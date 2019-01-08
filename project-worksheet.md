@@ -33,9 +33,8 @@ Include a full list of features that have been prioritized based on the `Time an
 
 The functionality will then be divided into two separate lists: MPV and PostMVP.  Carefully decided what is placed into your MVP as the client will expect this functionality to be implemented upon project completion.  
 
+#### SAMPLE.....
 #### MVP 
-
-```// Below are examples for MVP and PostMVP values. Replace them with your actual MVP and PostMVP ```
 
 - Find and use external api 
 - Render data on page 
@@ -54,6 +53,7 @@ Define the the React components and the architectural design of your app.
 
 Based on the initial logic defined in the previous sections try and breakdown the logic further into stateless/stateful components. 
 
+#### SAMPLE.....
 | Component | Description | 
 | --- | :---: |  
 | Header | This will render the header include the nav | 
@@ -62,6 +62,7 @@ Based on the initial logic defined in the previous sections try and breakdown th
 
 Time frames are also key in the development cycle.  You have limited time to code all phases of the game.  Your estimates can then be used to evalute game possibilities based on time needed and the actual time you have before game must be submitted. It's always best to pad the time by a few hours so that you account for the unknown so add and additional hour or two to each component to play it safe.
 
+#### SAMPLE.....
 | Component | Priority | Estimated Time | Actual Time |
 | --- | :---: |  :---: | :---: |
 | Adding Form | H | 3hrs| 3.5hrs |
@@ -71,6 +72,7 @@ Time frames are also key in the development cycle.  You have limited time to cod
 ## Helper Functions
 Helper functions should be generic enought that they can be reused in other applications. Use this section to document all helper functions that fall into this category.
 
+#### SAMPLE.....
 | Function | Description | 
 | --- | :---: |  
 | Capitalize | This will capitalize the first letter in a string of text | 
@@ -82,6 +84,7 @@ Helper functions should be generic enought that they can be reused in other appl
 
 Use this section to include a brief code snippet of functionality that you are proud of an a brief description  
 
+#### SAMPLE.....
 ```
 function reverse(string) {
 	// here is the code to reverse a string of text
@@ -90,6 +93,11 @@ function reverse(string) {
 
 ## Change Log
  Use this section to document what changes were made and the reasoning behind those changes.  
+
+#### SAMPLE.....
+| Original Plan | Outcome | 
+| --- | :---: |  
+| Have one <Book /> component | Split that component into <BookInfo /> and <BookInteraction /> as the component grew too complicated | 
 
 ## Issues and Resolutions
  Use this section to list of all major issues encountered and their resolution.
