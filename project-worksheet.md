@@ -97,7 +97,7 @@ function reverse(string) {
 #### SAMPLE.....
 | Original Plan | Outcome | 
 | --- | :---: |  
-| Have one <Book /> component | Split that component into <BookInfo /> and <BookInteraction /> as the component grew too complicated | 
+| Have one Book component | Split that component into BookInfo and BookInteraction as the component grew too complicated | 
 
 ## Issues and Resolutions
  Use this section to list of all major issues encountered and their resolution.
