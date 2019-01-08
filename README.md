@@ -16,14 +16,12 @@ Show us what you've got!
 #### Your website must:
 
 - Be a working, interactive, React application.
-- Include one of the following:
-  - Pull data into the application using an API
-  - Persist data using localStorage and have two distinct "views" in your application using conditional rendering
-- Have at least 3 separate components, each with their own folder in your application.
- - Be build using Create React App Minimal.
-- Be deployed via GitHub, Firebase.
+- Pull data into the application using an API
+- Have at least 3 separate components, in a components folder in your application.
+- Be built using Create React App or Create React App Minimal.
+- Be deployed via Surge, Firebase, Etc.
 - Be styled with CSS.
-- Use flexbox layout...or learn something new like CSS Grid.
+- Use Flexbox or CSS Grid.
 
 
 #### Your code must:
@@ -42,13 +40,12 @@ Show us what you've got!
 
 ## Necessary Deliverables
 
-#### For the proposal:
+#### For the proposal your project worksheet *MUST* include:
 - A collection of wireframes - hand-drawn or digitally created - outlining the important pages of your site, as well as the critical states of your project.
-- A proposal including:
-	- A description of the project you'll be building with the objective described in non-technical language.
-	- An explanation of the major problems you plan to face while implementing this app.
-	- An explanation of how you foresee yourself solving the aforementioned problems.
-  - If using an API, a link to the API you plan to use
+- A drawing that depicts of your component heiarchy
+- A priority matrix
+- A link to the API you plan to use
 
-#### For the project:
-- A git repository hosted on GitHub, with a link to your hosted project, and frequent commits dating back to the very beginning of the project (YOUR APP SHOULD BE LOCATED IN A SEPARATE STANDING REPO. DO NOT build your app in this repository. YOU MUST initiate a new repo on your GitHub account.)
+#### For the project submission:
+- A git repository hosted on GitHub, with a link to your hosted project, and frequent commits dating back to the very beginning of the project (YOUR APP SHOULD BE LOCATED IN A FORK OF THIS REPOSITORY)
+- A pull request on this repository with the standard pull request format including wins, struggles, and questions.
