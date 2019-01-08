@@ -79,6 +79,13 @@ Helper functions should be generic enought that they can be reused in other appl
 
 ## Additional Libraries
  Use this section to list all supporting libraries and thier role in the project. 
+ 
+ #### SAMPLE.....
+| Library | What it Does | 
+| --- | :---: |  
+| Bootstrap | Used to help style my application | 
+| Giphy API | Used to get gifs to use | 
+
 
 ## Code Snippet
 
