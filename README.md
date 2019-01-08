@@ -47,5 +47,5 @@ Show us what you've got!
 - A link to the API you plan to use
 
 #### For the project submission:
-- A git repository hosted on GitHub, with a link to your hosted project, and frequent commits dating back to the very beginning of the project (YOUR APP SHOULD BE LOCATED IN A FORK OF THIS REPOSITORY)
+- A git repository hosted on GitHub, with a link to your hosted project, and frequent commits dating back to the very beginning of the project (YOUR APP SHOULD BE LOCATED IN A FORK OF THIS REPOSITORY IN ITS OWN FOLDER)
 - A pull request on this repository with the standard pull request format including wins, struggles, and questions.
