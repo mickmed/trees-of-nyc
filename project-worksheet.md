@@ -37,13 +37,11 @@ The functionality will then be divided into two separate lists: MPV and PostMVP.
 #### MVP 
 
 - Find and use external api 
-- Render data on page 
-- Allow user to choose favorites 
-- Save their choices in firebase
+- Render data on page in a list
 
 #### PostMVP 
 
-- Add user auth
+- Add data to favorites section
 
 ## React Architectural Design
 
