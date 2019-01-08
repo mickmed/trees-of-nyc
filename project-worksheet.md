@@ -35,6 +35,8 @@ The functionality will then be divided into two separate lists: MPV and PostMVP.
 
 #### MVP 
 
+```javascript Below are examples for MVP and PostMVP values. Replace them with your actual MVP and PostMVP ```
+
 - Find and use external api 
 - Render data on page 
 - Allow user to choose favorites 
