@@ -49,3 +49,10 @@ Show us what you've got!
 #### For the project submission:
 - A git repository hosted on GitHub, with a link to your hosted project, and frequent commits dating back to the very beginning of the project (YOUR APP SHOULD BE LOCATED IN A FORK OF THIS REPOSITORY IN ITS OWN FOLDER NAMED P2)
 - A pull request on this repository with the standard pull request format including wins, struggles, and questions.
+
+#### API Resources
+
+- https://github.com/toddmotto/public-apis
+- https://github.com/abhishekbanthia/Public-APIs
+- https://any-api.com/
+- https://apilist.fun/
