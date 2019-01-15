@@ -8,8 +8,8 @@ You are **responsible** for scheduling time with your squad to seek approval for
 
 |  Day | Deliverable | Status
 |---|---| ---|
-|Day 1| Project Description | Incomplete
-|Day 2| Wireframes / Priority Matrix / Functional Components | Incomplete
+|Day 1| Project Description | Complete
+|Day 2| Wireframes / Priority Matrix / Functional Components | Complete
 |Day 3| Core Application Structure (HTML, CSS, etc.) | Incomplete
 |Day 4| Pseudocode / actual code | Incomplete
 |Day 5| Initial Clickable Model  | Incomplete
@@ -19,7 +19,7 @@ You are **responsible** for scheduling time with your squad to seek approval for
 
 ## Project Description
 
-Use this section to describe your final project and perhaps any links to relevant sites that help convey the concept and\or functionality.
+A map that shows population and other demographics of major world cities.
 
 ## Wireframes
 
@@ -31,23 +31,24 @@ Include a full list of features that have been prioritized based on the `Time an
 
 ### MVP/PostMVP - 5min
 
-The functionality will then be divided into two separate lists: MPV and PostMVP.  Carefully decided what is placed into your MVP as the client will expect this functionality to be implemented upon project completion.  
 
-#### SAMPLE.....
 #### MVP 
+	Find API
+	Fetch Data
+	Display Map
+	Display Blob Markers
+	Display Popups
+	Style Components
 
-- Find and use external api 
-- Render data on page in a list
 
 #### PostMVP 
-
-- Add data to favorites section
+	Add UI features, select menus, filters etc...
 
 ## React Architectural Design
 
 Define the the React components and the architectural design of your app.
 
-#### [SAMPLE FROM A MAP BASED PROJECT](https://res.cloudinary.com/dvjtpejbw/image/upload/v1540221204/20181022_111216.jpg)
+
 
 ## Functional Components
 
@@ -56,35 +57,42 @@ Based on the initial logic defined in the previous sections try and breakdown th
 #### SAMPLE.....
 | Component | Description | 
 | --- | :---: |  
-| Header | This will render the header include the nav | 
-| Footer | This will render the header include the nav | 
+| App | This will fetch the data | 
+| CityList | This will map the city demographics | 
+| City | This will display city info |
+| Map Container | This will render the map |
+| Map Blobs | This will render map blobs |
+| Popup Info | Display info for popups |
 
 
-Time frames are also key in the development cycle.  You have limited time to code all phases of the game.  Your estimates can then be used to evalute game possibilities based on time needed and the actual time you have before game must be submitted. It's always best to pad the time by a few hours so that you account for the unknown so add and additional hour or two to each component to play it safe.
 
-#### SAMPLE.....
 | Component | Priority | Estimated Time | Actual Time |
 | --- | :---: |  :---: | :---: |
-| Adding Form | H | 3hrs| 3.5hrs |
-| Working with API | H | 3hrs| 2.5hrs |
-| Total | H | 6hrs| 5hrs | 
+| App (and fetch) | H | 1hr|  |
+| Get city Demographics | H | 2hrs|  |
+| Display City Info | H | 2hrs|  |
+| Display Map | H | 2hrs|  |
+| Map Blobs | H | 6hrs|  |
+| Popup Info | H | 2hrs |  |
+| Media Queries | H | 3hrs |  |
+
+| Total | H | 18hrs |  |
+
+
 
 ## Helper Functions
-Helper functions should be generic enought that they can be reused in other applications. Use this section to document all helper functions that fall into this category.
 
-#### SAMPLE.....
 | Function | Description | 
 | --- | :---: |  
-| Capitalize | This will capitalize the first letter in a string of text | 
+| ColorSelector | This will choose blob color according to population size | 
+
 
 ## Additional Libraries
- Use this section to list all supporting libraries and thier role in the project. 
- 
- #### SAMPLE.....
+
 | Library | What it Does | 
 | --- | :---: |  
-| Bootstrap | Used to help style my application | 
-| Giphy API | Used to get gifs to use | 
+| Bulma/Bootstrap | Used to help style my application | 
+| Font Awesom | Indicators and Clickable Icons | 
 
 
 ## Code Snippet
