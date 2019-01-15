@@ -23,11 +23,11 @@ A map that shows population and other demographics of major world cities.
 
 ## Wireframes
 
-Upload images of wireframe to cloudinary and add the link here with a description of the specific wireframe.
+https://drive.google.com/drive/u/0/folders/1Z1ZevfqgnntRZHu8aewaD4etL7KFsFVs
 
 ## Priority Matrix
 
-Include a full list of features that have been prioritized based on the `Time and Importance` Matix.  
+https://drive.google.com/drive/u/0/folders/1Z1ZevfqgnntRZHu8aewaD4etL7KFsFVs 
 
 ### MVP/PostMVP - 5min
 
@@ -46,7 +46,7 @@ Include a full list of features that have been prioritized based on the `Time an
 
 ## React Architectural Design
 
-Define the the React components and the architectural design of your app.
+https://drive.google.com/drive/u/0/folders/1Z1ZevfqgnntRZHu8aewaD4etL7KFsFVs
 
 
 
@@ -75,7 +75,6 @@ Based on the initial logic defined in the previous sections try and breakdown th
 | Map Blobs | H | 6hrs|  |
 | Popup Info | H | 2hrs |  |
 | Media Queries | H | 3hrs |  |
-
 | Total | H | 18hrs |  |
 
 
@@ -92,7 +91,7 @@ Based on the initial logic defined in the previous sections try and breakdown th
 | Library | What it Does | 
 | --- | :---: |  
 | Bulma/Bootstrap | Used to help style my application | 
-| Font Awesom | Indicators and Clickable Icons | 
+| Font Awesome | Indicators and Clickable Icons | 
 
 
 ## Code Snippet

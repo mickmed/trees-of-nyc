@@ -1,28 +1,43 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "./style.css";
+import axios from "axios";
+
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      cities: []
+    };
+  }
+
+  componentDidMount() {
+    const TELEPORT_URL =
+      "https://api.teleport.org/api/";
+    axios
+      .get(TELEPORT_URL)
+      .then(response => {
+        const cities = response.data;
+        this.setState({
+          cities: cities
+        });
+      })
+      .catch(error => {
+        console.error("Error: ", error);
+      });
+  }
   render() {
+    const citiesData = this.state.cities;
+    console.log(citiesData)
+
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      
+        null
       </div>
     );
   }
 }
 
-export default App;
+export default App
