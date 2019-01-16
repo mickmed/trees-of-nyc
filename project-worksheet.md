@@ -9,12 +9,9 @@ You are **responsible** for scheduling time with your squad to seek approval for
 |  Day | Deliverable | Status
 |---|---| ---|
 |Day 1| Project Description | Complete
-|Day 2| Wireframes / Priority Matrix / Functional Components | Complete
-|Day 3| Core Application Structure (HTML, CSS, etc.) | Incomplete
-|Day 4| Pseudocode / actual code | Incomplete
-|Day 5| Initial Clickable Model  | Incomplete
-|Day 6| MVP | Incomplete
-|Day 7| Present | Incomplete
+|Day 2| Wireframes / Priority Matrix / Functional Components, Core Application Structure (HTML, CSS, etc.), Initial Clickable Model| Complete
+|Day 3| MVP, Present | Incomplete
+
 
 
 ## Project Description
@@ -36,7 +33,7 @@ https://drive.google.com/drive/u/0/folders/1Z1ZevfqgnntRZHu8aewaD4etL7KFsFVs
 	Find API
 	Fetch Data
 	Display Map
-	Display Blob Markers
+	Display Markers
 	Display Popups
 	Style Components
 
@@ -68,11 +65,12 @@ Based on the initial logic defined in the previous sections try and breakdown th
 
 | Component | Priority | Estimated Time | Actual Time |
 | --- | :---: |  :---: | :---: |
-| App (and fetch) | H | 1hr|  |
-| Get city Demographics | H | 2hrs|  |
-| Display City Info | H | 2hrs|  |
-| Display Map | H | 2hrs|  |
-| Map Blobs | H | 6hrs|  |
+| App (and fetch) | H | 1hr| 1hr |
+| Get tree demographics | H | 2hrs|  |
+| Display Tree Info | H | 2hrs|  |
+| Display Map | H | 2hrs| 2hrs|
+| Map Markers | H | 2hrs| 2hrs |
+| Map Markers with Filters | H | 4hrs|  |
 | Popup Info | H | 2hrs |  |
 | Media Queries | H | 3hrs |  |
 | Total | H | 18hrs |  |
