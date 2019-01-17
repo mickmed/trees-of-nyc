@@ -72,6 +72,7 @@ Based on the initial logic defined in the previous sections try and breakdown th
 | Map Markers | H | 2hrs| 2hrs |
 | Map Markers with Filters | H | 4hrs|  |
 | Popup Info | H | 2hrs |  |
+| Style | H | 5rs |  |
 | Media Queries | H | 3hrs |  |
 | Total | H | 18hrs |  |
 

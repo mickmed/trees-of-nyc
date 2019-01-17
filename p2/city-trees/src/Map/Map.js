@@ -25,7 +25,7 @@ class Map extends Component {
         height: 600,
         latitude: 0,
         longitude: 0,
-        zoom: 12
+        zoom: 14
 
       },
       coordinates: null,
@@ -39,7 +39,7 @@ class Map extends Component {
   //this updates the initial state of viewport (latitude and longitude) so that when the page loads the user sees the portion of the map that has the newsest quake on it.
 //   https://stackoverflow.com/questions/43638938/updating-an-object-with-setstate-in-react
   componentWillReceiveProps = props => {
-      // console.log(props.treesData)
+      console.log(props.treesData)
     this.setState(prevState => ({
       viewport: {
         ...prevState.viewport,
@@ -54,7 +54,7 @@ class Map extends Component {
   }
 
   _renderMarker(tree, index) {
-   
+   console.log(tree)
     return (
         
       <Marker
@@ -82,7 +82,7 @@ class Map extends Component {
   _renderPopup() {
     // const { coordinates } = this.state && this.state;
     // const { info } = this.state && this.state;
-    console.log(this.state)
+    // console.log(this.state)
     // return (
     //   coordinates && (
     //     <Popup
@@ -102,7 +102,7 @@ class Map extends Component {
   render() {
     const { viewport } = this.state;
     const TREES = this.props.treesData;
-    // console.log(TREES)
+    console.log(TREES)
 
     return (
       <ReactMapGL
