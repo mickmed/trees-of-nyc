@@ -6,7 +6,7 @@ import Map from "../Map/Map.js";
 
 // import Map from "../Map";
 const TREES_URL =
-  "https://data.cityofnewyork.us/resource/5rq2-4hqu.json?$limit=200";
+  "https://data.cityofnewyork.us/resource/5rq2-4hqu.json?$limit=1000";
 
 class App extends Component {
   constructor(props) {
@@ -14,11 +14,11 @@ class App extends Component {
 
     this.state = {
       trees: [],
-      status: "&status=Alive",
       boro: "&boroname=Manhattan",
-      health: "&health=Good",
-      zipcode: "&zipcode=10002",
-      spcCommon: ''
+      zipcode: "",
+      spcCommon: "",
+      status: "",
+      health: ""
     };
   }
 
@@ -27,14 +27,13 @@ class App extends Component {
     if (param) {
       urlStr = url + param;
     } else {
-      urlStr = url + this.state.boro + this.state.status;
+      urlStr = url + this.state.boro + this.state.zipcode + this.state.status + this.state.spcCommon;
     }
     console.log(urlStr);
     await axios
       .get(urlStr)
       .then(response => {
         const trees = response.data;
-
         this.setState({
           trees: trees
         });
@@ -44,16 +43,42 @@ class App extends Component {
       });
   };
 
+  //functions for button and select clicks/chngs
   boroClk = e => {
-    let str = e.target.value + this.state.status;
-
+    // console.log(e.target.value);
+    
+    let str =
+      e.target.value +
+      this.state.status 
+      this.setState({ boro: e.target.value });
     this.fetchData(TREES_URL, str);
-    this.setState({ boro: e.target.value });
+  };
+
+  zipChng = e => {
+    this.setState({ zipcode: "&zipcode=" + e.target.value });
+    let str =
+      this.state.boro +
+      this.state.status +
+      this.state.spcCommon +
+      "&zipcode=" +
+      e.target.value;
+    this.fetchData(TREES_URL, str);
+  };
+
+  speciesChng = e => {
+    console.log(e.target.value);
+    this.setState({ spcCommon: "&spc_common=" + e.target.value });
+    let str =
+      this.state.boro +
+      this.state.status +
+      
+      "&spc_common=" +
+      e.target.value;
+    this.fetchData(TREES_URL, str);
   };
 
   sttsClk = e => {
     this.setState({ status: e.target.value });
-
     let str = this.state.boro + e.target.value;
     this.fetchData(TREES_URL, str);
   };
@@ -64,43 +89,23 @@ class App extends Component {
     this.fetchData(TREES_URL, str);
   };
 
-  zipChng = e => {
-    console.log(e.target.value);
-    this.setState({ zipcode: "&zipcode=" + e.target.value });
-    let str =
-      this.state.boro + this.state.status + "&zipcode=" + e.target.value;
-
-    this.fetchData(TREES_URL, str);
-  };
-
-  speciesChng = e => {
-    console.log(e.target.value);
-    this.setState({ spcCommon: "&spc_common=" + e.target.value });
-    let str =
-      this.state.boro + this.state.status + "&spc_common=" + e.target.value;
-
-    this.fetchData(TREES_URL, str);
-  };
-
   componentDidMount() {
     this.fetchData(TREES_URL);
   }
 
   render() {
-    // console.log(this.state.trees);
-
     return (
       <div className="App">
         <div className="mapContainer">
           <Map component={Map} treesData={this.state.trees} />
         </div>
         <div className="treeContainer">
-          <h1>Trees in NYC: </h1>
+          <h3>NYC TREES &#x1F600; &#x1F333; </h3>
           <div className="tree-inner">
+          
             <TreesList
               treesurl={TREES_URL}
               treesData={this.state.trees}
-              
               boroClk={this.boroClk}
               sttsClk={this.sttsClk}
               hlthClk={this.hlthClk}
@@ -109,7 +114,9 @@ class App extends Component {
               boro={this.state.boro}
               status={this.state.status}
               health={this.state.health}
-              zip={this.state.zipcode}
+              zipcode={this.state.zipcode}
+              spcCommon={this.state.spcCommon}
+              
             />
           </div>
         </div>

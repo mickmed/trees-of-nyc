@@ -8,26 +8,22 @@ const health = ["Good", "Fair", "Poor"];
 class TreesList extends React.Component {
   constructor() {
     super();
-
     this.state = {
       trees: [],
-      slctdBoroZips: 0
+      zipSelectdefault: []
     };
   }
-
+  //set state of rawurl and zip to obtain zips for select
   componentWillReceiveProps = props => {
-    console.log(props);
-    // this.setState(prevState => ({
-    //   trees: props.treesData
-    // }));
+    console.log(props.treesurl + props.boro);
     this.fetchData(props.treesurl + props.boro);
   };
+
   fetchData = async url => {
     await axios
       .get(url)
       .then(response => {
         const trees = response.data;
-
         this.setState({
           trees: trees
         });
@@ -37,51 +33,19 @@ class TreesList extends React.Component {
       });
   };
 
-  // componentDidMount() {
-  //   this.fetchData(this.props.treesurl + this.props.boro);
-  // }
-
   render() {
-    // console.log(this.props.treesData);
-
     let snipPrpStr = str => {
       let prpstr = str.substring(str.indexOf("=") + 1);
-
       return prpstr;
     };
 
     // //https://stackoverflow.com/questions/15125920/how-to-get-distinct-values-from-an-array-of-objects-in-javascript
 
-    // let array = [
-    //   { "name": "Joe", "age": 17 },
-    //   { "name": "Bob", "age": 17 },
-    //   { "name": "Carl", "age": 35 }
-    // ];
-    // this.props.treeData.map(item => item.age)
-    //   .filter((value, index, self) => self.indexOf(value) === index)
-
-    const unqZip = [
-      ...new Set(
-        this.state.trees.map((item, index) => {
-          return <option key={index}>{item.zipcode}</option>;
-        })
-      )
-    ];
-
-    const unqSpecies = [
-      ...new Set(
-        this.state.trees.map((item, index) => {
-          return <option key={index}>{item.spc_common}</option>;
-        })
-      )
-    ];
-
     const trees = (
       <div>
-        {this.props.treesData &&
-          this.props.treesData.map((tree, index) => {
-            return <Tree key={index} address={tree.address} />;
-          })}
+        {this.props.treesData.map((tree, index) => {
+          return <Tree key={index} trees={tree} />;
+        })}
       </div>
     );
 
@@ -145,14 +109,80 @@ class TreesList extends React.Component {
       </div>
     );
 
-    return (
-      <div>
-        {borosList}
-        {<select onChange={this.props.zipChng}>{unqZip}</select>}
-        {statusList}
-        {this.props.status === "&status=Alive" ? healthList : null}
-        {/* {<select onChange={this.props.speciesChng}>{unqSpecies}</select>} */}
+    //make unique zipcode selects
+    console.log(this.state.trees);
+    const zips = this.state.trees
+      .map(item => item.zipcode)
+      .filter((value, index, arr) => arr.indexOf(value) === index);
 
+    zips.sort(function(a, b) {
+      return a - b;
+    });
+    console.log(zips);
+    const zipsOpts = zips.map((el, id) => {
+      // console.log(el)
+      return (
+        <option key={id} value={el}>
+          {el}
+        </option>
+      );
+    });
+
+    //make unique species selects
+    const species = this.state.trees
+      .map(item => item.spc_common)
+      .filter((value, index, arr) => arr.indexOf(value) === index);
+
+    species.sort();
+    const speciesOpts = species.map((el, id) => {
+      // console.log(el)
+      return (
+        <option key={id} value={el}>
+          {el}
+        </option>
+      );
+    });
+
+    ///render filter selects and buttons
+    return (
+      <div className="filters">
+        <div className="boros">
+          {borosList}
+          <div className="zip" />
+          {
+            <select
+              onChange={this.props.zipChng}
+              value={snipPrpStr(this.props.zipcode)}
+            >
+              <option value="" disabled>
+                zipcode
+              </option>
+
+              {zipsOpts}
+            </select>
+          }
+        </div>
+
+        <div className="status">
+          {statusList}
+          <div className="health">
+            {this.props.status === "&status=Alive" ? healthList : null}
+          </div>
+        </div>
+
+        <div className="species">
+          {
+            <select
+              onChange={this.props.speciesChng}
+              value={snipPrpStr(this.props.spcCommon)}
+            >
+              <option value="" disabled>
+                species
+              </option>
+              {speciesOpts}
+            </select>
+          }
+        </div>
         {trees}
       </div>
     );

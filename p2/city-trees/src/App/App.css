@@ -2,6 +2,10 @@ body {
   margin: 40px 60px;
   height: 90vh;
   background-color: lightyellow;
+  /* background-image: url('../assets/elmtrees.jpg');
+  background-repeat: no-repeat;
+  background-size: cover; */
+
 }
 .App {
   display: flex;
@@ -15,37 +19,71 @@ body {
 }
 
 .map {
-  border: 2px dashed green;
+  border: 2px solid green;
   border-radius: 20px;
 }
 
 .treeContainer {
   flex: 3;
- 
+  
+  border-radius:20px;
+  border:2px solid green;
+  background-color:rgb(240, 227, 227);
+  height:550px;
 
 }
-.treeContainer h1 {
+.treeContainer h3 {
     margin:0;
-    font-size:30px;
+    padding-left:20px;
+    font-size:20px;
+    
 }
 .tree-inner{
-  overflow: scroll;
-  height:580px;
+  overflow-y: scroll;
+  height:80%;
+  background-color:rgb(230, 216, 216);
+  padding:20px;
 }
 .tree-pin {
-  background-image: linear-gradient(rgb(207, 221, 208), rgb(202, 235, 235));
-  width:3px;
-  height:3px;
-  border: radius 50%;
+  /* background-image: linear-gradient(rgb(207, 221, 208), rgb(202, 235, 235)); */
+  /* width:10px;
+  height:10px;
+  border-radius: 50%;
+  background-color:green; */
+  font-size:10px;
+}
+.filters{
+  display:flex;
+  flex-direction: column;
+}
+.boros{
+  display:flex;
+}
+/* .zip{
+  display:flex;
+} */
+.status{
+  margin-top:10px;
+  display:flex;
+ 
 }
 
+.species{
+  display:flex;
+  margin-top:15px;
+
+}
+.health{
+  margin-left:20px;
+}
 .popup {
   background-color: lightyellow;
   padding: 5px;
+  
 }
 
 .magdot {
-  height: 10px;
+  height: 20px;
   width: 10px;
   
   border-radius: 50%;
