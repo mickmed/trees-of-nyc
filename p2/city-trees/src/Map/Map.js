@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ReactMapGL, { Marker, Popup, NavigationControl} from "react-map-gl";
+import ReactMapGL, { Marker, Popup, NavigationControl } from "react-map-gl";
 import TreePin from "./tree-pin.js";
 import TreeInfo from "./TreeInfo";
 // import ControlPanel from "./control-panel.js";
@@ -44,10 +44,9 @@ class Map extends Component {
           ...prevState.viewport,
           longitude: parseFloat(props.treesData[0].longitude),
           latitude: parseFloat(props.treesData[0].latitude),
-          zoom: this.props.boro===''?11:14
+          zoom: this.props.boro === "" ? 11 : 14
         }
       }));
-    console.log(props)
   };
 
   _updateViewport = viewport => {
@@ -60,29 +59,22 @@ class Map extends Component {
         key={index}
         longitude={parseFloat(tree.longitude)}
         latitude={parseFloat(tree.latitude)}
-      > 
-    
-    
-
+      >
         <div>
-        {tree.status==="Alive"&&
-        <p className="mrkr-alive">{`\u{1F333}`}</p>}
+          {tree.status === "Alive" && (
+            <p className="mrkr-alive">{`\u{1F333}`}</p>
+          )}
 
-     
+          {tree.status === "Stump" && (
+            <p className="tree-pin" title={`\u{1F96B}`}>{`\u{1F96B}`}</p>
+          )}
 
-        {tree.status==="Stump"&&
-        <p className="tree-pin" title={`\u{1F96B}`}>{`\u{1F96B}`}</p>}
-
-        {tree.status==="Dead"&&
-        <p className="tree-pin" title={`\u{1F334}`}>{`\u{1F334}`}</p>}
-
+          {tree.status === "Dead" && (
+            <p className="tree-pin" title={`\u{1F334}`}>{`\u{1F334}`}</p>
+          )}
         </div>
 
-       
-
-
-{/* &#x1F333; */}
-     
+        {/* &#x1F333; */}
       </Marker>
     );
   }
@@ -131,7 +123,6 @@ class Map extends Component {
         <div className="nav" style={navStyle}>
           <NavigationControl onViewportChange={this._updateViewport} />
         </div>
-        
       </ReactMapGL>
     );
   }

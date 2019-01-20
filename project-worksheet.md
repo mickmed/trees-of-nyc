@@ -10,13 +10,13 @@ You are **responsible** for scheduling time with your squad to seek approval for
 |---|---| ---|
 |Day 1| Project Description | Complete
 |Day 2| Wireframes / Priority Matrix / Functional Components, Core Application Structure (HTML, CSS, etc.), Initial Clickable Model| Complete
-|Day 3| MVP, Present | Incomplete
+|Day 3| MVP, Present | Complete
 
 
 
 ## Project Description
 
-A map that shows population and other demographics of major world cities.
+A map that shows the trees of New York City using NYC Opendata API. Filters include zipcode, species, and status of the tree(s).
 
 ## Wireframes
 
@@ -58,7 +58,7 @@ Based on the initial logic defined in the previous sections try and breakdown th
 | CityList | This will map the city demographics | 
 | City | This will display city info |
 | Map Container | This will render the map |
-| Map Blobs | This will render map blobs |
+| Map Markers | This will render map markers |
 | Popup Info | Display info for popups |
 
 
@@ -82,7 +82,7 @@ Based on the initial logic defined in the previous sections try and breakdown th
 
 | Function | Description | 
 | --- | :---: |  
-| ColorSelector | This will choose blob color according to population size | 
+| ColorSelector | This will choose marker according to population size | 
 
 
 ## Additional Libraries
@@ -97,24 +97,44 @@ Based on the initial logic defined in the previous sections try and breakdown th
 
 Use this section to include a brief code snippet of functionality that you are proud of an a brief description  
 
-#### SAMPLE.....
+//this updates the initial state of viewport (latitude and longitude) so that when the page loads the map centers on the first tree in the array.
 ```
-function reverse(string) {
-	// here is the code to reverse a string of text
-}
+  componentWillReceiveProps = props => {
+    props.treesData[0] &&
+      this.setState(prevState => ({
+        viewport: {
+          ...prevState.viewport,
+          longitude: parseFloat(props.treesData[0].longitude),
+          latitude: parseFloat(props.treesData[0].latitude),
+          zoom: this.props.boro===''?11:14
+        }
+      }));
+    
+  };
 ```
 
 ## Change Log
- Use this section to document what changes were made and the reasoning behind those changes.  
+ Map zoom size changes depending on whether a boro is selected or not.  
 
-#### SAMPLE.....
-| Original Plan | Outcome | 
-| --- | :---: |  
-| Have one Book component | Split that component into BookInfo and BookInteraction as the component grew too complicated | 
+
 
 ## Issues and Resolutions
- Use this section to list of all major issues encountered and their resolution.
+ Difficulty using conditional rendering with emojis. Solution from trial and error. Final solution using && conditionals.
 
-#### SAMPLE.....
-**ERROR**: app.js:34 Uncaught SyntaxError: Unexpected identifier                                
-**RESOLUTION**: Missing comma after first object in sources {} object
+ ```
+ <div>
+          {tree.status === "Alive" && (
+            <p className="mrkr-alive">{`\u{1F333}`}</p>
+          )}
+
+          {tree.status === "Stump" && (
+            <p className="tree-pin" title={`\u{1F96B}`}>{`\u{1F96B}`}</p>
+          )}
+
+          {tree.status === "Dead" && (
+            <p className="tree-pin" title={`\u{1F334}`}>{`\u{1F334}`}</p>
+          )}
+        </div>
+
+ ```
+
