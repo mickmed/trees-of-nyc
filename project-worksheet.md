@@ -66,15 +66,15 @@ Based on the initial logic defined in the previous sections try and breakdown th
 | Component | Priority | Estimated Time | Actual Time |
 | --- | :---: |  :---: | :---: |
 | App (and fetch) | H | 1hr| 1hr |
-| Get tree demographics | H | 2hrs|  |
-| Display Tree Info | H | 2hrs|  |
-| Display Map | H | 2hrs| 2hrs|
-| Map Markers | H | 2hrs| 2hrs |
-| Map Markers with Filters | H | 4hrs|  |
-| Popup Info | H | 2hrs |  |
-| Style | H | 5rs |  |
-| Media Queries | H | 3hrs |  |
-| Total | H | 18hrs |  |
+| Get tree demographics | H | 2hrs| 1.5hrs |
+| Display Tree Info | H | 2hrs| 1hr  |
+| Display Map | H | 2hrs| 3hrs|
+| Map Markers | H | 2hrs| 5hrs |
+| Map Markers with Filters | H | 4hrs| 8.5hrs |
+| Popup Info | H | 2hrs | xx |
+| Style | H | 5rs | 4hrs |
+| Media Queries | H | 3hrs | xx |
+| Total | H | 18hrs | 28hrs  |
 
 
 
