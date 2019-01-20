@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ReactMapGL, { Marker, Popup, NavigationControl } from "react-map-gl";
+import ReactMapGL, { Marker, Popup, NavigationControl} from "react-map-gl";
 import TreePin from "./tree-pin.js";
 import TreeInfo from "./TreeInfo";
 // import ControlPanel from "./control-panel.js";
@@ -23,7 +23,7 @@ class Map extends Component {
         height: 550,
         latitude: 0,
         longitude: 0,
-        zoom: 12
+        zoom: 11
       },
       lat: 0,
       long: 0,
@@ -38,14 +38,16 @@ class Map extends Component {
   //this updates the initial state of viewport (latitude and longitude) so that when the page loads the map centers on the first tree in the array.
   //   https://stackoverflow.com/questions/43638938/updating-an-object-with-setstate-in-react
   componentWillReceiveProps = props => {
-    props.treesData[0] && 
-    this.setState(prevState => ({
-      viewport: {
-        ...prevState.viewport,
-        longitude: parseFloat(props.treesData[0].longitude),
-        latitude: parseFloat(props.treesData[0].latitude)
-      }
-    }));
+    props.treesData[0] &&
+      this.setState(prevState => ({
+        viewport: {
+          ...prevState.viewport,
+          longitude: parseFloat(props.treesData[0].longitude),
+          latitude: parseFloat(props.treesData[0].latitude),
+          zoom: this.props.boro===''?11:14
+        }
+      }));
+    console.log(props)
   };
 
   _updateViewport = viewport => {
@@ -53,67 +55,54 @@ class Map extends Component {
   };
 
   _renderMarker(tree, index) {
-    // console.log(tree.status)
-    
     return (
       <Marker
         key={index}
         longitude={parseFloat(tree.longitude)}
         latitude={parseFloat(tree.latitude)}
-        
-      >
-        <div className="tree-pin">
-        &#x1F333;
-       
+      > 
+    
+    
+
+        <div>
+        {tree.status==="Alive"&&
+        <p className="mrkr-alive">{`\u{1F333}`}</p>}
+
+     
+
+        {tree.status==="Stump"&&
+        <p className="tree-pin" title={`\u{1F96B}`}>{`\u{1F96B}`}</p>}
+
+        {tree.status==="Dead"&&
+        <p className="tree-pin" title={`\u{1F334}`}>{`\u{1F334}`}</p>}
+
         </div>
 
-        {/* <TreePin
-          size={20}
-          onClick={() =>
-            this.setState({
-              lat: tree.longitude,
-              long: tree.latitude
-              // info: tree.properties
-            })
-          }
-        /> */}
+       
+
+
+{/* &#x1F333; */}
+     
       </Marker>
     );
   }
 
-  // _renderPopup() {
-  //   // console.log(this.state && this.state);
-  //   const { lat } = this.state && this.state;
-  //   const { long } = this.state && this.state;
-  //   console.log(lat);
-
-  //   return (
-  //     <Popup
-  //       tipSize={5}
-  //       anchor="top"
-  //       longitude={parseFloat(long)}
-  //       latitude={parseFloat(lat)}
-  //       closeOnClick={false}
-  //       onClose={() => this.setState({ latitude: null, longitude: null })}
-  //     >
-  //       <TreeInfo lat={lat} long={long} />
-  //     </Popup>
-  //   );
-  // }
-
   _renderPopup() {
-    const {popupInfo} = this.state;
+    const { popupInfo } = this.state;
 
-    return popupInfo && (
-      
-      <Popup tipSize={5}
-        anchor="top"
-        longitude={popupInfo.longitude}
-        latitude={popupInfo.latitude}
-        closeOnClick={false}
-        onClose={() => this.setState({popupInfo: null})} >
-        <TreeInfo info={popupInfo} />
-      </Popup>
+    return (
+      popupInfo && (
+        <Popup
+          tipSize={5}
+          anchor="top"
+          longitude={popupInfo.longitude}
+          latitude={popupInfo.latitude}
+          closeOnClick={false}
+          onClose={() => this.setState({ popupInfo: null })}
+        >
+          <TreeInfo info={popupInfo} />
+        </Popup>
+      )
     );
   }
 
@@ -121,7 +110,7 @@ class Map extends Component {
     const { viewport } = this.state;
     const TREES = this.props.treesData && this.props.treesData;
     // console.log(this.state);
-    
+
     return (
       <ReactMapGL
         className="map"
@@ -137,12 +126,12 @@ class Map extends Component {
         <div onLoad={this.hello} />
         {this.state.popupInfo}
         {TREES && TREES.map(this._renderMarker)}
-        {/* {console.log(this.props && this.props)} */}
+
         {this._renderPopup()}
         <div className="nav" style={navStyle}>
           <NavigationControl onViewportChange={this._updateViewport} />
         </div>
-        {/* <ControlPanel containerComponent={this.props.containerComponent} /> */}
+        
       </ReactMapGL>
     );
   }

@@ -1,7 +1,7 @@
 body {
-  margin: 40px 60px;
+  
   height: 90vh;
-  background-color: lightyellow;
+  background-color: #FFF;
   /* background-image: url('../assets/elmtrees.jpg');
   background-repeat: no-repeat;
   background-size: cover; */
@@ -9,17 +9,39 @@ body {
 }
 .App {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   font-family: Arial, sans-serif;
   height:90vh;
+  margin: 10px 60px;
 }
 
 .mapContainer {
   flex: 5;
 }
+header{
+  background-color:black;
+  padding:10px 30px 0px;
+  /* text-align: center; */
+  display:flex;
+  justify-content:space-between;
+}
 
+header h1{
+  margin:0 auto;
+  color:white;
+  
+}
+header p{
+  padding:0px;
+  color:white;
+}
+
+header img{
+  height:50px;
+  padding:0px 20px;
+}
 .map {
-  border: 2px solid green;
+  border: 1px solid green;
   border-radius: 20px;
 }
 
@@ -27,41 +49,38 @@ body {
   flex: 3;
   
   border-radius:20px;
-  border:2px solid green;
-  background-color:rgb(240, 227, 227);
+  border:1px solid green;
+  background-color:rgb(224, 238, 245);
   height:550px;
 
 }
 .treeContainer h3 {
     margin:0;
+    margin-top:5px;
     padding-left:20px;
     font-size:20px;
     
 }
 .tree-inner{
   overflow-y: scroll;
-  height:80%;
-  background-color:rgb(230, 216, 216);
-  padding:20px;
+  height:360px;
+  background-color: #f0e3f5;
+  padding:3px 20px;
+  margin-top:20px;
+
 }
-.tree-pin {
-  /* background-image: linear-gradient(rgb(207, 221, 208), rgb(202, 235, 235)); */
-  /* width:10px;
-  height:10px;
-  border-radius: 50%;
-  background-color:green; */
-  font-size:10px;
-}
+
 .filters{
   display:flex;
   flex-direction: column;
+  padding:20px ;
 }
 .boros{
   display:flex;
 }
-/* .zip{
-  display:flex;
-} */
+.zip{
+  margin-left:10px;
+}
 .status{
   margin-top:10px;
   display:flex;
@@ -70,7 +89,7 @@ body {
 
 .species{
   display:flex;
-  margin-top:15px;
+  margin-top:20px;
 
 }
 .health{
@@ -81,11 +100,48 @@ body {
   padding: 5px;
   
 }
+button{
+  border-radius:5px;
+}
+.tree{
+  padding:3px;
+}
+.tree-info{
+  display:flex;
+}
+.tree h5 {
+  margin:5px 0px;
+}
+.tree-status{
+  display:flex;
+  justify-content: space-around;
+}
+.tree-status p{
+  margin:5px 0px;
+  font-size:13px;
+}
+/* .tree-pin{
+  filter: contrast(0) sepia(50) saturate(100) hue-rotate(10deg);
+} */
 
-.magdot {
-  height: 20px;
-  width: 10px;
-  
-  border-radius: 50%;
-  display: inline-block;
+body {
+  background: #fff;
+}
+
+.tree-pin {
+  margin: 0;
+  color: transparent;
+  text-shadow: 0 0 1px rgb(47, 33, 33);
+  font-size: 6px;
+  position: relative;
+}
+
+.tree-pin::before {
+  content: attr(title);
+  position: absolute;
+  /* text-shadow: 0 0 0 #fff; */
+}
+
+.mrkr-alive{
+  font-size:8px;
 }

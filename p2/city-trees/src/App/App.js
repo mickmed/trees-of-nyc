@@ -16,8 +16,8 @@ class App extends Component {
       trees: [],
       boro: "&boroname=Manhattan",
       zipcode: "",
-      spcCommon: "",
-      status: "",
+      spc_common: "",
+      status: "&status=Alive",
       health: ""
     };
   }
@@ -27,10 +27,16 @@ class App extends Component {
     if (param) {
       urlStr = url + param;
     } else {
-      urlStr = url + this.state.boro + this.state.zipcode + this.state.status + this.state.spcCommon;
+      urlStr =
+        url +
+        this.state.boro +
+        this.state.zipcode +
+        this.state.status +
+        this.state.spc_common;
     }
     console.log(urlStr);
     await axios
+
       .get(urlStr)
       .then(response => {
         const trees = response.data;
@@ -45,47 +51,68 @@ class App extends Component {
 
   //functions for button and select clicks/chngs
   boroClk = e => {
-    // console.log(e.target.value);
-    
     let str =
       e.target.value +
-      this.state.status 
-      this.setState({ boro: e.target.value });
+      this.state.spc_common +
+      this.state.status +
+      this.state.health;
+    this.setState({ boro: e.target.value });
     this.fetchData(TREES_URL, str);
   };
 
   zipChng = e => {
+    //chk for empty zip
+    let zip;
+    e.target.value === "" ? (zip = "") : (zip = "&zipcode=" + e.target.value);
     this.setState({ zipcode: "&zipcode=" + e.target.value });
+
+    //chk for empty species
+    let spec;
+    this.state.spc_common === "" ? (spec = "") : (spec = this.state.spc_common);
+    this.setState({ zipcode: "&zipcode=" + e.target.value });
+    console.log(spec);
+    //set url parameters
     let str =
-      this.state.boro +
-      this.state.status +
-      this.state.spcCommon +
-      "&zipcode=" +
-      e.target.value;
+      this.state.boro + zip + spec + this.state.status + this.state.health;
     this.fetchData(TREES_URL, str);
   };
 
   speciesChng = e => {
-    console.log(e.target.value);
-    this.setState({ spcCommon: "&spc_common=" + e.target.value });
+    //chk for empty species
+    let specs;
+    e.target.value === ""
+      ? (specs = "")
+      : (specs = "&spc_common=" + e.target.value);
+
+    //chk for empty zip
+    let zips;
+    this.state.zipcode === "" ? (zips = "") : (zips = this.state.zipcode);
+    this.setState({ spc_common: "&spc_common=" + e.target.value });
+
+    //set url parameters
     let str =
-      this.state.boro +
-      this.state.status +
-      
-      "&spc_common=" +
-      e.target.value;
+      this.state.boro + zips + specs + this.state.status + this.state.health;
     this.fetchData(TREES_URL, str);
   };
 
   sttsClk = e => {
     this.setState({ status: e.target.value });
-    let str = this.state.boro + e.target.value;
+    let str =
+      this.state.boro +
+      this.state.zipcode +
+      this.state.spc_common +
+      e.target.value;
     this.fetchData(TREES_URL, str);
   };
 
   hlthClk = e => {
     this.setState({ health: e.target.value });
-    let str = this.state.boro + this.state.status + e.target.value;
+    let str =
+      this.state.boro +
+      this.state.zipcode +
+      this.state.spc_common +
+      this.state.status +
+      e.target.value;
     this.fetchData(TREES_URL, str);
   };
 
@@ -94,15 +121,28 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.state.trees);
     return (
-      <div className="App">
-        <div className="mapContainer">
-          <Map component={Map} treesData={this.state.trees} />
-        </div>
-        <div className="treeContainer">
-          <h3>NYC TREES &#x1F600; &#x1F333; </h3>
-          <div className="tree-inner">
-          
+      <div>
+        <header>
+          <h1>NEW YORK CITY TREES</h1>
+          <p>
+            <i>mapping the trees of NYC</i>
+          </p>
+          <img src="https://res.cloudinary.com/dw5c4jnc3/image/upload/v1547829310/nyc.png" />
+        </header>
+
+        <div className="App">
+          <div className="mapContainer">
+            <Map
+              component={Map}
+              treesData={this.state.trees}
+              boro={this.state.zipcode}
+            />
+          </div>
+          <div className="treeContainer">
+            <h3>&#x1F333; NYC TREES &#x1F333; </h3>
+
             <TreesList
               treesurl={TREES_URL}
               treesData={this.state.trees}
@@ -115,8 +155,7 @@ class App extends Component {
               status={this.state.status}
               health={this.state.health}
               zipcode={this.state.zipcode}
-              spcCommon={this.state.spcCommon}
-              
+              spc_common={this.state.spc_common}
             />
           </div>
         </div>

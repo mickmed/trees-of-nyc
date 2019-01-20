@@ -2,10 +2,7 @@ import React, { PureComponent } from "react";
 
 class TreeInfo extends PureComponent {
   render() {
-    // const { info } = this.props;
-    // const { lat } = this.props;
-    // const { long } = this.props
-    // console.log(lat)
+
     const {info} = this.props
     console.log(info)
 
