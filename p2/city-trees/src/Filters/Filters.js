@@ -123,16 +123,17 @@ class Filters extends React.Component {
     return (
       <div className="filters">
         <div className="boros">
-          {
+          {<div className="select">
             <select
               onChange={this.props.boroClk}
               value={snipPrpStr(this.props.boroname)}
             >
               {borosSelect}
             </select>
+            </div>
           }
 
-          {
+          {<div className="select">
             <select
               onChange={this.props.zipChng}
               value={snipPrpStr(this.props.zipcode)}
@@ -141,9 +142,10 @@ class Filters extends React.Component {
 
               {zipsOpts}
             </select>
+            </div>
           }
 
-          {
+          {<div className="select">
             <select
               onChange={this.props.speciesChng}
               value={snipPrpStr(this.props.spc_common)}
@@ -151,11 +153,12 @@ class Filters extends React.Component {
               <option value="">all species</option>
               {speciesOpts}
             </select>
+            </div>
           }
         </div>
 
         <div className="status">
-          {/* {this.props.spcCommon ? statusList : null} */}
+         
           <div className="stslist">{statusList}</div>
           {this.props.status === "&status=Alive" ? healthList : null}
         </div>
@@ -166,24 +169,5 @@ class Filters extends React.Component {
 
 export default Filters;
 
-{
-  /* // const borosList = (
-//   <div>
-//     {boros.map((el, id) => { */
-}
-//       return (
-//         <button
-//           key={id}
-//           onClick={this.props.boroClk}
-//           value={"&boroname=" + el}
-//           style={{
-//             backgroundColor:
-//               snipPrpStr(this.props.boro) === el ? "orange" : "white"
-//           }}
-//         >
-//           {el}
-//         </button>
-//       );
-//     })}
-//   </div>
-// );
+
+
