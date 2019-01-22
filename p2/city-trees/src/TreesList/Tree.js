@@ -1,18 +1,21 @@
 import React from "react";
 
 const Tree = props => {
-
   return (
-    <div className="tree">
-      <div className="tree-info">
-        <h5>{props.trees.address}&nbsp;&nbsp;</h5>
-        <h5>~ {props.trees.nta_name}</h5>
-      </div>
-      <div className="tree-status">
-        <p>SPECIES: <i>{props.trees.spc_common}</i></p>
-        <p>STATUS: <i>{props.trees.status}</i></p>
-      </div>
+    <div>
+      <div className="tree">
+        <p>
+          <strong>{props.trees.address}&nbsp;&nbsp;</strong>
+        </p>
+        <p>{props.trees.nta_name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
 
+        <p>
+          <i>{props.trees.spc_common}&nbsp;&nbsp;</i>
+        </p>
+        <p>
+          <i>{props.trees.status}&nbsp;&nbsp;</i>
+        </p>
+      </div>
       <hr />
     </div>
   );

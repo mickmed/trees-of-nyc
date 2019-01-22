@@ -117,7 +117,8 @@ Use this section to include a brief code snippet of functionality that you are p
  Map zoom size changes depending on whether a boro is selected or not. 
  Markers render different emojis according to tree status.
  Restructured layout.
-  
+ Made cite responsive with media queries.
+
 
 
 

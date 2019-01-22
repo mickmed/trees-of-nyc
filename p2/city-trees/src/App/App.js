@@ -155,7 +155,7 @@ class App extends Component {
             </div>
 
             <div className="treeContainer">
-              <h3>&#x1F333; NYC TREES &#x1F333; </h3>
+              {/* <h3>&#x1F333; NYC TREES &#x1F333; </h3> */}
 
               <TreesList treesData={this.state.trees} />
             </div>

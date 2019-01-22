@@ -45,7 +45,7 @@ class Map extends Component {
           ...prevState.viewport,
           longitude: parseFloat(props.treesData[0].longitude),
           latitude: parseFloat(props.treesData[0].latitude),
-          zoom: this.props.boro === "" ? 11 : 14
+          zoom: this.props.boroname === "" ? 10 : 14
         }
       }));
   };

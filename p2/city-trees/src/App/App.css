@@ -1,13 +1,10 @@
 body {
-  /* height: 90vh; */
+  height: 90vh;
   background-color: #fff;
- 
 }
 .App {
   font-family: Arial, sans-serif;
-  /* height:90vh; */
-  /* margin: 0 20px; */
-  height:100%;
+  padding: 0 10px;
 }
 
 header {
@@ -15,19 +12,18 @@ header {
   padding: 10px 10px 0px;
   display: flex;
   justify-content: space-between;
+  /* position:fixed; */
 }
 
 header h1 {
   margin: 0 10px;
   color: white;
   font-size: 20px;
-  /* gggggggg */
 }
 header p {
   padding: 0px;
   color: white;
   display: none;
-  /* gggggggg */
 }
 
 header img {
@@ -35,43 +31,62 @@ header img {
   padding: 0px 20px 0px 10px;
 }
 
-.inner{
- display:flex;
- flex-direction:column;
+.inner {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto auto;
 }
-
 
 .treeContainer {
+  border: 1px solid black;
+  width: 100%;
   border-radius: 10px;
-  border: 1px solid green;
-  background-color: rgb(224, 238, 245);
-  height: 550px;
-}
-.treeContainer h3 {
-  margin: 0;
-  margin-top: 5px;
-  padding-left: 20px;
-  font-size: 20px;
-}
-.tree-inner {
-  overflow-y: scroll;
-  height: 360px;
-  background-color: #f0e3f5;
-  padding: 3px 20px;
-  margin-top: 20px;
+  background-color: rgb(231, 240, 243);
+  height: 570px;
 }
 
+.tree-inner {
+  overflow-y: scroll;
+  height: 550px;
+  margin-top: 10px;
+}
+
+.tree {
+  padding: 3px;
+  display: flex;
+  justify-content: space-around;
+  /* padding:30px; */
+  /* background-color:lightblue; */
+}
+
+.tree p {
+  margin: 5px 0px;
+  flex: 1;
+  font-size: 10px;
+  padding-left: 10px;
+}
+
+.tree-status p {
+  margin: 5px 0px;
+  font-size: 13px;
+}
+.mapContainer {
+  margin-bottom: 20px;
+}
+.mapContainer > div {
+  height: 720px;
+  width: 100%;
+}
 .filters {
   display: flex;
   flex-direction: column;
   padding: 10px;
 }
-.filters select{
-  width:100px;
-  border:1px solid lightgrey;
-  padding:0 5px;
-  margin:0 5px;
-  
+.filters select {
+  width: 100px;
+  border: 1px solid lightgrey;
+  padding: 0 5px;
+  margin: 0 5px;
 }
 .boros {
   display: inline-flex;
@@ -85,8 +100,8 @@ header img {
   display: flex;
   justify-content: center;
 }
-.stslist{
-  margin-right:10px;
+.stslist {
+  margin-right: 10px;
 }
 
 .health {
@@ -99,23 +114,7 @@ header img {
 button {
   border-radius: 5px;
 }
-.tree {
-  padding: 3px;
-}
-.tree-info {
-  display: flex;
-}
-.tree h5 {
-  margin: 5px 0px;
-}
-.tree-status {
-  display: flex;
-  justify-content: space-around;
-}
-.tree-status p {
-  margin: 5px 0px;
-  font-size: 13px;
-}
+
 /* .tree-pin{
   filter: contrast(0) sepia(50) saturate(100) hue-rotate(10deg);
 } */
@@ -127,7 +126,7 @@ body {
 .tree-pin {
   margin: 0;
   color: transparent;
-  text-shadow: 0 0 1px rgb(225, 230, 196);
+  text-shadow: 0 0 1px rgb(226, 209, 136);
   font-size: 6px;
   position: relative;
 }
@@ -144,15 +143,27 @@ body {
 
 /* for IPAD and above*/
 @media only screen and (min-width: 1024px) {
- .filters{
-   flex-direction:row;
-   justify-content: space-between;
- }
- .inner{
-  flex-direction: row;
- }
- .mapContainer{
-   height:900px;
-   width:50%;
- }
+  .App {
+    margin: 0 30px;
+  }
+  header p{
+    display:inline;
+    margin:0;
+  }
+  .filters {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .inner {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+  }
+  .mapContainer > div {
+    height: 700px;
+  }
+  .mapContainer{
+    margin-bottom:0px;
+  }
 }
