@@ -7,7 +7,12 @@ https://data.cityofnewyork.us/Environment/2015-Street-Tree-Census-Tree-Data/pi5s
 
 The user can filter the results by boro, zipcode, tree species, and status of the tree. The map automatically moves to the destination in question.
 
-Link to deployed site: http://nyc-trees.surge.sh/
+Link to deployed site: 
+MVP
+http://nyc-trees.surge.sh/
+
+POST MVP
+http://trees-of-nyc.surge.sh
 
 
 
