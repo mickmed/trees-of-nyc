@@ -10,11 +10,9 @@ const Tree = props => {
         <p>{props.trees.nta_name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
 
         <p>
-          <i>{props.trees.spc_common}&nbsp;&nbsp;</i>
+          {props.trees.spc_common}&nbsp;&nbsp;
         </p>
-        <p>
-          <i>{props.trees.status}&nbsp;&nbsp;</i>
-        </p>
+        
       </div>
       <hr />
     </div>

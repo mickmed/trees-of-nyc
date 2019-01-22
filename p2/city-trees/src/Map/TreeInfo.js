@@ -4,7 +4,7 @@ class TreeInfo extends PureComponent {
   render() {
 
     const {info} = this.props
-    console.log(info)
+    
 
     return (
       <div className="popup">

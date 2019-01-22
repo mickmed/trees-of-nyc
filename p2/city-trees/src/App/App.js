@@ -146,15 +146,15 @@ class App extends Component {
             spc_common={this.state.spc_common}
           />
           <div className="inner">
-            <div className="mapContainer">
+            <div className="mapContainer grid-item">
               <Map
                 component={Map}
                 treesData={this.state.trees}
-               
+                zipcode={this.state.zipcode}
               />
             </div>
 
-            <div className="treeContainer">
+            <div className="treeContainer grid-item">
               {/* <h3>&#x1F333; NYC TREES &#x1F333; </h3> */}
 
               <TreesList treesData={this.state.trees} />

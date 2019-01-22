@@ -14,7 +14,7 @@ class Filters extends React.Component {
   //set state of rawurl and zip to obtain zips for select
   componentWillReceiveProps = props => {
     this.fetchData(props.treesurl + props.boroname);
-    console.log(props);
+    
   };
 
   fetchData = async url => {
@@ -88,7 +88,7 @@ class Filters extends React.Component {
     );
 
     //make unique zipcode selects
-    console.log(this.state.trees);
+    
     const zips = this.state.trees
       .map(item => item.zipcode)
       .filter((value, index, arr) => arr.indexOf(value) === index);

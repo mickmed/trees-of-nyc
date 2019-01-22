@@ -39,13 +39,15 @@ class Map extends Component {
   //this updates the initial state of viewport (latitude and longitude) so that when the page loads the map centers on the first tree in the array.
   //   https://stackoverflow.com/questions/43638938/updating-an-object-with-setstate-in-react
   componentWillReceiveProps = props => {
+    
     props.treesData[0] &&
       this.setState(prevState => ({
         viewport: {
           ...prevState.viewport,
           longitude: parseFloat(props.treesData[0].longitude),
           latitude: parseFloat(props.treesData[0].latitude),
-          zoom: this.props.boroname === "" ? 10 : 14
+          zoom: props.zipcode === "" ? 11 : 14
+          
         }
       }));
   };
@@ -100,7 +102,7 @@ class Map extends Component {
   render() {
     const { viewport } = this.state;
     const TREES = this.props.treesData && this.props.treesData;
-    // console.log(this.state);
+    
 
     return (
       <ReactMapGL
