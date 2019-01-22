@@ -46,7 +46,7 @@ class Map extends Component {
           ...prevState.viewport,
           longitude: parseFloat(props.treesData[0].longitude),
           latitude: parseFloat(props.treesData[0].latitude),
-          zoom: props.zipcode === "" ? 11 : 14
+          zoom: props.zipcode === "" ? 12 : 14
           
         }
       }));
