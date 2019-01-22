@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import "./app.css";
 import axios from "axios";
 import TreesList from "../TreesList/TreesList.js";
+import Filters from "../Filters/Filters";
 import Map from "../Map/Map.js";
+import Header from "./Header";
+// import Search from "./Search";
 
-// import Map from "../Map";
 const TREES_URL =
   "https://data.cityofnewyork.us/resource/5rq2-4hqu.json?$limit=1000";
 
@@ -14,7 +16,7 @@ class App extends Component {
 
     this.state = {
       trees: [],
-      boro: "&boroname=Manhattan",
+      boroname: "&boroname=Manhattan",
       zipcode: "",
       spc_common: "",
       status: "&status=Alive",
@@ -29,7 +31,7 @@ class App extends Component {
     } else {
       urlStr =
         url +
-        this.state.boro +
+        this.state.boroname +
         this.state.zipcode +
         this.state.status +
         this.state.spc_common;
@@ -51,12 +53,11 @@ class App extends Component {
 
   //functions for button and select clicks/chngs
   boroClk = e => {
+    let boroname = "&boroname=" + e.target.value;
+    this.setState({ boroname: boroname });
+
     let str =
-      e.target.value +
-      this.state.spc_common +
-      this.state.status +
-      this.state.health;
-    this.setState({ boro: e.target.value });
+      boroname + this.state.spc_common + this.state.status + this.state.health;
     this.fetchData(TREES_URL, str);
   };
 
@@ -70,10 +71,10 @@ class App extends Component {
     let spec;
     this.state.spc_common === "" ? (spec = "") : (spec = this.state.spc_common);
     this.setState({ zipcode: "&zipcode=" + e.target.value });
-    console.log(spec);
+
     //set url parameters
     let str =
-      this.state.boro + zip + spec + this.state.status + this.state.health;
+      this.state.boroname + zip + spec + this.state.status + this.state.health;
     this.fetchData(TREES_URL, str);
   };
 
@@ -91,14 +92,18 @@ class App extends Component {
 
     //set url parameters
     let str =
-      this.state.boro + zips + specs + this.state.status + this.state.health;
+      this.state.boroname +
+      zips +
+      specs +
+      this.state.status +
+      this.state.health;
     this.fetchData(TREES_URL, str);
   };
 
   sttsClk = e => {
     this.setState({ status: e.target.value });
     let str =
-      this.state.boro +
+      this.state.boroname +
       this.state.zipcode +
       this.state.spc_common +
       e.target.value;
@@ -108,7 +113,7 @@ class App extends Component {
   hlthClk = e => {
     this.setState({ health: e.target.value });
     let str =
-      this.state.boro +
+      this.state.boroname +
       this.state.zipcode +
       this.state.spc_common +
       this.state.status +
@@ -121,42 +126,39 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state.trees);
+    console.log(this.state.zipcode);
     return (
-      <div>
-        <header>
-          <h1>NEW YORK CITY TREES</h1>
-          <p>
-            <i>mapping the trees of NYC</i>
-          </p>
-          <img src="https://res.cloudinary.com/dw5c4jnc3/image/upload/v1547829310/nyc.png" />
-        </header>
-
+      <div className="main">
+        <Header />
+        {/* <Search /> */}
         <div className="App">
-          <div className="mapContainer">
-            <Map
-              component={Map}
-              treesData={this.state.trees}
-              boro={this.state.zipcode}
-            />
-          </div>
-          <div className="treeContainer">
-            <h3>&#x1F333; NYC TREES &#x1F333; </h3>
+          <Filters
+            treesurl={TREES_URL}
+            boroClk={this.boroClk}
+            sttsClk={this.sttsClk}
+            hlthClk={this.hlthClk}
+            zipChng={this.zipChng}
+            speciesChng={this.speciesChng}
+            boroname={this.state.boroname}
+            status={this.state.status}
+            health={this.state.health}
+            zipcode={this.state.zipcode}
+            spc_common={this.state.spc_common}
+          />
+          <div className="inner">
+            <div className="mapContainer">
+              <Map
+                component={Map}
+                treesData={this.state.trees}
+               
+              />
+            </div>
 
-            <TreesList
-              treesurl={TREES_URL}
-              treesData={this.state.trees}
-              boroClk={this.boroClk}
-              sttsClk={this.sttsClk}
-              hlthClk={this.hlthClk}
-              zipChng={this.zipChng}
-              speciesChng={this.speciesChng}
-              boro={this.state.boro}
-              status={this.state.status}
-              health={this.state.health}
-              zipcode={this.state.zipcode}
-              spc_common={this.state.spc_common}
-            />
+            <div className="treeContainer">
+              <h3>&#x1F333; NYC TREES &#x1F333; </h3>
+
+              <TreesList treesData={this.state.trees} />
+            </div>
           </div>
         </div>
       </div>

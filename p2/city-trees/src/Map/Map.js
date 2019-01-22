@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import ReactMapGL, { Marker, Popup, NavigationControl } from "react-map-gl";
-import TreePin from "./tree-pin.js";
+// import TreePin from "./tree-pin.js";
 import TreeInfo from "./TreeInfo";
 // import ControlPanel from "./control-panel.js";
+import './Map.css'
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
@@ -19,8 +20,8 @@ class Map extends Component {
 
     this.state = {
       viewport: {
-        width: 700,
-        height: 550,
+        width: '100%',
+        height: '100%',
         latitude: 0,
         longitude: 0,
         zoom: 11
@@ -73,8 +74,6 @@ class Map extends Component {
             <p className="tree-pin" title={`\u{1F334}`}>{`\u{1F334}`}</p>
           )}
         </div>
-
-        {/* &#x1F333; */}
       </Marker>
     );
   }

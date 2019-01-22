@@ -8,8 +8,8 @@ You are **responsible** for scheduling time with your squad to seek approval for
 
 |  Day | Deliverable | Status
 |---|---| ---|
-|Day 1| Project Description | Complete
-|Day 2| Wireframes / Priority Matrix / Functional Components, Core Application Structure (HTML, CSS, etc.), Initial Clickable Model| Complete
+|Day 1| Project Description, Wireframes / Priority Matrix | Complete
+|Day 2|  Functional Components, Core Application Structure (HTML, CSS, etc.), Initial Clickable Model| Complete
 |Day 3| MVP, Present | Complete
 
 
@@ -114,7 +114,10 @@ Use this section to include a brief code snippet of functionality that you are p
 ```
 
 ## Change Log
- Map zoom size changes depending on whether a boro is selected or not.  
+ Map zoom size changes depending on whether a boro is selected or not. 
+ Markers render different emojis according to tree status.
+ Restructured layout.
+  
 
 
 
