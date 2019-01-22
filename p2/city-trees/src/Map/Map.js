@@ -112,7 +112,7 @@ class Map extends Component {
         latitude={viewport.latitude}
         longitude={viewport.longitude}
         zoom={viewport.zoom}
-        mapStyle="mapbox://styles/mapbox/light-v9"
+        mapStyle="mapbox://styles/mapbox/streets-v9"
         onViewportChange={this._updateViewport}
         mapboxApiAccessToken={MAPBOX_TOKEN}
       >

@@ -5,7 +5,7 @@ import TreesList from "../TreesList/TreesList.js";
 import Filters from "../Filters/Filters";
 import Map from "../Map/Map.js";
 import Header from "./Header";
-// import Search from "./Search";
+
 
 const TREES_URL =
   "https://data.cityofnewyork.us/resource/5rq2-4hqu.json?$limit=1000";
@@ -36,7 +36,7 @@ class App extends Component {
         this.state.status +
         this.state.spc_common;
     }
-    console.log(urlStr);
+  
     await axios
 
       .get(urlStr)
@@ -126,7 +126,7 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state.zipcode);
+ 
     return (
       <div className="main">
         <Header />

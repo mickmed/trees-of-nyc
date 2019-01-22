@@ -3,22 +3,24 @@ body {
   background-color: #fff;
 }
 .App {
-  font-family: Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
   padding: 0 10px;
 }
 
 header {
   background-color: black;
-  padding: 10px 10px 0px;
+  padding: 10px;
   display: flex;
   justify-content: space-between;
   /* position:fixed; */
+  
 }
 
 header h1 {
   margin: 0 10px;
   color: white;
   font-size: 20px;
+  font-family: 'Noto Serif SC', serif;
 }
 header p {
   padding: 0px;
@@ -148,7 +150,7 @@ body {
   }
   header p{
     display:inline;
-    margin:0;
+    margin:5px 0 0 0;
   }
   .filters {
     flex-direction: row;
