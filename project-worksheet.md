@@ -89,8 +89,8 @@ Based on the initial logic defined in the previous sections try and breakdown th
 
 | Library | What it Does | 
 | --- | :---: |  
-| Bulma/Bootstrap | Used to help style my application | 
-| Font Awesome | Indicators and Clickable Icons | 
+| Bulma | Used to help style my application | 
+| Google Fonts | Header Style | 
 
 
 ## Code Snippet
