@@ -47,6 +47,7 @@ class Search extends Component {
           onChange={this.handleInputChange}
         />
         <p>{this.state.query}</p>
+        <p>{this.state.results}</p>
       </form>
     )
   }

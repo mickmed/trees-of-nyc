@@ -4,11 +4,16 @@ import axios from "axios";
 import TreesList from "../TreesList/TreesList.js";
 import Filters from "../Filters/Filters";
 import Map from "../Map/Map.js";
+import MapMobile from "../Map/MapMobile.js";
 import Header from "./Header";
-
+import Search from "./Search";
+import MediaQuery from "react-responsive";
 
 const TREES_URL =
   "https://data.cityofnewyork.us/resource/5rq2-4hqu.json?$limit=1000";
+
+  const TREES_URL2 =
+  "https://data.cityofnewyork.us/resource/5rq2-4hqu.json?$limit=5000";
 
 class App extends Component {
   constructor(props) {
@@ -20,9 +25,11 @@ class App extends Component {
       zipcode: "",
       spc_common: "",
       status: "&status=Alive",
-      health: ""
+      health: "",
+      
     };
   }
+  
 
   fetchData = async (url, param) => {
     let urlStr;
@@ -36,7 +43,7 @@ class App extends Component {
         this.state.status +
         this.state.spc_common;
     }
-  
+
     await axios
 
       .get(urlStr)
@@ -50,7 +57,10 @@ class App extends Component {
         console.error("Error: ", error);
       });
   };
-
+viewportChange = (vpz) => {
+  this.fetchData(TREES_URL2);
+    
+  };
   //functions for button and select clicks/chngs
   boroClk = e => {
     let boroname = "&boroname=" + e.target.value;
@@ -125,11 +135,19 @@ class App extends Component {
     this.fetchData(TREES_URL);
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    // Typical usage (don't forget to compare props):
+    // if (this.props.userID !== prevProps.userID) {
+    //   this.fetchData(this.props.userID);
+    // }
+    console.log(prevProps, prevState)
+  }
   render() {
- 
+    console.log('t',this.state.zoom)
     return (
       <div className="main">
         <Header />
+
         {/* <Search /> */}
         <div className="App">
           <Filters
@@ -146,14 +164,27 @@ class App extends Component {
             spc_common={this.state.spc_common}
           />
           <div className="inner">
-            <div className="mapContainer grid-item">
-              <Map
-                component={Map}
-                treesData={this.state.trees}
-                zipcode={this.state.zipcode}
-              />
-            </div>
-
+            {/* Render Map for Mobile */}
+            <MediaQuery query="(max-device-width: 1224px)">
+              <div className="mapContainer grid-item">
+                <MapMobile
+                  component={Map}
+                  treesData={this.state.trees}
+                  zipcode={this.state.zipcode}
+                />
+              </div>
+            </MediaQuery>
+            {/* Render Map for Desktop */}
+            <MediaQuery query="(min-device-width: 1224px)">
+              <div className="mapContainer grid-item">
+                <Map
+                  component={Map}
+                  treesData={this.state.trees}
+                  zipcode={this.state.zipcode}
+                  vpc={this.viewportChange}
+                />
+              </div>
+            </MediaQuery>
             <div className="treeContainer grid-item">
               {/* <h3>&#x1F333; NYC TREES &#x1F333; </h3> */}
 

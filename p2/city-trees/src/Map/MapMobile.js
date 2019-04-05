@@ -3,7 +3,7 @@ import ReactMapGL, { Marker, Popup, NavigationControl } from "react-map-gl";
 // import TreePin from "./tree-pin.js";
 import TreeInfo from "./TreeInfo";
 // import ControlPanel from "./control-panel.js";
-import "./Map.css";
+import './Map.css'
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
@@ -14,21 +14,14 @@ const navStyle = {
   padding: "10px"
 };
 
-class Map extends Component {
+class MapMobile extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      trees: [],
-      boroname: "&boroname=Manhattan",
-      zipcode: "",
-      spc_common: "",
-      status: "&status=Alive",
-      health: "",
-
       viewport: {
-        width: "100%",
-        height: 700,
+        width: '100%',
+        height: 500,
         latitude: 0,
         longitude: 0,
         zoom: 12
@@ -43,27 +36,19 @@ class Map extends Component {
     this._renderPopup = this._renderPopup.bind(this);
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.viewport.zoom !== prevState.viewport.zoom) {
-      if (this.state.viewport.zoom > 15) {
-        this.props.vpc();
-      }
-    }
-    console.log(this.state.viewport.zoom, prevState.viewport.zoom);
-  }
-
   //this updates the initial state of viewport (latitude and longitude) so that when the page loads the map centers on the first tree in the array.
   //   https://stackoverflow.com/questions/43638938/updating-an-object-with-setstate-in-react
   componentWillReceiveProps = props => {
-    console.log(props.zipcode);
-    console.log(this.state.viewport);
+    console.log(props.zipcode)
+    console.log(this.state.viewport)
     props.treesData[0] &&
       this.setState(prevState => ({
         viewport: {
           ...prevState.viewport,
           longitude: parseFloat(props.treesData[0].longitude),
-          latitude: parseFloat(props.treesData[0].latitude)
-          // zoom: props.zipcode === "&zipcode=" ? 12 : 14
+          latitude: parseFloat(props.treesData[0].latitude),
+          zoom: props.zipcode === "&zipcode=" ? 12 : 14
+          
         }
       }));
   };
@@ -80,7 +65,7 @@ class Map extends Component {
         latitude={parseFloat(tree.latitude)}
       >
         <div className="treepin">
-          {tree.status === "Alive" && (
+          {/* {tree.status === "Alive" && (
             <p className="mrkr-alive">{`\u{1F333}`}</p>
           )}
 
@@ -90,7 +75,8 @@ class Map extends Component {
 
           {tree.status === "Dead" && (
             <p className="tree-dead" title={`\u{1F334}`}>{`\u{1F334}`}</p>
-          )}
+          )} */}
+
         </div>
       </Marker>
     );
@@ -118,10 +104,8 @@ class Map extends Component {
   render() {
     const { viewport } = this.state;
     const TREES = this.props.treesData && this.props.treesData;
-    if (viewport.zoom > 15) {
-      console.log("hi");
-    }
-    console.log(viewport.zoom);
+    
+
     return (
       <ReactMapGL
         className="map"
@@ -132,7 +116,6 @@ class Map extends Component {
         zoom={viewport.zoom}
         mapStyle="mapbox://styles/mapbox/streets-v9"
         onViewportChange={this._updateViewport}
-        // onViewportChange={this.props.vpc(viewport.zoom)}
         mapboxApiAccessToken={MAPBOX_TOKEN}
       >
         <div onLoad={this.hello} />
@@ -148,4 +131,4 @@ class Map extends Component {
   }
 }
 
-export default Map;
+export default MapMobile;

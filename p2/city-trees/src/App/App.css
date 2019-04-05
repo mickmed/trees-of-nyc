@@ -5,6 +5,8 @@ body {
 .App {
   font-family: 'Roboto', sans-serif;
   padding: 0 10px;
+  
+  
 }
 
 header {
@@ -22,6 +24,7 @@ header h1 {
   font-size: 20px;
   font-family: 'Noto Serif SC', serif;
 }
+
 header p {
   padding: 0px;
   color: white;
@@ -33,10 +36,16 @@ header img {
   padding: 0px 20px 0px 10px;
 }
 
+.filters{
+  width:80%;
+  margin:0 auto;
+}
 .inner {
   display: grid;
   grid-template-columns: auto;
-  grid-template-rows: auto auto;
+  grid-template-rows: auto;
+  width:80%;
+  margin:0 auto;
 }
 
 .treeContainer {
@@ -45,18 +54,22 @@ header img {
   border-radius: 10px;
   background-color: rgb(231, 240, 243);
   height: 570px;
+  
+
 }
 
 .tree-inner {
   overflow-y: scroll;
   height: 550px;
   margin-top: 10px;
+  width:100%;
 }
 
 .tree {
   padding: 3px;
   display: flex;
   justify-content: space-around;
+  width:100%;
   /* padding:30px; */
   /* background-color:lightblue; */
 }
@@ -74,6 +87,7 @@ header img {
 }
 .mapContainer {
   margin-bottom: 20px;
+  
 }
 .mapContainer > div {
   height: 720px;
@@ -125,20 +139,39 @@ body {
   background: #fff;
 }
 
-.tree-pin {
+.tree-stmp {
   margin: 0;
   color: transparent;
-  text-shadow: 0 0 1px red;
+  text-shadow: 0 0 1px yellow;
   font-size: 6px;
   position: relative;
 }
 
-.tree-pin::before {
+.tree-stmp::before {
   content: attr(title);
   position: absolute;
   text-shadow: black;
 }
 
+.tree-dead {
+  margin: 0;
+  color: transparent;
+  text-shadow: 0 0 1px rgb(236, 118, 8);
+  font-size: 6px;
+  position: relative;
+}
+
+.tree-dead::before {
+  content: attr(title);
+  position: absolute;
+  text-shadow: black;
+}
+/* 
+.treepin{
+  height:5px;
+  width:5px;
+  background-color:green;
+} */
 .mrkr-alive {
   font-size: 8px;
 }
@@ -162,7 +195,7 @@ body {
 
   .inner {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto;
     grid-template-rows: auto;
   }
   .mapContainer > div {
