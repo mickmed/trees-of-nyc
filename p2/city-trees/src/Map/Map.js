@@ -5,8 +5,9 @@ import TreeInfo from "./TreeInfo";
 // import ControlPanel from "./control-panel.js";
 import "./Map.css";
 
-const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
-
+const MAPBOX_TOKEN = 'pk.eyJ1IjoibWlja21lZCIsImEiOiJjanFzdTVtZjEwMnY0NDJzM2g4MXNuNTM0In0.VDbqZxEh0hxXAixRjS9FzA'
+const h = window.innerHeight
+// console.log(h)
 const navStyle = {
   position: "absolute",
   top: 0,
@@ -28,10 +29,10 @@ class Map extends Component {
 
       viewport: {
         width: "100%",
-        height: 700,
+        height: "100%",
         latitude: 0,
         longitude: 0,
-        zoom: 12
+        zoom: 10
       },
       lat: 0,
       long: 0,

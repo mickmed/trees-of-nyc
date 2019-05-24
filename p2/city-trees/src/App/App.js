@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./app.css";
+import "./App.css";
 import axios from "axios";
 import TreesList from "../TreesList/TreesList.js";
 import Filters from "../Filters/Filters";
