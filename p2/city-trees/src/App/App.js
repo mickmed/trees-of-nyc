@@ -10,7 +10,7 @@ import Search from "./Search";
 import MediaQuery from "react-responsive";
 
 const TREES_URL =
-  "https://data.cityofnewyork.us/resource/5rq2-4hqu.json?$limit=1000";
+  "https://data.cityofnewyork.us/resource/5rq2-4hqu.json?$limit=2000";
 
 const TREES_URL2 =
   "https://data.cityofnewyork.us/resource/5rq2-4hqu.json?$limit=5000";
