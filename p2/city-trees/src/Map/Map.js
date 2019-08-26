@@ -4,6 +4,7 @@ import ReactMapGL, { Marker, Popup, NavigationControl } from "react-map-gl";
 import TreeInfo from "./TreeInfo";
 // import ControlPanel from "./control-panel.js";
 import "./Map.css";
+import App from "../App/App";
 
 const MAPBOX_TOKEN = 'pk.eyJ1IjoibWlja21lZCIsImEiOiJjanFzdTVtZjEwMnY0NDJzM2g4MXNuNTM0In0.VDbqZxEh0hxXAixRjS9FzA'
 const h = window.innerHeight
@@ -28,11 +29,11 @@ class Map extends Component {
       health: "",
 
       viewport: {
-        width: "100%",
-        height: "100%",
+        width: window.innerWidth,
+        height: window.innerHeight,
         latitude: 0,
         longitude: 0,
-        zoom: 10
+        zoom: 14
       },
       lat: 0,
       long: 0,
@@ -43,21 +44,46 @@ class Map extends Component {
     this._renderMarker = this._renderMarker.bind(this);
     this._renderPopup = this._renderPopup.bind(this);
   }
-
+  componentDidMount() {
+    const AppDims = document.querySelector(".App")
+    console.log(AppDims)
+    if (AppDims.offsetWidth < 900 && AppDims.offsetWidth < AppDims.offsetHeight) {
+      this.setState({
+        viewport: {
+          ...this.state.viewport,
+          width: '100%',
+          height: AppDims.offsetHeight / 2 + 'px',
+          appDims: AppDims,
+        }
+      })
+    }
+    else {
+      this.setState({
+        viewport: {
+          ...this.state.viewport,
+          width: '100%',
+          height: AppDims.offsetHeight / 1.25 + 'px',
+          appDims: AppDims,
+        }
+      })
+    }
+    window.addEventListener('resize', this._resize);
+    this._resize();
+  }
   componentDidUpdate(prevProps, prevState) {
     if (this.state.viewport.zoom !== prevState.viewport.zoom) {
       if (this.state.viewport.zoom > 15) {
         this.props.vpc();
       }
     }
-    console.log(this.state.viewport.zoom, prevState.viewport.zoom);
+    // console.log(this.state.viewport.zoom, prevState.viewport.zoom);  
   }
 
   //this updates the initial state of viewport (latitude and longitude) so that when the page loads the map centers on the first tree in the array.
   //   https://stackoverflow.com/questions/43638938/updating-an-object-with-setstate-in-react
   componentWillReceiveProps = props => {
-    console.log(props.zipcode);
-    console.log(this.state.viewport);
+    // console.log(props.zipcode);
+    // console.log(this.state.viewport);
     props.treesData[0] &&
       this.setState(prevState => ({
         viewport: {
@@ -68,11 +94,23 @@ class Map extends Component {
         }
       }));
   };
-
+  
+  _resize = () => {
+    const AppDims = document.querySelector(".mapWrapper")
+    // console.log(AppDims.offsetWidth)
+    this._onViewportChange({
+      width: AppDims.offsetWidth,
+      height: AppDims.offsetHeight - AppDims.offsetHeight / 10
+    });
+  }
   _updateViewport = viewport => {
     this.setState({ viewport });
   };
-
+  _onViewportChange = (viewport) => {
+    this.setState({
+      viewport: { ...this.state.viewport, ...viewport }
+    });
+  }
   _renderMarker(tree, index) {
     return (
       <Marker
@@ -120,9 +158,9 @@ class Map extends Component {
     const { viewport } = this.state;
     const TREES = this.props.treesData && this.props.treesData;
     if (viewport.zoom > 15) {
-      console.log("hi");
+      // console.log("hi");
     }
-    console.log(viewport.zoom);
+    // console.log(viewport.zoom);
     return (
       <ReactMapGL
         className="map"

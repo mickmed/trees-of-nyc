@@ -12,7 +12,7 @@ import MediaQuery from "react-responsive";
 const TREES_URL =
   "https://data.cityofnewyork.us/resource/5rq2-4hqu.json?$limit=1000";
 
-  const TREES_URL2 =
+const TREES_URL2 =
   "https://data.cityofnewyork.us/resource/5rq2-4hqu.json?$limit=5000";
 
 class App extends Component {
@@ -22,14 +22,14 @@ class App extends Component {
     this.state = {
       trees: [],
       boroname: "&boroname=Manhattan",
-      zipcode: "",
+      zipcode: "&zipcode=10001",
       spc_common: "",
       status: "&status=Alive",
       health: "",
-      
+
     };
   }
-  
+
 
   fetchData = async (url, param) => {
     let urlStr;
@@ -57,9 +57,9 @@ class App extends Component {
         console.error("Error: ", error);
       });
   };
-viewportChange = (vpz) => {
-  this.fetchData(TREES_URL2);
-    
+  viewportChange = (vpz) => {
+    this.fetchData(TREES_URL2);
+
   };
   //functions for button and select clicks/chngs
   boroClk = e => {
@@ -140,57 +140,45 @@ viewportChange = (vpz) => {
     // if (this.props.userID !== prevProps.userID) {
     //   this.fetchData(this.props.userID);
     // }
-    console.log(prevProps, prevState)
+    // console.log(prevProps, prevState)
   }
   render() {
-    console.log('t',this.state.zoom)
+    // console.log('t', this.state.zoom)
     return (
-      <div className="main">
+      <div className="App">
         <Header />
+     
+        <div className="homeComponent">
+          {/* <Search /> */}
+          <div className="mapWrapper">
 
-        {/* <Search /> */}
-        <div className="App">
-          <Filters
-            treesurl={TREES_URL}
-            boroClk={this.boroClk}
-            sttsClk={this.sttsClk}
-            hlthClk={this.hlthClk}
-            zipChng={this.zipChng}
-            speciesChng={this.speciesChng}
-            boroname={this.state.boroname}
-            status={this.state.status}
-            health={this.state.health}
-            zipcode={this.state.zipcode}
-            spc_common={this.state.spc_common}
-          />
-          <div className="inner">
-            {/* Render Map for Mobile */}
-            <MediaQuery query="(max-device-width: 1224px)">
-              <div className="mapContainer grid-item">
-                <MapMobile
-                  component={Map}
-                  treesData={this.state.trees}
-                  zipcode={this.state.zipcode}
-                />
-              </div>
-            </MediaQuery>
-            {/* Render Map for Desktop */}
-            <MediaQuery query="(min-device-width: 1224px)">
-              <div className="mapContainer grid-item">
-                <Map
-                  component={Map}
-                  treesData={this.state.trees}
-                  zipcode={this.state.zipcode}
-                  vpc={this.viewportChange}
-                />
-              </div>
-            </MediaQuery>
-            <div className="treeContainer grid-item">
-              {/* <h3>&#x1F333; NYC TREES &#x1F333; </h3> */}
 
-              <TreesList treesData={this.state.trees} />
-            </div>
+            <Map
+              component={Map}
+              treesData={this.state.trees}
+              zipcode={this.state.zipcode}
+            />
           </div>
+
+          <div className="locationsListWrapper">
+            {/* <h3>&#x1F333; NYC TREES &#x1F333; </h3> */}
+            <Filters
+          treesurl={TREES_URL}
+          boroClk={this.boroClk}
+          sttsClk={this.sttsClk}
+          hlthClk={this.hlthClk}
+          zipChng={this.zipChng}
+          speciesChng={this.speciesChng}
+          boroname={this.state.boroname}
+          status={this.state.status}
+          health={this.state.health}
+          zipcode={this.state.zipcode}
+          spc_common={this.state.spc_common}
+        />
+            <TreesList treesData={this.state.trees} />
+          </div>
+
+
         </div>
       </div>
     );
