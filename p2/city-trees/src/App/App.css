@@ -36,17 +36,17 @@ header img {
   display:flex;
   flex-direction:column;
  
-      height:calc(95vh - 3%);
+      height:calc(100vh - 8%);
 
 }
 .mapWrapper{
-  height:45%;
+  height:50%;
   position:relative;
 }
 .mapWrapper, .locationsListWrapper{
   margin:2%;
-  flex:1;
-  
+ 
+  /* flex:1; */
 }
 
 .locationsListWrapper{
@@ -101,7 +101,7 @@ header img {
 .tree-inner {
   overflow-y:scroll;
   margin: 2% auto;
-  height:80%;
+  height:75%;
  
 }
 
@@ -174,7 +174,7 @@ button {
   }
   .mapWrapper{
       height:100%;
-      width:45%;
+      width:46%;
   }
   .tree-inner{
     /* height:90%; */
