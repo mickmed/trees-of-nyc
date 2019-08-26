@@ -147,7 +147,7 @@ class App extends Component {
     return (
       <div className="App">
         <Header />
-     
+
         <div className="homeComponent">
           {/* <Search /> */}
           <div className="mapWrapper">
@@ -163,18 +163,18 @@ class App extends Component {
           <div className="locationsListWrapper">
             {/* <h3>&#x1F333; NYC TREES &#x1F333; </h3> */}
             <Filters
-          treesurl={TREES_URL}
-          boroClk={this.boroClk}
-          sttsClk={this.sttsClk}
-          hlthClk={this.hlthClk}
-          zipChng={this.zipChng}
-          speciesChng={this.speciesChng}
-          boroname={this.state.boroname}
-          status={this.state.status}
-          health={this.state.health}
-          zipcode={this.state.zipcode}
-          spc_common={this.state.spc_common}
-        />
+              treesurl={TREES_URL}
+              boroClk={this.boroClk}
+              sttsClk={this.sttsClk}
+              hlthClk={this.hlthClk}
+              zipChng={this.zipChng}
+              speciesChng={this.speciesChng}
+              boroname={this.state.boroname}
+              status={this.state.status}
+              health={this.state.health}
+              zipcode={this.state.zipcode}
+              spc_common={this.state.spc_common}
+            />
             <TreesList treesData={this.state.trees} />
           </div>
 

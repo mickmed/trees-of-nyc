@@ -30,7 +30,7 @@ class Map extends Component {
 
       viewport: {
         width: window.innerWidth,
-        height: window.innerHeight,
+        height: window.innerHeight + '100px',
         latitude: 0,
         longitude: 0,
         zoom: 14
@@ -52,7 +52,7 @@ class Map extends Component {
         viewport: {
           ...this.state.viewport,
           width: '100%',
-          height: AppDims.offsetHeight / 2 + 'px',
+          // height: AppDims.offsetHeight / 2 + 'px',
           appDims: AppDims,
         }
       })
@@ -62,7 +62,7 @@ class Map extends Component {
         viewport: {
           ...this.state.viewport,
           width: '100%',
-          height: AppDims.offsetHeight / 1.25 + 'px',
+          // height: AppDims.offsetHeight / 1 + 'px',
           appDims: AppDims,
         }
       })
@@ -72,9 +72,9 @@ class Map extends Component {
   }
   componentDidUpdate(prevProps, prevState) {
     if (this.state.viewport.zoom !== prevState.viewport.zoom) {
-      if (this.state.viewport.zoom > 15) {
-        this.props.vpc();
-      }
+      // if (this.state.viewport.zoom > 15) {
+      //   this.props.vpc();
+      // }
     }
     // console.log(this.state.viewport.zoom, prevState.viewport.zoom);  
   }

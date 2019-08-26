@@ -11,7 +11,7 @@ class TreesList extends React.Component {
 
   render() {
     const trees = (
-      <div>
+      <div className="tree-list">
         {this.props.treesData.map((tree, index) => {
           return <Tree key={index} trees={tree} />;
         })}
@@ -19,9 +19,9 @@ class TreesList extends React.Component {
     );
 
     return (
-      <div>
+     
         <div className="tree-inner">{trees}</div>
-      </div>
+    
     );
   }
 }

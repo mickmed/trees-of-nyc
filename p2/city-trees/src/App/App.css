@@ -1,10 +1,8 @@
 .App{
   height:100vh;
   max-width:1200px;
-  background-image: linear-gradient(lightyellow, rgb(176, 223, 255));
+  /* background-image: linear-gradient(lightyellow, rgb(176, 223, 255)); */
   margin:0 auto;
-  
-
 }
 
 header {
@@ -12,14 +10,13 @@ header {
   padding: 10px;
   display: flex;
   justify-content: space-between;
-  /* position:fixed; */
-  
+ 
 }
 
 header h1 {
   margin: 0 10px;
   color: white;
-  font-size: 20px;
+  font-size: 1em;
   font-family: 'Noto Serif SC', serif;
 }
 
@@ -34,57 +31,56 @@ header img {
   padding: 0px 20px 0px 10px;
 }
 
-.filters{
-  width:90%;
-  margin:0 auto;
-  padding:0 1% 1%;
+
+.homeComponent{
+  display:flex;
+  flex-direction:column;
+ 
+      height:calc(95vh - 3%);
+
 }
-
-
-
-
-.tree-inner {
-  overflow-y: scroll;
-  height: 400px;
-  margin: 2% auto;
-  width:90%;
-  padding:3%;
+.mapWrapper{
+  height:45%;
+  position:relative;
+}
+.mapWrapper, .locationsListWrapper{
+  margin:2%;
+  flex:1;
   
 }
 
-.tree {
-  padding: 3px;
-  display: flex;
-  justify-content: space-around;
-  width:100%;
-  /* padding:30px; */
-  /* background-color:lightblue; */
+.locationsListWrapper{
+  background-image: linear-gradient(rgb(249, 252, 252), lightgrey);
+  background-image: linear-gradient(rgb(239, 239, 240));
+  height:90%;
+  /* overflow:hidden; */
+  /* overflow-y:auto; */
 }
 
-.tree p {
-  margin: 5px 0px;
-  flex: 1;
-  font-size: 10px;
-  padding-left: 10px;
+.filters{
+  width:90%;
+  margin:0 auto 5%;
+  padding:1%;
+  /* background:rgb(241, 233, 233); */
+  /* position:fixed; */
+
 }
-
-
 
 .filters select {
   width: 100px;
-  border: 1px solid lightgrey;
+  border: 1px solid rgb(247, 246, 246);
   padding: 0 5px;
   margin: 0 5px;
 }
 .boros {
-  display: inline-flex;
+  display: flex;
   justify-content: center;
 }
 .zip {
   margin-left: 10px;
 }
 .status {
-  margin-top: 3px;
+  margin-top: 2%;
   display: flex;
   justify-content: center;
 }
@@ -95,21 +91,49 @@ header img {
 .health {
   margin-left: 20px;
 }
+
+.tree-list{
+  width:90%;
+  padding-left:5%;
+  
+}
+
+.tree-inner {
+  overflow-y:scroll;
+  margin: 2% auto;
+  height:80%;
+ 
+}
+
+.tree {
+  padding: 1%;
+  display: flex;
+  justify-content: space-around;
+  width:100%;
+}
+
+.tree p {
+  margin: 1% 0;
+  flex: 1;
+  font-size: .8em;
+  padding-left: 4%;
+}
+
+button {
+  border-radius: 5px;
+}
+
 .popup {
   background-color: lightyellow;
   padding: 5px;
 }
-button {
-  border-radius: 5px;
-}
+
 
 /* .tree-pin{
   filter: contrast(0) sepia(50) saturate(100) hue-rotate(10deg);
 } */
 
-body {
-  background: #fff;
-}
+
 
 .tree-stmp {
   margin: 0;
@@ -138,21 +162,29 @@ body {
   position: absolute;
   text-shadow: black;
 }
-/* 
-.treepin{
-  height:5px;
-  width:5px;
-  background-color:green;
-} */
+
 .mrkr-alive {
-  font-size: 8px;
+  font-size: 1em;
 }
 
-/* for IPAD and above*/
-@media only screen and (min-width: 1024px) {
-  .App {
-    margin: 0 30px;
+  
+@media only screen and (min-width: 900px) {
+  .homeComponent{
+      flex-direction:row;
   }
+  .mapWrapper{
+      height:100%;
+      width:45%;
+  }
+  .tree-inner{
+    /* height:90%; */
+  }
+  .locationsListWrapper{
+    /* height:100%; */
+  }
+}
+
+@media only screen and (min-width: 1200px) {
   header{
     padding:10px 30px;
   }
@@ -160,20 +192,25 @@ body {
     display:inline;
     margin:5px 0 0 0;
   }
-  .filters {
-    /* flex-direction: row; */
-    /* justify-content: space-between; */
-  }
+}
 
-  .inner {
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto;
-  }
-  .mapContainer > div {
-    height: 700px;
-  }
-  .mapContainer{
-    margin-bottom:0px;
-  }
+@media only screen and (min-height: 1200px) {
+    .homeComponent{
+        flex-direction:column;
+    }
+    .mapWrapper{
+        height:45%;
+        width:96%;
+    }
+    .tree p{
+      font-size:1em;
+    }
+    .filters{
+      display:flex;
+      justify-content: center;
+
+    }
+    .status{
+      margin:0;
+    }
 }
