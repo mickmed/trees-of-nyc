@@ -4,6 +4,15 @@
   /* background-image: linear-gradient(lightyellow, rgb(176, 223, 255)); */
   margin:0 auto;
 }
+.mapboxgl-popup-anchor-left {
+  /* margin-left: -10px; */
+}
+.mapboxgl-popup-anchor-right {
+  /* margin-left: -10px; */
+  background-color:green;
+  color:blue;
+}
+
 
 header {
   background-color: black;
@@ -126,6 +135,11 @@ button {
 .popup {
   background-color: lightyellow;
   padding: 5px;
+  color:blue;
+  font-size:1em;
+  /* width:300px;
+  height:300px; */
+  z-index:5;
 }
 
 

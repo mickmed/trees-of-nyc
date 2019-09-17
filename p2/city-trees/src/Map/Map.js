@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import ReactMapGL, { Marker, Popup, NavigationControl } from "react-map-gl";
-// import TreePin from "./tree-pin.js";
+import TreePin from "./tree-pin.js";
 import TreeInfo from "./TreeInfo";
 // import ControlPanel from "./control-panel.js";
 import "./Map.css";
-import App from "../App/App";
+
 
 const MAPBOX_TOKEN = 'pk.eyJ1IjoibWlja21lZCIsImEiOiJjanFzdTVtZjEwMnY0NDJzM2g4MXNuNTM0In0.VDbqZxEh0hxXAixRjS9FzA'
-const h = window.innerHeight
+// const h = window.innerHeight
 // console.log(h)
 const navStyle = {
   position: "absolute",
@@ -38,7 +38,10 @@ class Map extends Component {
       lat: 0,
       long: 0,
       info: null,
-      popupInfo: null
+      popupInfo: null,
+      tree: null
+  
+      
     };
 
     this._renderMarker = this._renderMarker.bind(this);
@@ -70,31 +73,22 @@ class Map extends Component {
     window.addEventListener('resize', this._resize);
     this._resize();
   }
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.viewport.zoom !== prevState.viewport.zoom) {
-      // if (this.state.viewport.zoom > 15) {
-      //   this.props.vpc();
-      // }
-    }
-    // console.log(this.state.viewport.zoom, prevState.viewport.zoom);  
-  }
+
 
   //this updates the initial state of viewport (latitude and longitude) so that when the page loads the map centers on the first tree in the array.
   //   https://stackoverflow.com/questions/43638938/updating-an-object-with-setstate-in-react
   componentWillReceiveProps = props => {
-    // console.log(props.zipcode);
-    // console.log(this.state.viewport);
+ 
     props.treesData[0] &&
       this.setState(prevState => ({
         viewport: {
           ...prevState.viewport,
           longitude: parseFloat(props.treesData[0].longitude),
           latitude: parseFloat(props.treesData[0].latitude)
-          // zoom: props.zipcode === "&zipcode=" ? 12 : 14
         }
       }));
   };
-  
+
   _resize = () => {
     const AppDims = document.querySelector(".mapWrapper")
     // console.log(AppDims.offsetWidth)
@@ -103,7 +97,7 @@ class Map extends Component {
       height: AppDims.offsetHeight - AppDims.offsetHeight / 10
     });
   }
-  _updateViewport = viewport => {
+  _updateViewport = (viewport) => {
     this.setState({ viewport });
   };
   _onViewportChange = (viewport) => {
@@ -112,13 +106,18 @@ class Map extends Component {
     });
   }
   _renderMarker(tree, index) {
+    // console.log(tree)
     return (
       <Marker
         key={index}
         longitude={parseFloat(tree.longitude)}
         latitude={parseFloat(tree.latitude)}
       >
-        <div className="treepin">
+       <div className="treepin"
+          onClick={() => this.setState({
+           tree: tree
+          })}
+        >
           {tree.status === "Alive" && (
             <p className="mrkr-alive">{`\u{1F333}`}</p>
           )}
@@ -130,25 +129,38 @@ class Map extends Component {
           {tree.status === "Dead" && (
             <p className="tree-dead" title={`\u{1F334}`}>{`\u{1F334}`}</p>
           )}
-        </div>
+        </div> 
+        {/* <TreePin
+          size={20}
+          onClick={() =>
+            this.setState({
+              
+              tree: tree
+            })
+          }
+        /> */}
       </Marker>
     );
   }
 
-  _renderPopup() {
-    const { popupInfo } = this.state;
-
+  _renderPopup(map) {
+    const { tree } = this.state;
+   
     return (
-      popupInfo && (
+      
+      tree && (
         <Popup
-          tipSize={5}
-          anchor="top"
-          longitude={popupInfo.longitude}
-          latitude={popupInfo.latitude}
+          tipSize={50}
+          offsetLeft={12}
+          offsetTop={15}
+          longitude={parseFloat(tree.longitude)}
+          latitude={parseFloat(tree.latitude)}
           closeOnClick={false}
-          onClose={() => this.setState({ popupInfo: null })}
+          onClose={() => this.setState({ tree: null })}
         >
-          <TreeInfo info={popupInfo} />
+          <TreeInfo info={tree} />
+          
+          
         </Popup>
       )
     );
@@ -157,10 +169,7 @@ class Map extends Component {
   render() {
     const { viewport } = this.state;
     const TREES = this.props.treesData && this.props.treesData;
-    if (viewport.zoom > 15) {
-      // console.log("hi");
-    }
-    // console.log(viewport.zoom);
+  
     return (
       <ReactMapGL
         className="map"
@@ -175,7 +184,7 @@ class Map extends Component {
         mapboxApiAccessToken={MAPBOX_TOKEN}
       >
         <div onLoad={this.hello} />
-        {this.state.popupInfo}
+        {/* {this.state.tree && this.state.tree.latitude} */}
         {TREES && TREES.map(this._renderMarker)}
 
         {this._renderPopup()}
@@ -188,3 +197,6 @@ class Map extends Component {
 }
 
 export default Map;
+
+
+   

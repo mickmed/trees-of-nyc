@@ -4,10 +4,10 @@ import axios from "axios";
 import TreesList from "../TreesList/TreesList.js";
 import Filters from "../Filters/Filters";
 import Map from "../Map/Map.js";
-import MapMobile from "../Map/MapMobile.js";
+
 import Header from "./Header";
-import Search from "./Search";
-import MediaQuery from "react-responsive";
+// import Search from "./Search";
+
 
 const TREES_URL =
   "https://data.cityofnewyork.us/resource/5rq2-4hqu.json?$limit=2000";
@@ -135,13 +135,7 @@ class App extends Component {
     this.fetchData(TREES_URL);
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    // Typical usage (don't forget to compare props):
-    // if (this.props.userID !== prevProps.userID) {
-    //   this.fetchData(this.props.userID);
-    // }
-    // console.log(prevProps, prevState)
-  }
+ 
   render() {
     // console.log('t', this.state.zoom)
     return (
