@@ -1,0 +1,230 @@
+.App{
+  height:100vh;
+  max-width:1200px;
+  /* background-image: linear-gradient(lightyellow, rgb(176, 223, 255)); */
+  margin:0 auto;
+}
+.mapboxgl-popup-anchor-left {
+  /* margin-left: -10px; */
+}
+.mapboxgl-popup-anchor-right {
+  /* margin-left: -10px; */
+  background-color:green;
+  color:blue;
+}
+
+
+header {
+  background-color: black;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+ 
+}
+
+header h1 {
+  margin: 0 10px;
+  color: white;
+  font-size: 1em;
+  font-family: 'Noto Serif SC', serif;
+}
+
+header p {
+  padding: 0px;
+  color: white;
+  display: none;
+}
+
+header img {
+  height: 30px;
+  padding: 0px 20px 0px 10px;
+}
+
+
+.homeComponent{
+  display:flex;
+  flex-direction:column;
+ 
+      height:calc(100vh - 8%);
+
+}
+.mapWrapper{
+  height:50%;
+  position:relative;
+}
+.mapWrapper, .locationsListWrapper{
+  margin:2%;
+ 
+  /* flex:1; */
+}
+
+.locationsListWrapper{
+  background-image: linear-gradient(rgb(249, 252, 252), lightgrey);
+  background-image: linear-gradient(rgb(239, 239, 240));
+  height:90%;
+  /* overflow:hidden; */
+  /* overflow-y:auto; */
+}
+
+.filters{
+  width:90%;
+  margin:0 auto 5%;
+  padding:1%;
+  /* background:rgb(241, 233, 233); */
+  /* position:fixed; */
+
+}
+
+.filters select {
+  width: 100px;
+  border: 1px solid rgb(247, 246, 246);
+  padding: 0 5px;
+  margin: 0 5px;
+}
+.boros {
+  display: flex;
+  justify-content: center;
+}
+.zip {
+  margin-left: 10px;
+}
+.status {
+  margin-top: 2%;
+  display: flex;
+  justify-content: center;
+}
+.stslist {
+  margin-right: 10px;
+}
+
+.health {
+  margin-left: 20px;
+}
+
+.tree-list{
+  width:90%;
+  padding-left:5%;
+  
+}
+
+.tree-inner {
+  overflow-y:scroll;
+  margin: 2% auto;
+  height:75%;
+ 
+}
+
+.tree {
+  padding: 1%;
+  display: flex;
+  justify-content: space-around;
+  width:100%;
+}
+
+.tree p {
+  margin: 1% 0;
+  flex: 1;
+  font-size: .8em;
+  padding-left: 4%;
+}
+
+button {
+  border-radius: 5px;
+}
+
+.popup {
+  background-color: lightyellow;
+  padding: 5px;
+  color:blue;
+  font-size:1em;
+  /* width:300px;
+  height:300px; */
+  z-index:5;
+}
+
+
+/* .tree-pin{
+  filter: contrast(0) sepia(50) saturate(100) hue-rotate(10deg);
+} */
+
+
+
+.tree-stmp {
+  margin: 0;
+  color: transparent;
+  text-shadow: 0 0 1px yellow;
+  font-size: 6px;
+  position: relative;
+}
+
+.tree-stmp::before {
+  content: attr(title);
+  position: absolute;
+  text-shadow: black;
+}
+
+.tree-dead {
+  margin: 0;
+  color: transparent;
+  text-shadow: 0 0 1px rgb(236, 118, 8);
+  font-size: 6px;
+  position: relative;
+}
+
+.tree-dead::before {
+  content: attr(title);
+  position: absolute;
+  text-shadow: black;
+}
+
+.mrkr-alive {
+  font-size: 1em;
+}
+
+  
+@media only screen and (min-width: 900px) {
+  .homeComponent{
+      flex-direction:row;
+  }
+  .mapWrapper{
+      height:100%;
+      width:46%;
+  }
+  .tree-inner{
+    /* height:90%; */
+  }
+  .locationsListWrapper{
+    /* height:100%; */
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  header{
+    padding:10px 30px;
+  }
+  header p{
+    display:inline;
+    margin:5px 0 0 0;
+  }
+}
+
+@media only screen and (min-height: 1200px) {
+    .homeComponent{
+        flex-direction:column;
+    }
+    .mapWrapper{
+        height:45%;
+        width:96%;
+    }
+    .tree p{
+      font-size:1em;
+    }
+    .filters{
+      display:flex;
+      justify-content: center;
+
+    }
+    .status{
+      margin:0;
+    }
+}
