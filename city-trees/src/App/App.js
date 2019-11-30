@@ -57,10 +57,10 @@ class App extends Component {
         console.error("Error: ", error);
       });
   };
-  viewportChange = (vpz) => {
-    this.fetchData(TREES_URL2);
+  // viewportChange = (vpz) => {
+  //   this.fetchData(TREES_URL2);
 
-  };
+  // };
   //functions for button and select clicks/chngs
   boroClk = e => {
     let boroname = "&boroname=" + e.target.value;
