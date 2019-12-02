@@ -1,6 +1,6 @@
 import React from "react";
 import Tree from "./Tree";
-import Filters from "../Filters/Filters";
+// import Filters from "../Filters/Filters";
 
 class TreesList extends React.Component {
   constructor() {
@@ -22,16 +22,16 @@ class TreesList extends React.Component {
     const trees = (
       <div className="tree-list">
         {this.props.treesData.map((tree, index) => {
-          console.log(tree.nta_name)
+          // console.log(tree.nta_name)
           return <Tree key={index} trees={tree} />;
         })}
       </div>
     );
     
-    console.log(this.props.treesData)
+    // console.log(this.props.treesData)
 
     const neighbs = this.props.treesData.map(hood=>hood.nta_name)
-    const species = this.props.treesData.map(hood=>hood.spc_common)
+    // const species = this.props.treesData.map(hood=>hood.spc_common)
     // const hds = this.hoods(neighbs)
     // console.log([this.hoods(neighbs)])
     const hoods = [this.hoods(neighbs)].map((hood,i)=>(

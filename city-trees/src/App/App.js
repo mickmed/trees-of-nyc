@@ -4,16 +4,17 @@ import axios from "axios";
 import TreesList from "../TreesList/TreesList.js";
 import Filters from "../Filters/Filters";
 import Map from "../Map/Map.js";
+import ReactDOM from 'react-dom';
+
 
 import Header from "./Header";
 // import Search from "./Search";
 
-
 const TREES_URL =
   "https://data.cityofnewyork.us/resource/5rq2-4hqu.json?$limit=2000";
 
-const TREES_URL2 =
-  "https://data.cityofnewyork.us/resource/5rq2-4hqu.json?$limit=5000";
+// const TREES_URL2 =
+  // "https://data.cityofnewyork.us/resource/5rq2-4hqu.json?$limit=5000";
 
 class App extends Component {
   constructor(props) {
@@ -26,10 +27,9 @@ class App extends Component {
       spc_common: "",
       status: "&status=Alive",
       health: "",
-
+      fixHeader: false
     };
   }
-
 
   fetchData = async (url, param) => {
     let urlStr;
@@ -133,11 +133,62 @@ class App extends Component {
 
   componentDidMount() {
     this.fetchData(TREES_URL);
+    // window.addEventListener('scroll', this.handleScroll)
   }
 
+  // componentWillUnmount() {
+  //   window.removeEventListener('scroll', this.handleScroll)
+  // }
+
+  // handleScroll=()=>{
+  //   let headerHeight = document.getElementById("myHeader").offsetHeight
+  //   console.log('header', headerHeight)
+  //   console.log('windowScrollY', window.scrollY);
+  
+  //   if(window.scrollY < headerHeight){
+      
+  //     this.setState({
+  //       fixHeader:false
+  //     })
+  //   }else{
+  //     this.setState({
+  //       fixHeader:true
+  //     })
+  //   }
+    
  
+
+    // (window.scrollY > headerHeight) && 
+    // console.log('false')
+ 
+
+  // }
+
   render() {
+    console.log(this.state.fixHeader)
+    // const style = this.state.fixHeader ?
+    // {}
     // console.log('t', this.state.zoom)
+    // window.onscroll = function() {
+    //   myFunction();
+    // };
+
+    // // Get the header
+
+    // // Get the offset position of the navbar
+    // var sticky = header.offsetTop;
+
+    // // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
+    // function myFunction() {
+    //   if (window.pageYOffset > sticky) {
+    //     header.classList.add("sticky");
+    //   } else {
+    //     header.classList.remove("sticky");
+    //   }
+    // }
+   
+    
+
     return (
       <div className="App">
         <Header />
@@ -145,8 +196,6 @@ class App extends Component {
         <div className="homeComponent">
           {/* <Search /> */}
           <div className="mapWrapper">
-
-
             <Map
               component={Map}
               treesData={this.state.trees}
@@ -171,8 +220,6 @@ class App extends Component {
             />
             <TreesList treesData={this.state.trees} />
           </div>
-
-
         </div>
       </div>
     );

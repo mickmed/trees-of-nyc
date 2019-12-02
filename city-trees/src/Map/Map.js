@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ReactMapGL, { Marker, Popup, NavigationControl } from "react-map-gl";
-import TreePin from "./tree-pin.js";
+// import TreePin from "./tree-pin.js";
 import TreeInfo from "./TreeInfo";
 // import ControlPanel from "./control-panel.js";
 import "./Map.css";
