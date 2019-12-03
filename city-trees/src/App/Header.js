@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import Search1 from "./Search1"
 
 class header extends Component {
   state = {
@@ -70,8 +71,7 @@ class header extends Component {
             src="https://res.cloudinary.com/dw5c4jnc3/image/upload/v1547829310/nyc.png"
             alt="nyc trees"
           />
-          <input type="text" className="search-input" style={style.searchInput} placeholder="street, species, zipcode, health, etc..." />
-        
+          <Search1 style={style.searchInput}/>
         </div>
         <header className="banner" style={style.banner}>
           <h1>NEW YORK CITY TREES</h1>

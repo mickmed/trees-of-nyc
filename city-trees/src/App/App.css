@@ -81,7 +81,7 @@
 }
 .search input{
   /* transform:translateY(-40%); */
-  width:30%;
+  /* width:60%; */
   /* padding:2%; */
   font-style: italic;
   border-radius:10px;
