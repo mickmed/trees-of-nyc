@@ -21,7 +21,7 @@
   background-image:url('/assets/west_village.jpg');
   /* background-size:cover; */
   /* background-position: ; */
-  height: 100vh;
+  height: 80vh;
     width: 100%;
     z-index:2;
     max-width:1400px;
@@ -68,7 +68,7 @@
   max-width:1400px;
 
   position:absolute;
-  top:60%;
+  bottom:10%;
   z-index:5;
   background:rgba(85, 85, 85, .95);
   height:20%;
@@ -97,7 +97,7 @@
   width:48%; */
 /* display:none; */
 border-radius:20px;
-visibility:hidden;
+/* visibility:hidden; */
 
 }
 

@@ -4,8 +4,7 @@ import axios from "axios";
 import TreesList from "../TreesList/TreesList.js";
 import Filters from "../Filters/Filters";
 import Map from "../Map/Map.js";
-import ReactDOM from 'react-dom';
-
+import ReactDOM from "react-dom";
 
 import Header from "./Header";
 // import Search from "./Search";
@@ -14,7 +13,7 @@ const TREES_URL =
   "https://data.cityofnewyork.us/resource/5rq2-4hqu.json?$limit=2000";
 
 // const TREES_URL2 =
-  // "https://data.cityofnewyork.us/resource/5rq2-4hqu.json?$limit=5000";
+// "https://data.cityofnewyork.us/resource/5rq2-4hqu.json?$limit=5000";
 
 class App extends Component {
   constructor(props) {
@@ -27,7 +26,8 @@ class App extends Component {
       spc_common: "",
       status: "&status=Alive",
       health: "",
-      fixHeader: false
+      fixHeader: false,
+      input: ""
     };
   }
 
@@ -135,7 +135,56 @@ class App extends Component {
     this.fetchData(TREES_URL);
     // window.addEventListener('scroll', this.handleScroll)
   }
-
+  capitalize = (s) => {
+   
+    if (typeof s !== 'string') return ''
+    return s.charAt(0).toUpperCase() + s.slice(1)
+  }
+  onChange = evt => {
+    let params = ['address', 'spc_latin']
+    console.log(evt.target.value, evt.target.value.length);
+    evt.target.value.length > 2 &&
+      axios
+        .get(
+          `https://data.cityofnewyork.us/resource/5rq2-4hqu.json?` 
+          + `$limit=5000`
+          + `&$where=` 
+          + `address%20like%20%27%25${evt.target.value.toUpperCase()}%25%27` 
+          + `or ` 
+          + `address%20like%20%27%25${evt.target.value.toLowerCase()}%25%27` 
+          + `or ` 
+          + `address%20like%20%27%25${this.capitalize(evt.target.value)}%25%27` 
+          + `or ` 
+          + `spc_latin%20like%20%27%25${evt.target.value.toUpperCase()}%25%27`
+          + `or `
+          + `spc_latin%20like%20%27%25${evt.target.value.toLowerCase()}%25%27` 
+          + `or ` 
+          + `spc_latin%20like%20%27%25${this.capitalize(evt.target.value)}%25%27` 
+          + `or ` 
+          + `spc_common%20like%20%27%25${evt.target.value.toUpperCase()}%25%27`
+          + `or `
+          + `spc_common%20like%20%27%25${evt.target.value.toLowerCase()}%25%27` 
+          + `or ` 
+          + `spc_common%20like%20%27%25${this.capitalize(evt.target.value)}%25%27` 
+          + `or ` 
+          + `zipcode%20like%20%27%25${evt.target.value.toUpperCase()}%25%27`
+          + `or `
+          + `zipcode%20like%20%27%25${evt.target.value.toLowerCase()}%25%27` 
+          + `or ` 
+          + `zipcode%20like%20%27%25${this.capitalize(evt.target.value)}%25%27` 
+          
+        )
+        .then(response => {
+          const trees = response.data;
+          console.log(trees);
+          this.setState({
+            trees: trees
+          });
+        })
+        .catch(error => {
+          console.error("Error: ", error);
+        });
+  };
   // componentWillUnmount() {
   //   window.removeEventListener('scroll', this.handleScroll)
   // }
@@ -144,9 +193,9 @@ class App extends Component {
   //   let headerHeight = document.getElementById("myHeader").offsetHeight
   //   console.log('header', headerHeight)
   //   console.log('windowScrollY', window.scrollY);
-  
+
   //   if(window.scrollY < headerHeight){
-      
+
   //     this.setState({
   //       fixHeader:false
   //     })
@@ -155,17 +204,14 @@ class App extends Component {
   //       fixHeader:true
   //     })
   //   }
-    
- 
 
-    // (window.scrollY > headerHeight) && 
-    // console.log('false')
- 
+  // (window.scrollY > headerHeight) &&
+  // console.log('false')
 
   // }
 
   render() {
-    console.log(this.state.fixHeader)
+    console.log(this.state.fixHeader);
     // const style = this.state.fixHeader ?
     // {}
     // console.log('t', this.state.zoom)
@@ -186,12 +232,10 @@ class App extends Component {
     //     header.classList.remove("sticky");
     //   }
     // }
-   
-    
 
     return (
       <div className="App">
-        <Header />
+        <Header onchange={this.onChange} />
 
         <div className="homeComponent">
           {/* <Search /> */}

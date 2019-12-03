@@ -62,7 +62,11 @@ class TreesList extends React.Component {
     // )
     return (
      
-        <div className="tree-inner">{hoods}{trees}
+        <div className="tree-inner">
+        {this.props.treesData.length}
+
+        {hoods}
+        {trees}
         </div>
     
     );

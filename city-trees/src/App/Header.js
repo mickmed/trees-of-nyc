@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import Search1 from "./Search1"
+import Search1 from "./Search1";
+import axios from "axios"
 
 class header extends Component {
   state = {
@@ -17,61 +18,67 @@ class header extends Component {
   handleScroll = () => {
     // let headerHeight = document.getElementById("myHeader").offsetHeight
     const header = ReactDOM.findDOMNode(this);
-    const search = ReactDOM.findDOMNode(this).getElementsByClassName('search')
-    console.log("headerHeight", header.offsetHeight);
+    const search = ReactDOM.findDOMNode(this).getElementsByClassName("search");
+    // console.log("headerHeight", header.offsetHeight);
     // console.log('header', headerHeight)
-    console.log("searchOffsetTop", search[0].offsetTop);
+    // console.log("searchOffsetTop", search[0].offsetTop);
 
-    console.log("windowScrollY", window.scrollY);
+    // console.log("windowScrollY", window.scrollY);
 
-    if (window.scrollY < .6 * header.offsetHeight) {
-      console.log("less than");
+    if (window.scrollY < 0.6 * header.offsetHeight) {
+      // console.log("less than");
       this.setState({
         fixHeader: false
       });
     }
-    if (window.scrollY > .6 * header.offsetHeight ) {
+    if (window.scrollY > 0.6 * header.offsetHeight) {
       this.setState({
-        fixHeader: true
+        fixHeader: true,
+        input: ""
       });
     }
   };
+ 
+
   render() {
-    console.log(this.state.fixHeader);
+    // console.log(this.props);
     const style = this.state.fixHeader
-      ? 
-      {
-        searchInput:{
-          // transform:'translateY(-150%)'
-        },
-        search:{
-          position: "fixed",
-          top: 0,
-          width:'100%',
-          height:'15%'
-          // animation: 'fadeInSearch 1s', 
-          // justifyContent: 'flex-end'
-        },
-        banner:{
-          position: "fixed",  width:"100%", top:0
-        },
-        img:{visibility:'hidden'}
-      }
-      : 
-      {search:{ position: "absolute" },
-      header:{ position: "fixed" }}
-    
+      ? {
+          searchInput: {
+            // transform:'translateY(-150%)'
+          },
+          search: {
+            position: "fixed",
+            top: 0,
+            width: "100%",
+            height: "15%"
+            // animation: 'fadeInSearch 1s',
+            // justifyContent: 'flex-end'
+          },
+          banner: {
+            position: "fixed",
+            width: "100%",
+            top: 0
+          },
+          img: { visibility: "hidden" }
+        }
+      : { search: { position: "absolute" }, header: { position: "fixed" } };
 
     return (
       <div className="bigHeader" style={style.bigHeader}>
         <div className="search" id="search" style={style.search}>
           {/* <h2>My Header</h2> */}
           {/* <img src = {process.env.PUBLIC_URL + "assets/west_village.jpg"}/> */}
-          <img style={style.img}
+          <img
+            style={style.img}
             src="https://res.cloudinary.com/dw5c4jnc3/image/upload/v1547829310/nyc.png"
             alt="nyc trees"
           />
-          <Search1 style={style.searchInput}/>
+          <Search1
+            style={style.searchInput}
+            onchange={this.props.onchange}
+           
+          />
         </div>
         <header className="banner" style={style.banner}>
           <h1>NEW YORK CITY TREES</h1>
