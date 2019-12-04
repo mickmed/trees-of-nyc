@@ -134,36 +134,36 @@ class App extends Component {
   componentDidMount() {
     this.fetchData(TREES_URL);
     window.addEventListener("scroll", this.handleScroll);
-    this.handleScroll();
+    // this.handleScroll();
     // window.addEventListener('scroll', this.handleScroll)
   }
-  handleScroll = () => {
-    console.log("inside");
-    // let headerHeight = document.getElementById("myHeader").offsetHeight
-    const header = ReactDOM.findDOMNode(this).getElementsByClassName(
-      "bigHeader"
-    );
-    const search = ReactDOM.findDOMNode(this).getElementsByClassName("search");
-    // console.log("headerHeight", header.offsetHeight);
-    // console.log('header', .6 * header[0].offsetHeight)
-    // console.log("searchOffsetTop", search[0].offsetTop);
+  // handleScroll = () => {
+  //   console.log("inside");
+  //   // let headerHeight = document.getElementById("myHeader").offsetHeight
+  //   const header = ReactDOM.findDOMNode(this).getElementsByClassName(
+  //     "bigHeader"
+  //   );
+  //   const search = ReactDOM.findDOMNode(this).getElementsByClassName("search");
+  //   // console.log("headerHeight", header.offsetHeight);
+  //   // console.log('header', .6 * header[0].offsetHeight)
+  //   // console.log("searchOffsetTop", search[0].offsetTop);
 
-    console.log("windowScrollY", window.scrollY);
+  //   console.log("windowScrollY", window.scrollY);
 
-    // if (window.scrollY < 0.6 * header[0].offsetHeight) {
-    //   console.log("less than");
-    //   this.setState({
-    //     fixHeader: false
-    //   });
-    // }
-    // if (window.scrollY > 0.6 * header[0].offsetHeight) {
-    //   console.log("more than");
-    //   this.setState({
-    //     fixHeader: true,
-    //     input: ""
-    //   });
-    // }
-  };
+  //   if (window.scrollY < 0.5 * header[0].offsetHeight) {
+  //     console.log("less than");
+  //     this.setState({
+  //       fixHeader: false
+  //     });
+  //   }
+  //   if (window.scrollY > 0.5 * header[0].offsetHeight) {
+  //     console.log("more than");
+  //     this.setState({
+  //       fixHeader: true,
+  //       input: ""
+  //     });
+  //   }
+  // };
   capitalize = s => {
     if (typeof s !== "string") return "";
     return s.charAt(0).toUpperCase() + s.slice(1);

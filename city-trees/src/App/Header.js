@@ -9,41 +9,42 @@ class header extends Component {
   };
   componentDidMount() {
     // this.fetchData(TREES_URL);
-    // window.addEventListener("scroll", this.handleScroll);
+    window.addEventListener("scroll", this.handleScroll);
   }
 
   componentWillUnmount() {
     window.removeEventListener("scroll", this.handleScroll);
   }
-  // handleScroll = () => {
-  //   // let headerHeight = document.getElementById("myHeader").offsetHeight
-  //   const header = ReactDOM.findDOMNode(this);
-  //   const search = ReactDOM.findDOMNode(this).getElementsByClassName("search");
-  //   // console.log("headerHeight", header.offsetHeight);
-  //   // console.log('header', headerHeight)
-  //   // console.log("searchOffsetTop", search[0].offsetTop);
+  handleScroll = () => {
+    // let headerHeight = document.getElementById("myHeader").offsetHeight
+    const header = ReactDOM.findDOMNode(this);
+    const search = ReactDOM.findDOMNode(this).getElementsByClassName("search");
+    // console.log("headerHeight", header.offsetHeight);
+    // console.log('header', headerHeight)
+    // console.log("searchOffsetTop", search[0].offsetTop);
 
-  //   // console.log("windowScrollY", window.scrollY);
+    // console.log("windowScrollY", window.scrollY);
 
-  //   if (window.scrollY < 0.6 * header.offsetHeight) {
-  //     // console.log("less than");
-  //     this.setState({
-  //       fixHeader: false
-  //     });
-  //   }
-  //   if (window.scrollY > 0.6 * header.offsetHeight) {
-  //     this.setState({
-  //       fixHeader: true,
-  //       input: ""
-  //     });
-  //   }
-  // };
+    if (window.scrollY < 0.6 * header.offsetHeight) {
+      // console.log("less than");
+      this.setState({
+        fixHeader: false
+      });
+    }
+    if (window.scrollY > 0.6 * header.offsetHeight) {
+      this.setState({
+        fixHeader: true,
+        input: ""
+      });
+    }
+  };
 
   render() {
+    console.log(this.state.fixedHeader)
     // const header = ReactDOM.findDOMNode(this);
 
-    console.log(this.props);
-    const style = this.props.fixHeader
+    // console.log(this.props);
+    const style = this.state.fixHeader
       ? {
           searchInput: {
             // transform:'translateY(-150%)'
@@ -68,9 +69,9 @@ class header extends Component {
     return (
       <>
       
-        <div className="bigHeader" style={style.bigHeader}>
+        <div className="bigHeader">
           
-          {/* <header className="banner" style={style.banner}>
+          <header className="banner" style={style.banner}>
             <h1>NEW YORK CITY TREES</h1>
             <p>
               <i>mapping the trees of NYC</i>
@@ -79,13 +80,19 @@ class header extends Component {
               src="https://res.cloudinary.com/dw5c4jnc3/image/upload/v1547829310/nyc.png"
               alt="nyc trees"
             />
-          </header> */}
+          </header>
+           <img
+            style={style.img}
+            src="/assets/west_village.jpg"
+            alt="nyc trees"
+           
+          />
         </div>
         {/* <div>Hi there</div> */}
         <div
           className="search"
           id="search"
-          style={{ position: "sticky", top: "20%", marginTop: "0", transform:"translateY(-100%)"}}
+          // style={{ position: "sticky", top: "0", marginTop: "0", transform:"translateY(0%)"}}
         >
           {/* <h2>My Header</h2> */}
           {/* <img src = {process.env.PUBLIC_URL + "assets/west_village.jpg"}/> */}
