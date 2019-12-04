@@ -133,46 +133,80 @@ class App extends Component {
 
   componentDidMount() {
     this.fetchData(TREES_URL);
+    window.addEventListener("scroll", this.handleScroll);
+    this.handleScroll();
     // window.addEventListener('scroll', this.handleScroll)
   }
-  capitalize = (s) => {
-   
-    if (typeof s !== 'string') return ''
-    return s.charAt(0).toUpperCase() + s.slice(1)
-  }
+  handleScroll = () => {
+    console.log("inside");
+    // let headerHeight = document.getElementById("myHeader").offsetHeight
+    const header = ReactDOM.findDOMNode(this).getElementsByClassName(
+      "bigHeader"
+    );
+    const search = ReactDOM.findDOMNode(this).getElementsByClassName("search");
+    // console.log("headerHeight", header.offsetHeight);
+    // console.log('header', .6 * header[0].offsetHeight)
+    // console.log("searchOffsetTop", search[0].offsetTop);
+
+    console.log("windowScrollY", window.scrollY);
+
+    // if (window.scrollY < 0.6 * header[0].offsetHeight) {
+    //   console.log("less than");
+    //   this.setState({
+    //     fixHeader: false
+    //   });
+    // }
+    // if (window.scrollY > 0.6 * header[0].offsetHeight) {
+    //   console.log("more than");
+    //   this.setState({
+    //     fixHeader: true,
+    //     input: ""
+    //   });
+    // }
+  };
+  capitalize = s => {
+    if (typeof s !== "string") return "";
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  };
   onChange = evt => {
-    let params = ['address', 'spc_latin']
-    console.log(evt.target.value, evt.target.value.length);
-    evt.target.value.length > 2 &&
+    let params = ["address", "spc_latin"];
+    // console.log(evt.target.value, evt.target.value.length);
+    evt &&
+      evt.target.value.length > 2 &&
       axios
         .get(
-          `https://data.cityofnewyork.us/resource/5rq2-4hqu.json?` 
-          + `$limit=5000`
-          + `&$where=` 
-          + `address%20like%20%27%25${evt.target.value.toUpperCase()}%25%27` 
-          + `or ` 
-          + `address%20like%20%27%25${evt.target.value.toLowerCase()}%25%27` 
-          + `or ` 
-          + `address%20like%20%27%25${this.capitalize(evt.target.value)}%25%27` 
-          + `or ` 
-          + `spc_latin%20like%20%27%25${evt.target.value.toUpperCase()}%25%27`
-          + `or `
-          + `spc_latin%20like%20%27%25${evt.target.value.toLowerCase()}%25%27` 
-          + `or ` 
-          + `spc_latin%20like%20%27%25${this.capitalize(evt.target.value)}%25%27` 
-          + `or ` 
-          + `spc_common%20like%20%27%25${evt.target.value.toUpperCase()}%25%27`
-          + `or `
-          + `spc_common%20like%20%27%25${evt.target.value.toLowerCase()}%25%27` 
-          + `or ` 
-          + `spc_common%20like%20%27%25${this.capitalize(evt.target.value)}%25%27` 
-          + `or ` 
-          + `zipcode%20like%20%27%25${evt.target.value.toUpperCase()}%25%27`
-          + `or `
-          + `zipcode%20like%20%27%25${evt.target.value.toLowerCase()}%25%27` 
-          + `or ` 
-          + `zipcode%20like%20%27%25${this.capitalize(evt.target.value)}%25%27` 
-          
+          `https://data.cityofnewyork.us/resource/5rq2-4hqu.json?` +
+            `$limit=5000` +
+            `&$where=` +
+            `address%20like%20%27%25${evt.target.value.toUpperCase()}%25%27` +
+            `or ` +
+            `address%20like%20%27%25${evt.target.value.toLowerCase()}%25%27` +
+            `or ` +
+            `address%20like%20%27%25${this.capitalize(
+              evt.target.value
+            )}%25%27` +
+            `or ` +
+            `spc_latin%20like%20%27%25${evt.target.value.toUpperCase()}%25%27` +
+            `or ` +
+            `spc_latin%20like%20%27%25${evt.target.value.toLowerCase()}%25%27` +
+            `or ` +
+            `spc_latin%20like%20%27%25${this.capitalize(
+              evt.target.value
+            )}%25%27` +
+            `or ` +
+            `spc_common%20like%20%27%25${evt.target.value.toUpperCase()}%25%27` +
+            `or ` +
+            `spc_common%20like%20%27%25${evt.target.value.toLowerCase()}%25%27` +
+            `or ` +
+            `spc_common%20like%20%27%25${this.capitalize(
+              evt.target.value
+            )}%25%27` +
+            `or ` +
+            `zipcode%20like%20%27%25${evt.target.value.toUpperCase()}%25%27` +
+            `or ` +
+            `zipcode%20like%20%27%25${evt.target.value.toLowerCase()}%25%27` +
+            `or ` +
+            `zipcode%20like%20%27%25${this.capitalize(evt.target.value)}%25%27`
         )
         .then(response => {
           const trees = response.data;
@@ -235,16 +269,16 @@ class App extends Component {
 
     return (
       <div className="App">
-        <Header onchange={this.onChange} />
+        <Header onchange={this.onChange} fixHeader={this.state.fixHeader} />
 
         <div className="homeComponent">
           {/* <Search /> */}
           <div className="mapWrapper">
-            <Map
+            {/* <Map
               component={Map}
               treesData={this.state.trees}
               zipcode={this.state.zipcode}
-            />
+            /> */}
           </div>
 
           <div className="locationsListWrapper">
@@ -262,7 +296,10 @@ class App extends Component {
               zipcode={this.state.zipcode}
               spc_common={this.state.spc_common}
             />
-            <TreesList treesData={this.state.trees} />
+            <TreesList
+              treesData={this.state.trees}
+              fixHeader={this.state.fixHeader}
+            />
           </div>
         </div>
       </div>

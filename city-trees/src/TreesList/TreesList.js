@@ -63,10 +63,9 @@ class TreesList extends React.Component {
     return (
      
         <div className="tree-inner">
-        {this.props.treesData.length}
-
         {hoods}
         {trees}
+        {this.props.treesData.length}
         </div>
     
     );
