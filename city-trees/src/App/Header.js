@@ -10,6 +10,14 @@ class header extends Component {
   componentDidMount() {
     // this.fetchData(TREES_URL);
     window.addEventListener("scroll", this.handleScroll);
+    const search = this.divElement
+    const searchHeight = this.divElement.offsetHeight;
+    const bigHeaderHeight = this.bigH.offsetHeight;
+    this.setState({
+      searchHeight: searchHeight,
+      bigHeaderHeight: bigHeaderHeight,
+      search:search
+    });
   }
 
   componentWillUnmount() {
@@ -18,20 +26,20 @@ class header extends Component {
   handleScroll = () => {
     // let headerHeight = document.getElementById("myHeader").offsetHeight
     const header = ReactDOM.findDOMNode(this);
-    const search = ReactDOM.findDOMNode(this).getElementsByClassName("search");
+  
     // console.log("headerHeight", header.offsetHeight);
     // console.log('header', headerHeight)
     // console.log("searchOffsetTop", search[0].offsetTop);
 
     // console.log("windowScrollY", window.scrollY);
 
-    if (window.scrollY < 0.6 * header.offsetHeight) {
+    if (window.scrollY < header.offsetHeight) {
       // console.log("less than");
       this.setState({
         fixHeader: false
       });
     }
-    if (window.scrollY > 0.6 * header.offsetHeight) {
+    if (window.scrollY > header.offsetHeight) {
       this.setState({
         fixHeader: true,
         input: ""
@@ -40,7 +48,7 @@ class header extends Component {
   };
 
   render() {
-    console.log(this.state.fixedHeader)
+    // console.log(this.state);
     // const header = ReactDOM.findDOMNode(this);
 
     // console.log(this.props);
@@ -62,15 +70,19 @@ class header extends Component {
             width: "100%",
             top: 0
           },
-          img: { visibility: "hidden" }
+          img: { visibility: "hidden" },
+          dummy: { display: "block" }
         }
       : { search: { position: "absolute" }, header: { position: "fixed" } };
 
     return (
       <>
-      
-        <div className="bigHeader">
-          
+        <div
+          className="bigHeader"
+          ref={bigH => {
+            this.bigH = bigH;
+          }}
+        >
           <header className="banner" style={style.banner}>
             <h1>NEW YORK CITY TREES</h1>
             <p>
@@ -81,17 +93,20 @@ class header extends Component {
               alt="nyc trees"
             />
           </header>
-           <img
-            style={style.img}
+          {/* <img
+            
             src="/assets/west_village.jpg"
             alt="nyc trees"
            
-          />
+          /> */}
         </div>
         {/* <div>Hi there</div> */}
         <div
           className="search"
           id="search"
+          ref={divElement => {
+            this.divElement = divElement;
+          }}
           // style={{ position: "sticky", top: "0", marginTop: "0", transform:"translateY(0%)"}}
         >
           {/* <h2>My Header</h2> */}
@@ -101,8 +116,20 @@ class header extends Component {
             src="https://res.cloudinary.com/dw5c4jnc3/image/upload/v1547829310/nyc.png"
             alt="nyc trees"
           />
-          <Search1 style={style.searchInput} onchange={this.props.onchange()} />
+
+          <Search1
+            style={style.searchInput}
+            onchange={this.props.onchange}
+            fixHeader={this.state.fixHeader}
+            searchHeight={this.state.searchHeight}
+            bigHeaderHeight={this.state.bigHeaderHeight}
+            search={this.state.search}
+          />
         </div>
+        <div
+          className="dummy"
+          style={{ height: this.state.searchHeight }}
+        ></div>
       </>
     );
   }

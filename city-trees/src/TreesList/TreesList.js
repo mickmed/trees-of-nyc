@@ -19,6 +19,7 @@ class TreesList extends React.Component {
     return result
   }
   render() {
+    console.log(this.state.trees)
     const trees = (
       <div className="tree-list">
         {this.props.treesData.map((tree, index) => {
@@ -64,7 +65,7 @@ class TreesList extends React.Component {
      
         <div className="tree-inner">
         {hoods}
-        {trees}
+        {/* {trees} */}
         {this.props.treesData.length}
         </div>
     
