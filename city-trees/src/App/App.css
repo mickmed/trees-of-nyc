@@ -72,11 +72,11 @@
 }
 .search{
   position:sticky;
-  top:10%;
+  /* top:15%; */
   margin-top:0;
-  transform:translateY(-100%);
+  /* transform:translateY(-10%); */
   max-width:1400px;
-
+  max-height:30vh;
   background:rgba(85, 85, 85, .95);
   
   width:100%;
