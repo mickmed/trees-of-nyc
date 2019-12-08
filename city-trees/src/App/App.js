@@ -278,8 +278,8 @@ class App extends Component {
           <div className="mapWrapper">
             <Map
               // component={Map}
-              treesData={this.state.trees}
-              zipcode={this.state.zipcode}
+              // treesData={this.state.trees}
+              // zipcode={this.state.zipcode}
             />
           </div>
         

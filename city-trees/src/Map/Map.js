@@ -9,37 +9,42 @@ import "./Map.css";
 const MAPBOX_TOKEN = 'pk.eyJ1IjoibWlja21lZCIsImEiOiJjanFzdTVtZjEwMnY0NDJzM2g4MXNuNTM0In0.VDbqZxEh0hxXAixRjS9FzA'
 // const h = window.innerHeight
 // console.log(h)
-const navStyle = {
-  position: "absolute",
-  top: 0,
-  left: 0,
-  padding: "10px"
-};
+// const navStyle = {
+//   position: "absolute",
+//   top: 0,
+//   left: 0,
+//   padding: "10px"
+// };
 
 class Map extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      trees: [],
-      boroname: "&boroname=Manhattan",
-      zipcode: "",
-      spc_common: "",
-      status: "&status=Alive",
-      health: "",
+      // trees: [],
+      // boroname: "&boroname=Manhattan",
+      // zipcode: "",
+      // spc_common: "",
+      // status: "&status=Alive",
+      // health: "",
 
       viewport: {
-        width: window.innerWidth/2,
-        height: window.innerHeight + '100px',
+        // width: window.innerWidth/2,
+        width: 500,
+
+        // height: window.innerHeight + '100px',
+        height: 500,
+
         latitude: 0,
         longitude: 0,
-        zoom: 14
+        zoom: 1
+
       },
-      lat: 0,
-      long: 0,
-      info: null,
-      popupInfo: null,
-      tree: null
+      // lat: 0,
+      // long: 0,
+      // info: null,
+      // popupInfo: null,
+      // tree: null
   
       
     };
@@ -47,32 +52,32 @@ class Map extends Component {
     // this._renderMarker = this._renderMarker.bind(this);
     // this._renderPopup = this._renderPopup.bind(this);
   }
-  componentDidMount() {
-    // const AppDims = document.querySelector(".App")
-    // console.log(AppDims)
-    // if (AppDims.offsetWidth < 900 && AppDims.offsetWidth < AppDims.offsetHeight) {
-    //   this.setState({
-    //     viewport: {
-    //       ...this.state.viewport,
-    //       width: '100%',
-    //       // height: AppDims.offsetHeight / 2 + 'px',
-    //       appDims: AppDims,
-    //     }
-    //   })
-    // }
-    // else {
-    //   this.setState({
-    //     viewport: {
-    //       ...this.state.viewport,
-    //       width: '100%',
-    //       // height: AppDims.offsetHeight / 1 + 'px',
-    //       appDims: AppDims,
-    //     }
-    //   })
-    // }
-    // window.addEventListener('resize', this._resize);
-    // this._resize();
-  }
+  // componentDidMount() {
+  //   // const AppDims = document.querySelector(".App")
+  //   // console.log(AppDims)
+  //   // if (AppDims.offsetWidth < 900 && AppDims.offsetWidth < AppDims.offsetHeight) {
+  //   //   this.setState({
+  //   //     viewport: {
+  //   //       ...this.state.viewport,
+  //   //       width: '100%',
+  //   //       // height: AppDims.offsetHeight / 2 + 'px',
+  //   //       appDims: AppDims,
+  //   //     }
+  //   //   })
+  //   // }
+  //   // else {
+  //   //   this.setState({
+  //   //     viewport: {
+  //   //       ...this.state.viewport,
+  //   //       width: '100%',
+  //   //       // height: AppDims.offsetHeight / 1 + 'px',
+  //   //       appDims: AppDims,
+  //   //     }
+  //   //   })
+  //   // }
+  //   // window.addEventListener('resize', this._resize);
+  //   // this._resize();
+  // }
 
 
   //this updates the initial state of viewport (latitude and longitude) so that when the page loads the map centers on the first tree in the array.
@@ -179,7 +184,7 @@ class Map extends Component {
         longitude={viewport.longitude}
         zoom={viewport.zoom}
         mapStyle="mapbox://styles/mapbox/streets-v9"
-        onViewportChange={this._updateViewport}
+        // onViewportChange={this._updateViewport}
         // onViewportChange={this.props.vpc(viewport.zoom)}
         mapboxApiAccessToken={MAPBOX_TOKEN}
       >
@@ -188,9 +193,9 @@ class Map extends Component {
         {/* {TREES && TREES.map(this._renderMarker)} */}
 
         {/* {this._renderPopup()} */}
-        <div className="nav" style={navStyle}>
+        {/* <div className="nav" style={navStyle}>
           <NavigationControl onViewportChange={this._updateViewport} />
-        </div>
+        </div> */}
       </ReactMapGL>
     );
   }

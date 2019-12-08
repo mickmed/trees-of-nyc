@@ -103,7 +103,7 @@ class header extends Component {
         {/* <div>Hi there</div> */}
         <div
           className="search"
-          id="search"
+          id="search"    
           ref={divElement => {
             this.divElement = divElement;
           }}
