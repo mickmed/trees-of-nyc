@@ -48,29 +48,29 @@ class Map extends Component {
     this._renderPopup = this._renderPopup.bind(this);
   }
   componentDidMount() {
-    const AppDims = document.querySelector(".App")
-    console.log(AppDims)
-    if (AppDims.offsetWidth < 900 && AppDims.offsetWidth < AppDims.offsetHeight) {
-      this.setState({
-        viewport: {
-          ...this.state.viewport,
-          width: '100%',
-          // height: AppDims.offsetHeight / 2 + 'px',
-          appDims: AppDims,
-        }
-      })
-    }
-    else {
-      this.setState({
-        viewport: {
-          ...this.state.viewport,
-          width: '100%',
-          // height: AppDims.offsetHeight / 1 + 'px',
-          appDims: AppDims,
-        }
-      })
-    }
-    window.addEventListener('resize', this._resize);
+    // const AppDims = document.querySelector(".App")
+    // console.log(AppDims)
+    // if (AppDims.offsetWidth < 900 && AppDims.offsetWidth < AppDims.offsetHeight) {
+    //   this.setState({
+    //     viewport: {
+    //       ...this.state.viewport,
+    //       width: '100%',
+    //       // height: AppDims.offsetHeight / 2 + 'px',
+    //       appDims: AppDims,
+    //     }
+    //   })
+    // }
+    // else {
+    //   this.setState({
+    //     viewport: {
+    //       ...this.state.viewport,
+    //       width: '100%',
+    //       // height: AppDims.offsetHeight / 1 + 'px',
+    //       appDims: AppDims,
+    //     }
+    //   })
+    // }
+    // window.addEventListener('resize', this._resize);
     this._resize();
   }
 
