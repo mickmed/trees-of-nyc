@@ -167,60 +167,75 @@ class App extends Component {
   capitalize = s => {
     if (typeof s !== "string") return "";
     return s.charAt(0).toUpperCase() + s.slice(1);
-  };
+  }
+
+  onSubmit = evt => {
+    evt.preventDefault()
+  }
+
   onChange = evt => {
     let params = ["address", "spc_latin"];
-    let x = evt.target.value
+   
     // console.log(evt.target.value, evt.target.value.length);
     evt &&
-      evt.target.value.length > 2 &&
-      axios
+      (evt.target.value.length === 3 || evt.target.value.length === 5 || evt.target.value.length > 7) &&
+      this.getData(evt.target.value)
+      this.setState({
+        // trees: trees,
+        searchString:evt.target.value
+      });
+  }
+  getData = async(srch) =>{
+    console.log('here')
+  
+      await axios
         .get(
           `https://data.cityofnewyork.us/resource/5rq2-4hqu.json?` +
-            `$limit=5000` +
+            `$limit=1000` +
             `&$where=` +
-            `address%20like%20%27%25${evt.target.value.toUpperCase()}%25%27` +
+            `address%20like%20%27%25${srch.toUpperCase()}%25%27` +
             `or ` +
-            `address%20like%20%27%25${evt.target.value.toLowerCase()}%25%27` +
+            `address%20like%20%27%25${srch.toLowerCase()}%25%27` +
             `or ` +
             `address%20like%20%27%25${this.capitalize(
-              evt.target.value
+              srch
             )}%25%27` +
             `or ` +
-            `spc_latin%20like%20%27%25${evt.target.value.toUpperCase()}%25%27` +
+            `spc_latin%20like%20%27%25${srch.toUpperCase()}%25%27` +
             `or ` +
-            `spc_latin%20like%20%27%25${evt.target.value.toLowerCase()}%25%27` +
+            `spc_latin%20like%20%27%25${srch.toLowerCase()}%25%27` +
             `or ` +
             `spc_latin%20like%20%27%25${this.capitalize(
-              evt.target.value
+              srch
             )}%25%27` +
             `or ` +
-            `spc_common%20like%20%27%25${evt.target.value.toUpperCase()}%25%27` +
+            `spc_common%20like%20%27%25${srch.toUpperCase()}%25%27` +
             `or ` +
-            `spc_common%20like%20%27%25${evt.target.value.toLowerCase()}%25%27` +
+            `spc_common%20like%20%27%25${srch.toLowerCase()}%25%27` +
             `or ` +
             `spc_common%20like%20%27%25${this.capitalize(
-              evt.target.value
+              srch
             )}%25%27` +
             `or ` +
-            `zipcode%20like%20%27%25${evt.target.value.toUpperCase()}%25%27` +
+            `zipcode%20like%20%27%25${srch.toUpperCase()}%25%27` +
             `or ` +
-            `zipcode%20like%20%27%25${evt.target.value.toLowerCase()}%25%27` +
+            `zipcode%20like%20%27%25${srch.toLowerCase()}%25%27` +
             `or ` +
-            `zipcode%20like%20%27%25${this.capitalize(evt.target.value)}%25%27`
+            `zipcode%20like%20%27%25${this.capitalize(srch)}%25%27`
         )
         .then(response => {
           const trees = response.data;
           console.log(trees);
           this.setState({
             trees: trees,
-            searchString:x
+            // searchString:srch
           });
         })
         .catch(error => {
           console.error("Error: ", error);
         });
   };
+
   // componentWillUnmount() {
   //   window.removeEventListener('scroll', this.handleScroll)
   // }
@@ -245,9 +260,15 @@ class App extends Component {
   // console.log('false')
 
   // }
-
+  handleClickSearch = (clickedValue) => {
+    console.log(clickedValue)
+    this.setState({
+      searchString:clickedValue
+    })
+    this.getData(clickedValue)
+  }
   render() {
-    console.log(this.state);
+    // console.log(this.state);
     // const style = this.state.fixHeader ?
     // {}
     // console.log('t', this.state.zoom)
@@ -271,14 +292,18 @@ class App extends Component {
 
     return (
       <div className="App">
-        <Header onchange={this.onChange} fixHeader={this.state.fixHeader} />
+        <Header 
+        onchange={this.onChange} 
+        onsubmit={this.onSubmit}
+        fixHeader={this.state.fixHeader} 
+        searchString={this.state.searchString}/>
 
         <div className="homeComponent">
           {/* <Search /> */}
           <div className="mapWrapper">
             <Map
               // component={Map}
-              // treesData={this.state.trees}
+              treesData={this.state.trees}
               // zipcode={this.state.zipcode}
             />
           </div>
@@ -298,11 +323,12 @@ class App extends Component {
               zipcode={this.state.zipcode}
               spc_common={this.state.spc_common}
             /> */}
-            {/* <TreesList
+            <TreesList
               treesData={this.state.trees}
               fixHeader={this.state.fixHeader}
               searchString={this.state.searchString}
-            /> */}
+              handleClickSearch={this.handleClickSearch}
+            />
             {/* <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum interdum, nisi lorem egestas odio, vitae scelerisque enim ligula venenatis dolor. Maecenas nisl est, ultrices nec congue eget, auctor vitae massa. Fusce luctus vestibulum augue ut aliquet. Mauris ante ligula,e turpis. Donec vitae dui eget tellus gravida venenatis. Integer fringilla congue eros non fermentum. Sed dapibus pulvinar nibh tempor quet. Mauris ante ligula, facilisis sed ornare eu, lobortis in odio. Praesent convallis urna a lacus interdum ut hendrerit risus congue. Nunc sagittis dictum nisi, sed ullamcorper ipsum dignissim ac. In at libero sed nunc venenatis imperdiet sed ornare turpis. Donec vitae dui eget tellus gravida venenatis. Integer fringilla congue eros non fermentum. Sed dapibus pulvinar nibh tempor porta. Cras ac leo purus. Mauris quis diam velit.</div> */}
           </div>
         </div>

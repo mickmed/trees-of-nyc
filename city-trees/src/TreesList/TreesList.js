@@ -1,6 +1,8 @@
 import React from "react";
 import Tree from "./Tree";
 // import Filters from "../Filters/Filters";
+import { geolocated } from "../App/Geolocated";
+
 
 class TreesList extends React.Component {
   constructor() {
@@ -9,6 +11,21 @@ class TreesList extends React.Component {
       trees: []
     };
   }
+  componentDidMount(){
+    this.getLocation()
+  }
+  getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.showPosition);
+    } else { 
+      console.log("Geolocation is not supported by this browser.")
+    }
+  }
+  
+  showPosition = (position)=> {
+    console.log(position.coords.latitude.toString() + position.coords.longitude.toString())
+  }
+
   hoods = neighbs => {
     let result = {};
     for (let i = 0; i < neighbs.length; ++i) {
@@ -43,6 +60,7 @@ class TreesList extends React.Component {
                 str[1].includes("STREET") ||
                 str[1].includes("AVENUE") ||
                 str[1].includes("ROAD") ||
+                str[1].includes("HIGHWAY") ||
                 str[1].includes("PARKWAY") ||
                 str[1].includes("BOULEVARD") ||
                 str[1].includes("TURNPIKE") ||
@@ -55,18 +73,18 @@ class TreesList extends React.Component {
                 str[1].includes("COURT")
               ) {
                 if (srch.match(/^\d/)) {
-                  console.log("number", srch);
-                  console.log(srch.indexOf(" "));
-                  console.log(srch[srch.indexOf(" ") + 1]);
+                  // console.log("number", srch);
+                  // console.log(srch.indexOf(" "));
+                  // console.log(srch[srch.indexOf(" ") + 1]);
                   if (
                     srch.indexOf(" ") !== -1 &&
                     srch[srch.indexOf(" ") + 1] !== "undefined"
                   ) {
-                    console.log("number with space ");
+                    // console.log("number with space ");
                     !strngs.includes(str[1]) && strngs.unshift(str[1]);
                   }
                 } else {
-                  console.log("not number");
+                  // console.log("not number");
                   str[1] = str[1].slice(str[1].indexOf(" "));
                   !strngs.includes(str[1]) && strngs.unshift(str[1]);
                 }
@@ -80,6 +98,7 @@ class TreesList extends React.Component {
                   str[0] !== "boro_ct"
                 )
                   !strngs.includes(str[1]) && strngs.push(str[1]);
+                  // console.log('obj', obj)
                 // !strngs.includes(obj.spc_common) && strngs.push(obj.spc_common)
               }
             }
@@ -88,11 +107,9 @@ class TreesList extends React.Component {
       });
     return strngs;
   };
-  handleClick = () => {
-    
-  }
+  
   render() {
-    console.log(this.state.trees);
+    console.log(this.props.treesData);
     // const trees = (
     //   <div className="tree-list">
     //     {this.props.treesData.map((tree, index) => {
@@ -138,8 +155,9 @@ class TreesList extends React.Component {
     return (
       <div className="tree-inner">
         {this.matches().map(match=>(
-          <div onClick={this.handleClick}>{match}</div>
+          <div onClick={()=>this.props.handleClickSearch(match)}>{match}</div>
         ))}
+        <geolocated/>
         {/* {hoods} */}
         {/* {matches.map(match=><div>{match}</div>)} */}
         {/* {trees} */}

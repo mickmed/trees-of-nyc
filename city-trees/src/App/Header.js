@@ -10,13 +10,13 @@ class header extends Component {
   componentDidMount() {
     // this.fetchData(TREES_URL);
     window.addEventListener("scroll", this.handleScroll);
-    const search = this.divElement
-    const searchHeight = this.divElement.offsetHeight;
+
+    const searchHeight = this.searchDiv.offsetHeight;
     const bigHeaderHeight = this.bigH.offsetHeight;
+    console.log(searchHeight, bigHeaderHeight);
     this.setState({
-      searchHeight: searchHeight,
       bigHeaderHeight: bigHeaderHeight,
-      search:search
+      searchHeight: searchHeight
     });
   }
 
@@ -24,22 +24,30 @@ class header extends Component {
     window.removeEventListener("scroll", this.handleScroll);
   }
   handleScroll = () => {
+    console.log("here");
+    // const searchHeight = this.searchDiv.offsetHeight;
+    // this.setState({
+    //   dummyHeight: searchHeight,
+
+    //   // search:search
+    // });
     // let headerHeight = document.getElementById("myHeader").offsetHeight
     const header = ReactDOM.findDOMNode(this);
-  
+
     // console.log("headerHeight", header.offsetHeight);
     // console.log('header', headerHeight)
     // console.log("searchOffsetTop", search[0].offsetTop);
 
     // console.log("windowScrollY", window.scrollY);
 
-    if (window.scrollY < header.offsetHeight) {
+    if (window.scrollY < header.offsetHeight * 0.8) {
       // console.log("less than");
       this.setState({
         fixHeader: false
       });
     }
-    if (window.scrollY > header.offsetHeight) {
+    if (window.scrollY > header.offsetHeight * 0.8) {
+      // console.log("more than")
       this.setState({
         fixHeader: true,
         input: ""
@@ -48,7 +56,7 @@ class header extends Component {
   };
 
   render() {
-    // console.log(this.state);
+    console.log(this.state);
     // const header = ReactDOM.findDOMNode(this);
 
     // console.log(this.props);
@@ -57,24 +65,19 @@ class header extends Component {
           searchInput: {
             // transform:'translateY(-150%)'
           },
-          search: {
-            position: "fixed",
-            top: 0,
-            width: "100%",
-            height: "15%"
-            // animation: 'fadeInSearch 1s',
-            // justifyContent: 'flex-end'
-          },
+
           banner: {
             position: "fixed",
             width: "100%",
             top: 0
           },
           img: { visibility: "hidden" },
-          dummy: { display: "block" }
+          dummy: { display: "block", height: this.state.searchHeight }
         }
-      : { search: { position: "absolute" }, header: { position: "fixed" } };
-
+      : {
+          header: { position: "fixed" },
+          dummy: { height: 0 }
+        };
     return (
       <>
         <div
@@ -103,9 +106,9 @@ class header extends Component {
         {/* <div>Hi there</div> */}
         <div
           className="search"
-          id="search"    
-          ref={divElement => {
-            this.divElement = divElement;
+          id="search"
+          ref={searchDiv => {
+            this.searchDiv = searchDiv;
           }}
           // style={{ position: "sticky", top: "0", marginTop: "0", transform:"translateY(0%)"}}
         >
@@ -120,16 +123,15 @@ class header extends Component {
           <Search1
             style={style.searchInput}
             onchange={this.props.onchange}
+            onsubmit={this.props.onsubmit}
             fixHeader={this.state.fixHeader}
             searchHeight={this.state.searchHeight}
             bigHeaderHeight={this.state.bigHeaderHeight}
             search={this.state.search}
+            searchString={this.props.searchString}
           />
         </div>
-        <div
-          className="dummy"
-          style={{ height: this.state.searchHeight }}
-        ></div>
+        <div className="dummy" style={style.dummy}></div>
       </>
     );
   }

@@ -131,7 +131,7 @@ border-radius:20px;
   flex-direction:column;
  
       /* min-height:calc(100vh - 20%); */
-  min-height:100vh;
+  /* min-height:100vh; */
 
 }
 
@@ -145,6 +145,7 @@ border-radius:20px;
 
 .mapWrapper{
   height:50%;
+  width:70%;
   position:relative;
 }
 .mapWrapper, .locationsListWrapper{
@@ -160,7 +161,7 @@ border-radius:20px;
   /* min-height:90%; */
   /* overflow:hidden; */
   /* overflow-y:auto; */
-  width:47%;
+  width:27%;
 }
 
 .filters{
@@ -208,6 +209,7 @@ border-radius:20px;
   overflow-y:scroll;
   margin: 2% auto;
   height:25%;
+  padding:5%;
  
 }
 
@@ -294,13 +296,14 @@ button {
   }
   .mapWrapper{
       height:100%;
-      width:46%;
+      width:65%;
   }
   .tree-inner{
-    /* height:90%; */
+    height:90%;
   }
   .locationsListWrapper{
     /* height:100%; */
+    width:30%;
   }
 }
 
