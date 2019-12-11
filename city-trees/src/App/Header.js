@@ -10,13 +10,14 @@ class header extends Component {
   componentDidMount() {
     // this.fetchData(TREES_URL);
     window.addEventListener("scroll", this.handleScroll);
-
-    const searchHeight = this.searchDiv.offsetHeight;
     const bigHeaderHeight = this.bigH.offsetHeight;
+    const bannerHeight = this.banner.offsetHeight;
+    const searchHeight = this.searchDiv.offsetHeight;
     console.log(searchHeight, bigHeaderHeight);
     this.setState({
       bigHeaderHeight: bigHeaderHeight,
-      searchHeight: searchHeight
+      searchHeight: searchHeight,
+      bannerHeight:bannerHeight
     });
   }
 
@@ -46,6 +47,7 @@ class header extends Component {
         fixHeader: false
       });
     }
+
     if (window.scrollY > header.offsetHeight * 0.8) {
       // console.log("more than")
       this.setState({
@@ -62,20 +64,10 @@ class header extends Component {
     // console.log(this.props);
     const style = this.state.fixHeader
       ? {
-          searchInput: {
-            // transform:'translateY(-150%)'
-          },
-
-          banner: {
-            position: "fixed",
-            width: "100%",
-            top: 0
-          },
           img: { visibility: "hidden" },
-          dummy: { display: "block", height: this.state.searchHeight }
+          dummy: { display: "block", height: this.state.searchHeight + this.state.bannerHeight }
         }
       : {
-          header: { position: "fixed" },
           dummy: { height: 0 }
         };
     return (
@@ -86,7 +78,12 @@ class header extends Component {
             this.bigH = bigH;
           }}
         >
-          <header className="banner" style={style.banner}>
+          <header
+            className="banner"
+            ref={banner => {
+              this.banner = banner;
+            }}
+          >
             <h1>NEW YORK CITY TREES</h1>
             <p>
               <i>mapping the trees of NYC</i>
@@ -110,7 +107,7 @@ class header extends Component {
           ref={searchDiv => {
             this.searchDiv = searchDiv;
           }}
-          // style={{ position: "sticky", top: "0", marginTop: "0", transform:"translateY(0%)"}}
+          style={{ top: this.state.bannerHeight}}
         >
           {/* <h2>My Header</h2> */}
           {/* <img src = {process.env.PUBLIC_URL + "assets/west_village.jpg"}/> */}

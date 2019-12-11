@@ -109,7 +109,16 @@ class TreesList extends React.Component {
   };
   
   render() {
-    console.log(this.props.treesData);
+    
+    
+    
+    
+    
+    
+    
+    let blah = this.matches().sort()
+
+    console.log('matches', this.props.treesData);
     // const trees = (
     //   <div className="tree-list">
     //     {this.props.treesData.map((tree, index) => {
@@ -154,7 +163,8 @@ class TreesList extends React.Component {
     // )
     return (
       <div className="tree-inner">
-        {this.matches().map(match=>(
+        {/* {this.matches().sort()} */}
+        {blah.map(match=>(
           <div onClick={()=>this.props.handleClickSearch(match)}>{match}</div>
         ))}
         <geolocated/>

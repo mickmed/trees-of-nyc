@@ -33,7 +33,7 @@ class Search extends Component {
           name="input"
           className="search-input"
           style={style}
-          placeholder="street, species, zipcode, health, etc..."
+          placeholder="search..."
           onChange={this.props.onchange}
           onClick={this.scrollToView}
           value={this.props.searchString}
