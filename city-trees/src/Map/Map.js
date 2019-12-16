@@ -40,7 +40,7 @@ class Map extends Component {
 
         latitude: 0,
         longitude: 0,
-        zoom: 17
+        zoom: 13
 
       },
       // lat: 0,

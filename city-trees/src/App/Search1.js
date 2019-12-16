@@ -15,16 +15,10 @@ class Search extends Component {
  
 
   }
-  scrollToView = () => {
-    console.log(this.props.searchHeight)
-  
-    // console.log(this.props.fixHeader)
-    window.scrollTo(0, this.props.searchHeight + this.props.bigHeaderHeight) 
-    // this.props.search.scrollIntoView()
-  }
+
 
   render() {
-      console.log(this.props.searchString)
+      // console.log(this.props)
     const style = this.props.style;
     return (
       <form onSubmit={this.props.onsubmit}>
@@ -35,8 +29,9 @@ class Search extends Component {
           style={style}
           placeholder="search..."
           onChange={this.props.onchange}
-          onClick={this.scrollToView}
+          onClick={this.props.scrollToView}
           value={this.props.searchString}
+          
         />
 
         <p>{this.state.query}</p>

@@ -10,10 +10,13 @@ class header extends Component {
   componentDidMount() {
     // this.fetchData(TREES_URL);
     window.addEventListener("scroll", this.handleScroll);
+    // console.log('here')
+    const headerCDM = ReactDOM.findDOMNode(this)
+    // console.log('headerCDM', headerCDM.offsetHeight)
     const bigHeaderHeight = this.bigH.offsetHeight;
     const bannerHeight = this.banner.offsetHeight;
     const searchHeight = this.searchDiv.offsetHeight;
-    console.log(searchHeight, bigHeaderHeight);
+    // console.log(searchHeight, bigHeaderHeight);
     this.setState({
       bigHeaderHeight: bigHeaderHeight,
       searchHeight: searchHeight,
@@ -25,30 +28,30 @@ class header extends Component {
     window.removeEventListener("scroll", this.handleScroll);
   }
   handleScroll = () => {
-    console.log("here");
+    // console.log("window scroll", window.scrollY);
     // const searchHeight = this.searchDiv.offsetHeight;
     // this.setState({
     //   dummyHeight: searchHeight,
 
     //   // search:search
     // });
-    // let headerHeight = document.getElementById("myHeader").offsetHeight
+    // let headerHeight = document.getElementById("myHeader").offsetHeighthere
     const header = ReactDOM.findDOMNode(this);
-
+    // console.log(header.offsetHeight)
     // console.log("headerHeight", header.offsetHeight);
     // console.log('header', headerHeight)
     // console.log("searchOffsetTop", search[0].offsetTop);
 
     // console.log("windowScrollY", window.scrollY);
 
-    if (window.scrollY < header.offsetHeight * 0.8) {
+    if (window.scrollY < header.offsetHeight) {
       // console.log("less than");
       this.setState({
         fixHeader: false
       });
     }
 
-    if (window.scrollY > header.offsetHeight * 0.8) {
+    if (window.scrollY > header.offsetHeight) {
       // console.log("more than")
       this.setState({
         fixHeader: true,
@@ -57,15 +60,23 @@ class header extends Component {
     }
   };
 
+  scrollToView = () => {
+    // console.log('scroll to', this.props.searchHeight + this.props.bigHeaderHeight)
+    
+    // console.log(this.props.fixHeader)
+    window.scrollTo(0, this.state.bigHeaderHeight + this.state.searchHeight) 
+    // this.props.search.scrollIntoView()
+  }
+
   render() {
-    console.log(this.state);
+    // console.log(this.state);
     // const header = ReactDOM.findDOMNode(this);
 
     // console.log(this.props);
     const style = this.state.fixHeader
       ? {
           img: { visibility: "hidden" },
-          dummy: { display: "block", height: this.state.searchHeight + this.state.bannerHeight }
+          dummy: { display: "block", height: this.state.searchHeight + this.state.bannerHeight}
         }
       : {
           dummy: { height: 0 }
@@ -124,8 +135,10 @@ class header extends Component {
             fixHeader={this.state.fixHeader}
             searchHeight={this.state.searchHeight}
             bigHeaderHeight={this.state.bigHeaderHeight}
+            bannerHeight={this.state.bannerHeight}
             search={this.state.search}
             searchString={this.props.searchString}
+            scrollToView={this.scrollToView}
           />
         </div>
         <div className="dummy" style={style.dummy}></div>

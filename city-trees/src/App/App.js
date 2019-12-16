@@ -167,73 +167,126 @@ class App extends Component {
   capitalize = s => {
     if (typeof s !== "string") return "";
     return s.charAt(0).toUpperCase() + s.slice(1);
-  }
+  };
 
   onSubmit = evt => {
-    evt.preventDefault()
-  }
+    evt.preventDefault();
+  };
 
   onChange = evt => {
     let params = ["address", "spc_latin"];
-   
+
     // console.log(evt.target.value, evt.target.value.length);
     evt &&
-      (evt.target.value.length === 3 || evt.target.value.length === 5 || evt.target.value.length > 7) &&
-      this.getData(evt.target.value)
-      this.setState({
-        // trees: trees,
-        searchString:evt.target.value
-      });
-  }
-  getData = async(srch) =>{
-    console.log('here')
-  
-      await axios
-        .get(
-          `https://data.cityofnewyork.us/resource/5rq2-4hqu.json?` +
-            `$limit=1000` +
-            `&$where=` +
-            `address%20like%20%27%25${srch.toUpperCase()}%25%27` +
-            `or ` +
-            `address%20like%20%27%25${srch.toLowerCase()}%25%27` +
-            `or ` +
-            `address%20like%20%27%25${this.capitalize(
-              srch
-            )}%25%27` +
-            `or ` +
-            `spc_latin%20like%20%27%25${srch.toUpperCase()}%25%27` +
-            `or ` +
-            `spc_latin%20like%20%27%25${srch.toLowerCase()}%25%27` +
-            `or ` +
-            `spc_latin%20like%20%27%25${this.capitalize(
-              srch
-            )}%25%27` +
-            `or ` +
-            `spc_common%20like%20%27%25${srch.toUpperCase()}%25%27` +
-            `or ` +
-            `spc_common%20like%20%27%25${srch.toLowerCase()}%25%27` +
-            `or ` +
-            `spc_common%20like%20%27%25${this.capitalize(
-              srch
-            )}%25%27` +
-            `or ` +
-            `zipcode%20like%20%27%25${srch.toUpperCase()}%25%27` +
-            `or ` +
-            `zipcode%20like%20%27%25${srch.toLowerCase()}%25%27` +
-            `or ` +
-            `zipcode%20like%20%27%25${this.capitalize(srch)}%25%27`
-        )
-        .then(response => {
-          const trees = response.data;
-          console.log(trees);
-          this.setState({
-            trees: trees,
-            // searchString:srch
+      (evt.target.value.length === 3 ||
+        evt.target.value.length === 5 ||
+        evt.target.value.length > 7) &&
+      this.getData(evt.target.value);
+    this.setState({
+      // trees: trees,
+      searchString: evt.target.value
+    });
+  };
+  getData = async srch => {
+    // console.log('here')
+
+    await axios
+      .get(
+        `https://data.cityofnewyork.us/resource/5rq2-4hqu.json?` +
+          `$limit=1000` +
+          `&$where=` +
+          `address%20like%20%27%25${srch.toUpperCase()}%25%27` +
+          `or ` +
+          `address%20like%20%27%25${srch.toLowerCase()}%25%27` +
+          `or ` +
+          `address%20like%20%27%25${this.capitalize(srch)}%25%27` +
+          `or ` +
+          `spc_latin%20like%20%27%25${srch.toUpperCase()}%25%27` +
+          `or ` +
+          `spc_latin%20like%20%27%25${srch.toLowerCase()}%25%27` +
+          `or ` +
+          `spc_latin%20like%20%27%25${this.capitalize(srch)}%25%27` +
+          `or ` +
+          `spc_common%20like%20%27%25${srch.toUpperCase()}%25%27` +
+          `or ` +
+          `spc_common%20like%20%27%25${srch.toLowerCase()}%25%27` +
+          `or ` +
+          `spc_common%20like%20%27%25${this.capitalize(srch)}%25%27` +
+          `or ` +
+          `zipcode%20like%20%27%25${srch.toUpperCase()}%25%27` +
+          `or ` +
+          `zipcode%20like%20%27%25${srch.toLowerCase()}%25%27` +
+          `or ` +
+          `zipcode%20like%20%27%25${this.capitalize(srch)}%25%27`
+      )
+      .then(response => {
+        const trees = response.data;
+        console.log(trees);
+        const stuff = {};
+        const filtered = [];
+        const arr = [];
+        trees.map((obj, i) => {
+          // console.log(Object.values(obj), srch);
+          Object.entries(obj).forEach((str, index) => {
+            // str.includes(this.props.searchString) && console.log("yes")
+
+            if (typeof str[1] === "string") {
+              // console.log('obj', obj);
+              if (
+                str[1].includes(srch) ||
+                str[1].includes(srch.toLowerCase()) ||
+                str[1].includes(srch.toUpperCase()) ||
+                str[1].includes(this.capitalize(srch))
+              ) {
+                !arr.includes(str[0]) &&
+                  arr.push(str[0]) &&
+                  filtered.push({ [str[0]]: [] });
+               
+                const filts = [...filtered];
+
+                filts.forEach(f => {
+                  if (Object.keys(f)[0] === str[0]) {
+                    if(f[str[0]].includes(str[1])){
+                      console.log('here')
+                    }
+                    console.log(str[0])
+                    
+                    !f[str[0]].includes(str[1]) &&
+                    console.log('fuch')
+                    f[str[0]].push(obj);
+                  }
+                });
+                // console.log(filts);
+           
+                if (srch.match(/^\d/)) {
+                  // if (
+                  //     srch.indexOf(" ") !== -1 &&
+                  //     srch[srch.indexOf(" ") + 1] !== "undefined"
+
+                  //   )
+                  // console.log("number with space ");
+
+                } else {
+                  // console.log("not number");
+
+                  // str[1] = str[1].slice(str[1].indexOf(" ")); //chop number of address
+                               
+                }
+              } 
+             
+            }
           });
-        })
-        .catch(error => {
-          console.error("Error: ", error);
         });
+
+        this.setState({
+          trees: trees,
+          filtered: filtered
+          // searchString:srch
+        });
+      })
+      .catch(error => {
+        console.error("Error: ", error);
+      });
   };
 
   // componentWillUnmount() {
@@ -260,15 +313,15 @@ class App extends Component {
   // console.log('false')
 
   // }
-  handleClickSearch = (clickedValue) => {
-    console.log(clickedValue)
+  handleClickSearch = clickedValue => {
+    console.log(clickedValue);
     this.setState({
-      searchString:clickedValue
-    })
-    this.getData(clickedValue)
-  }
+      searchString: clickedValue
+    });
+    this.getData(clickedValue);
+  };
   render() {
-    // console.log(this.state);
+    console.log(this.state);
     // const style = this.state.fixHeader ?
     // {}
     // console.log('t', this.state.zoom)
@@ -292,11 +345,12 @@ class App extends Component {
 
     return (
       <div className="App">
-        <Header 
-        onchange={this.onChange} 
-        onsubmit={this.onSubmit}
-        fixHeader={this.state.fixHeader} 
-        searchString={this.state.searchString}/>
+        <Header
+          onchange={this.onChange}
+          onsubmit={this.onSubmit}
+          fixHeader={this.state.fixHeader}
+          searchString={this.state.searchString}
+        />
 
         <div className="homeComponent">
           {/* <Search /> */}
@@ -307,7 +361,7 @@ class App extends Component {
               // zipcode={this.state.zipcode}
             />
           </div>
-        
+
           <div className="locationsListWrapper">
             {/* <h3>&#x1F333; NYC TREES &#x1F333; </h3> */}
             {/* <Filters
@@ -328,10 +382,15 @@ class App extends Component {
               fixHeader={this.state.fixHeader}
               searchString={this.state.searchString}
               handleClickSearch={this.handleClickSearch}
+              filtered={this.state.filtered}
             />
             {/* <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum interdum, nisi lorem egestas odio, vitae scelerisque enim ligula venenatis dolor. Maecenas nisl est, ultrices nec congue eget, auctor vitae massa. Fusce luctus vestibulum augue ut aliquet. Mauris ante ligula,e turpis. Donec vitae dui eget tellus gravida venenatis. Integer fringilla congue eros non fermentum. Sed dapibus pulvinar nibh tempor quet. Mauris ante ligula, facilisis sed ornare eu, lobortis in odio. Praesent convallis urna a lacus interdum ut hendrerit risus congue. Nunc sagittis dictum nisi, sed ullamcorper ipsum dignissim ac. In at libero sed nunc venenatis imperdiet sed ornare turpis. Donec vitae dui eget tellus gravida venenatis. Integer fringilla congue eros non fermentum. Sed dapibus pulvinar nibh tempor porta. Cras ac leo purus. Mauris quis diam velit.</div> */}
           </div>
-        </div>
+         
+        </div> 
+        <footer className="footer">
+            footer
+          </footer>
       </div>
     );
   }
