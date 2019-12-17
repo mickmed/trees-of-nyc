@@ -178,6 +178,19 @@ class TreesList extends React.Component {
     // }
   };
 
+  makeUnique = (arr) => {
+    console.log(arr)
+    arr.forEach(obj => {
+      console.log(obj)
+      for(let ar in obj){
+        console.log(ar, obj[ar])
+        // ar[i].forEach()
+        
+      }
+    })
+
+  }
+
   renderPatches = () => {
     function compare(a, b) {
       // Use toUpperCase() to ignore character casing
@@ -233,6 +246,7 @@ class TreesList extends React.Component {
               {match[Object.keys(match)[0]]
                 .sort(compare)
                 .slice(0, 5)
+              
                 .map(mat => (
                   // console.log(mat)
 
@@ -248,6 +262,7 @@ class TreesList extends React.Component {
   };
 
   render() {
+    // this.props.filtered && this.makeUnique(this.props.filtered)
     // console.log(this.props.filtered)
     // this.props.filtered && this.props.filtered.map(tree=>{
     //   console.log(tree.address && tree.address.address)

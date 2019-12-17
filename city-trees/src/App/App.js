@@ -221,11 +221,12 @@ class App extends Component {
       )
       .then(response => {
         const trees = response.data;
-        console.log(trees);
+        // console.log(trees);
         const stuff = {};
         const filtered = [];
         const arr = [];
         trees.map((obj, i) => {
+          // console.log('index', i)
           // console.log(Object.values(obj), srch);
           Object.entries(obj).forEach((str, index) => {
             // str.includes(this.props.searchString) && console.log("yes")
@@ -238,42 +239,41 @@ class App extends Component {
                 str[1].includes(srch.toUpperCase()) ||
                 str[1].includes(this.capitalize(srch))
               ) {
-                !arr.includes(str[0]) &&
-                  arr.push(str[0]) &&
-                  filtered.push({ [str[0]]: [] });
-               
-                const filts = [...filtered];
+                if (!arr.includes(str[0])) {
+                  arr.push(str[0]) && filtered.push({ [str[0]]: [] });
+                  // console.log('index', index)
+                  // console.log('str0', str[0])
+                  // console.log('str1', str[1])
+                  // console.log('filtered', filtered)
+                  // console.log('filtered length', filtered.length)
+                }
+                if (arr.includes(str[0])) {
+                  filtered.forEach(fil => {
+                    do {
+                      fil[str[0]] && fil[str[0]].push(obj);
+                    } while (
+                      fil[str[0]] &&
+                      fil[str[0]].forEach(f => {
+                        // console.log(f[str[0]]);
 
-                filts.forEach(f => {
-                  if (Object.keys(f)[0] === str[0]) {
-                    if(f[str[0]].includes(str[1])){
-                      console.log('here')
-                    }
-                    console.log(str[0])
-                    
-                    !f[str[0]].includes(str[1]) &&
-                    console.log('fuch')
-                    f[str[0]].push(obj);
-                  }
-                });
-                // console.log(filts);
-           
+                        return f[str[0]] !== obj[str[0]] && true;
+                      })
+                    );
+                  });
+                }
+                console.log(filtered);
+
                 if (srch.match(/^\d/)) {
                   // if (
                   //     srch.indexOf(" ") !== -1 &&
                   //     srch[srch.indexOf(" ") + 1] !== "undefined"
-
                   //   )
                   // console.log("number with space ");
-
                 } else {
                   // console.log("not number");
-
                   // str[1] = str[1].slice(str[1].indexOf(" ")); //chop number of address
-                               
                 }
-              } 
-             
+              }
             }
           });
         });
@@ -386,11 +386,8 @@ class App extends Component {
             />
             {/* <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum interdum, nisi lorem egestas odio, vitae scelerisque enim ligula venenatis dolor. Maecenas nisl est, ultrices nec congue eget, auctor vitae massa. Fusce luctus vestibulum augue ut aliquet. Mauris ante ligula,e turpis. Donec vitae dui eget tellus gravida venenatis. Integer fringilla congue eros non fermentum. Sed dapibus pulvinar nibh tempor quet. Mauris ante ligula, facilisis sed ornare eu, lobortis in odio. Praesent convallis urna a lacus interdum ut hendrerit risus congue. Nunc sagittis dictum nisi, sed ullamcorper ipsum dignissim ac. In at libero sed nunc venenatis imperdiet sed ornare turpis. Donec vitae dui eget tellus gravida venenatis. Integer fringilla congue eros non fermentum. Sed dapibus pulvinar nibh tempor porta. Cras ac leo purus. Mauris quis diam velit.</div> */}
           </div>
-         
-        </div> 
-        <footer className="footer">
-            footer
-          </footer>
+        </div>
+        <footer className="footer">footer</footer>
       </div>
     );
   }
