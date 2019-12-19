@@ -179,8 +179,8 @@ class App extends Component {
     // console.log(evt.target.value, evt.target.value.length);
     evt &&
       (evt.target.value.length === 3 ||
-        evt.target.value.length === 5 ||
-        evt.target.value.length > 7) &&
+        evt.target.value.length === 4 ||
+        evt.target.value.length > 6) &&
       this.getData(evt.target.value);
     this.setState({
       // trees: trees,
@@ -221,7 +221,7 @@ class App extends Component {
       )
       .then(response => {
         const trees = response.data;
-        // console.log(trees);
+        console.log(trees);   
         const stuff = {};
         const filtered = [];
         const arr = [];
@@ -242,7 +242,7 @@ class App extends Component {
                 if (!arr.includes(str[0])) {
                   arr.push(str[0]) && filtered.push({ [str[0]]: [] });
                   // console.log('index', index)
-                  // console.log('str0', str[0])
+                  // console.log('str0', str[0])  
                   // console.log('str1', str[1])
                   // console.log('filtered', filtered)
                   // console.log('filtered length', filtered.length)
@@ -256,7 +256,7 @@ class App extends Component {
                       fil[str[0]].forEach(f => {
                         // console.log(f[str[0]]);
 
-                        return f[str[0]] !== obj[str[0]] && true;
+                        return f[str[0]] !== obj[str[0]]
                       })
                     );
                   });

@@ -49,147 +49,147 @@ class TreesList extends React.Component {
     return s.charAt(0).toUpperCase() + s.slice(1);
   };
 
-  matches = () => {
-    const stuff = {};
-    const streetTypes = [
-      "STREET",
-      "AVENUE",
-      "ROAD",
-      "HIGHWAY",
-      "PARKWAY",
-      "BOULEVARD",
-      "TURNPIKE",
-      "PLACE",
-      "DRIVE",
-      "LOOP",
-      "LANE",
-      "CIRCLE",
-      "PARK",
-      "COURT"
-    ];
+  // matches = () => {
+  //   const stuff = {};
+  //   const streetTypes = [
+  //     "STREET",
+  //     "AVENUE",
+  //     "ROAD",
+  //     "HIGHWAY",
+  //     "PARKWAY",
+  //     "BOULEVARD",
+  //     "TURNPIKE",
+  //     "PLACE",
+  //     "DRIVE",
+  //     "LOOP",
+  //     "LANE",
+  //     "CIRCLE",
+  //     "PARK",
+  //     "COURT"
+  //   ];
 
-    const srch = this.props.searchString;
-    srch &&
-      this.props.treesData.map((obj, i) => {
-        // console.log(Object.values(obj), srch);
-        Object.entries(obj).forEach(str => {
-          // str.includes(this.props.searchString) && console.log("yes")
+  //   const srch = this.props.searchString;
+  //   srch &&
+  //     this.props.treesData.map((obj, i) => {
+  //       // console.log(Object.values(obj), srch);
+  //       Object.entries(obj).forEach(str => {
+  //         // str.includes(this.props.searchString) && console.log("yes")
 
-          if (typeof str[1] === "string") {
-            // console.log('obj', obj);
-            if (
-              str[1].includes(srch) ||
-              str[1].includes(srch.toLowerCase()) ||
-              str[1].includes(srch.toUpperCase()) ||
-              str[1].includes(this.capitalize(srch))
-            ) {
-              let splitRes = str[1].split(" ");
-              if (str[0] === "address") {
-                if (srch.match(/^\d/)) {
-                  if (
-                    srch.indexOf(" ") !== -1 &&
-                    srch[srch.indexOf(" ") + 1] !== "undefined"
-                  ) {
-                    // console.log("number with space ");
+  //         if (typeof str[1] === "string") {
+  //           // console.log('obj', obj);
+  //           if (
+  //             str[1].includes(srch) ||
+  //             str[1].includes(srch.toLowerCase()) ||
+  //             str[1].includes(srch.toUpperCase()) ||
+  //             str[1].includes(this.capitalize(srch))
+  //           ) {
+  //             let splitRes = str[1].split(" ");
+  //             if (str[0] === "address") {
+  //               if (srch.match(/^\d/)) {
+  //                 if (
+  //                   srch.indexOf(" ") !== -1 &&
+  //                   srch[srch.indexOf(" ") + 1] !== "undefined"
+  //                 ) {
+  //                   // console.log("number with space ");
 
-                    if (!stuff[str[0]]) {
-                      stuff[str[0]] = [];
-                    }
-                    !stuff[str[0]].includes(str[1]) &&
-                      stuff[str[0]].push(str[1]);
-                  }
-                } else {
-                  // console.log("not number");
+  //                   if (!stuff[str[0]]) {
+  //                     stuff[str[0]] = [];
+  //                   }
+  //                   !stuff[str[0]].includes(str[1]) &&
+  //                     stuff[str[0]].push(str[1]);
+  //                 }
+  //               } else {
+  //                 // console.log("not number");
 
-                  str[1] = str[1].slice(str[1].indexOf(" ")); //chop number of address
+  //                 str[1] = str[1].slice(str[1].indexOf(" ")); //chop number of address
 
-                  if (!stuff[str[0]]) {
-                    stuff[str[0]] = [];
-                  }
-                  !stuff[str[0]].includes(str[1]) &&
-                    stuff[str[0]].unshift(str[1]);
-                }
-              } else {
-                if (
-                  str[0] !== "latitude" &&
-                  str[0] !== "longitude" &&
-                  str[0] !== "x_sp" &&
-                  str[0] !== "y_sp" &&
-                  str[0] !== "block_id" &&
-                  str[0] !== "boro_ct"
-                ) {
-                  const atts = [
-                    "zipcode",
-                    "tree_id",
-                    "health",
-                    "spc_latin",
-                    "spc_common",
-                    "zip_city",
-                    "boroname",
-                    "nta_name"
-                  ];
-                  atts.forEach(att => {
-                    if (att === str[0]) {
-                      // console.log('here', str[0], str[1], att)
-                      if (!stuff[att]) {
-                        stuff[att] = [];
-                      }
-                      // console.log('assafd', str[1])
-                      !stuff[str[0]].includes(str[1]) &&
-                        stuff[att].push(str[1]);
-                    }
-                  });
-                }
-              }
-            }
-          }
-        });
-      });
-    console.log("stuff", stuff);
-    return stuff;
-  };
-  renderMatches = () => {
-    const matchesList = this.matches();
+  //                 if (!stuff[str[0]]) {
+  //                   stuff[str[0]] = [];
+  //                 }
+  //                 !stuff[str[0]].includes(str[1]) &&
+  //                   stuff[str[0]].unshift(str[1]);
+  //               }
+  //             } else {
+  //               if (
+  //                 str[0] !== "latitude" &&
+  //                 str[0] !== "longitude" &&
+  //                 str[0] !== "x_sp" &&
+  //                 str[0] !== "y_sp" &&
+  //                 str[0] !== "block_id" &&
+  //                 str[0] !== "boro_ct"
+  //               ) {
+  //                 const atts = [
+  //                   "zipcode",
+  //                   "tree_id",
+  //                   "health",
+  //                   "spc_latin",
+  //                   "spc_common",
+  //                   "zip_city",
+  //                   "boroname",
+  //                   "nta_name"
+  //                 ];
+  //                 atts.forEach(att => {
+  //                   if (att === str[0]) {
+  //                     // console.log('here', str[0], str[1], att)
+  //                     if (!stuff[att]) {
+  //                       stuff[att] = [];
+  //                     }
+  //                     // console.log('assafd', str[1])
+  //                     !stuff[str[0]].includes(str[1]) &&
+  //                       stuff[att].push(str[1]);
+  //                   }
+  //                 });
+  //               }
+  //             }
+  //           }
+  //         }
+  //       });
+  //     });
+  //   console.log("stuff", stuff);
+  //   return stuff;
+  // };
+  // renderMatches = () => {
+  //   const matchesList = this.matches();
 
-    let keys = Object.keys(matchesList);
-    return keys.map(key => {
-      return (
-        <div>
-          <div className="list-subtitle">{key}</div>
-          {matchesList[key]
-            .sort()
-            .slice(0, 15)
-            .map(match => {
-              return <div>{match}</div>;
-            })}
-        </div>
-      );
-    });
+  //   let keys = Object.keys(matchesList);
+  //   return keys.map(key => {
+  //     return (
+  //       <div>
+  //         <div className="list-subtitle">{key}</div>
+  //         {matchesList[key]
+  //           .sort()
+  //           .slice(0, 15)
+  //           .map(match => {
+  //             return <div>{match}</div>;
+  //           })}
+  //       </div>
+  //     );
+  //   });
 
-    // for (let ls of matchesList){
-    //   console.log("list", matchesList[ls], ls);
+  //   // for (let ls of matchesList){
+  //   //   console.log("list", matchesList[ls], ls);
 
-    // }
-    // for (let list in matchesList) {
-    //   console.log("list", matchesList[list], list);
-    //   return matchesList[list].map(match=>{
-    //     return <div>{match}</div>
-    //   })
-    // }
-  };
+  //   // }
+  //   // for (let list in matchesList) {
+  //   //   console.log("list", matchesList[list], list);
+  //   //   return matchesList[list].map(match=>{
+  //   //     return <div>{match}</div>
+  //   //   })
+  //   // }
+  // };
 
-  makeUnique = (arr) => {
-    console.log(arr)
-    arr.forEach(obj => {
-      console.log(obj)
-      for(let ar in obj){
-        console.log(ar, obj[ar])
-        // ar[i].forEach()
+  // makeUnique = (arr) => {
+  //   console.log(arr)
+  //   arr.forEach(obj => {
+  //     console.log(obj)
+  //     for(let ar in obj){
+  //       console.log(ar, obj[ar])
+  //       // ar[i].forEach()
         
-      }
-    })
+  //     }
+  //   })
 
-  }
+  // }
 
   renderPatches = () => {
     function compare(a, b) {
