@@ -187,8 +187,23 @@ class App extends Component {
       searchString: evt.target.value
     });
   };
+
+  getKeyByValue = (object, value) => {
+    return Object.keys(object).find(key => object[key] === value);
+  };
   getData = async srch => {
     // console.log('here')
+    const tail =
+      `address%20like%20%27%25${srch.toUpperCase()}%25%27` +
+      `or ` +
+      `address%20like%20%27%25${srch.toLowerCase()}%25%27` +
+      `or ` +
+      `address%20like%20%27%25${this.capitalize(srch)}%25%27`;
+
+    const url =
+      `https://data.cityofnewyork.us/resource/5rq2-4hqu.json?` +
+      `$limit=1000` +
+      `&$where=`;
 
     await axios
       .get(
@@ -221,98 +236,48 @@ class App extends Component {
       )
       .then(response => {
         const trees = response.data;
-        // console.log(trees);
-        const stuff = {};
         const filtered = [];
         const arr = [];
+      
+     
         trees.map((obj, i) => {
-          // console.log('index', i)
-          // console.log(Object.values(obj), srch);
-          Object.entries(obj).forEach((str, index) => {
-            // str.includes(this.props.searchString) && console.log("yes")
-
+      
+          Object.entries(obj).map((str, index) => {
+            
             if (typeof str[1] === "string") {
-              // console.log('obj', obj);
+            
               if (
                 str[1].includes(srch) ||
                 str[1].includes(srch.toLowerCase()) ||
                 str[1].includes(srch.toUpperCase()) ||
                 str[1].includes(this.capitalize(srch))
               ) {
-                if (!arr.includes(str[0])) {
-                  arr.push(str[0]) && filtered.push({ [str[0]]: [] });
-                  // console.log('index', index)
-                  // console.log('str0', str[0])
-                  // console.log('str1', str[1])
-                  // console.log('filtered', filtered)
-                  // console.log('filtered length', filtered.length)
-                }
-                if (arr.includes(str[0])) {
-                  filtered.forEach(fil => {
-                    do {
-                      fil[str[0]] && fil[str[0]].push(obj);
-                    } while (
-                      fil[str[0]] &&
-                      fil[str[0]].forEach(f => {
-                        // console.log(f[str[0]]);
-
-                        return f[str[0]] !== obj[str[0]] && true;
-                      })
-                    );
-                  });
-                }
-                console.log(filtered);
-
-                if (srch.match(/^\d/)) {
-                  // if (
-                  //     srch.indexOf(" ") !== -1 &&
-                  //     srch[srch.indexOf(" ") + 1] !== "undefined"
-                  //   )
-                  // console.log("number with space ");
-                } else {
-                  // console.log("not number");
-                  // str[1] = str[1].slice(str[1].indexOf(" ")); //chop number of address
-                }
+                
+                filtered.push({[str[0]]:str[1]})
+              
+                // if (!arr.includes(str[0])) {
+                //   arr.push(str[0]) && filtered.push({ [str[0]]: [] });
+                // }
+                // if(arr.includes(str[0])){
+                // filtered.push({ [str[0]]: [str[1]] });
+                // }
               }
             }
-          });
+          })
         });
-
+     
         this.setState({
-          trees: trees,
-          filtered: filtered
-          // searchString:srch
-        });
+        trees:trees,
+        filtered:filtered
       })
-      .catch(error => {
-        console.error("Error: ", error);
-      });
-  };
+      })
+      
+    }
 
   // componentWillUnmount() {
   //   window.removeEventListener('scroll', this.handleScroll)
   // }
 
-  // handleScroll=()=>{
-  //   let headerHeight = document.getElementById("myHeader").offsetHeight
-  //   console.log('header', headerHeight)
-  //   console.log('windowScrollY', window.scrollY);
-
-  //   if(window.scrollY < headerHeight){
-
-  //     this.setState({
-  //       fixHeader:false
-  //     })
-  //   }else{
-  //     this.setState({
-  //       fixHeader:true
-  //     })
-  //   }
-
-  // (window.scrollY > headerHeight) &&
-  // console.log('false')
-
-  // }
   handleClickSearch = clickedValue => {
     console.log(clickedValue);
     this.setState({
@@ -321,27 +286,7 @@ class App extends Component {
     this.getData(clickedValue);
   };
   render() {
-    console.log(this.state);
-    // const style = this.state.fixHeader ?
-    // {}
-    // console.log('t', this.state.zoom)
-    // window.onscroll = function() {
-    //   myFunction();
-    // };
 
-    // // Get the header
-
-    // // Get the offset position of the navbar
-    // var sticky = header.offsetTop;
-
-    // // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
-    // function myFunction() {
-    //   if (window.pageYOffset > sticky) {
-    //     header.classList.add("sticky");
-    //   } else {
-    //     header.classList.remove("sticky");
-    //   }
-    // }
 
     return (
       <div className="App">

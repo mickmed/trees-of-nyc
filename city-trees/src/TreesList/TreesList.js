@@ -178,21 +178,17 @@ class TreesList extends React.Component {
     // }
   };
 
-  makeUnique = (arr) => {
-    console.log(arr)
+  makeUnique = arr => {
+    console.log(arr);
     arr.forEach(obj => {
-      console.log(obj)
-      for(let ar in obj){
-        console.log(ar, obj[ar])
+      console.log(obj);
+      for (let ar in obj) {
+        console.log(ar, obj[ar]);
         // ar[i].forEach()
-        
       }
-    })
-
-  }
-
-  renderPatches = () => {
-    function compare(a, b) {
+    });
+  };
+  compare = (a, b) => {
       // Use toUpperCase() to ignore character casing
       // const bandA = a.band.toUpperCase();
       // const bandB = b.band.toUpperCase();
@@ -205,6 +201,8 @@ class TreesList extends React.Component {
       }
       return comparison;
     }
+  renderPatches = () => {
+ 
 
     return (
       this.props.filtered &&
@@ -233,7 +231,7 @@ class TreesList extends React.Component {
         }
         if (Object.keys(match)[0] === "spc_latin") {
           icon = <Icon icon={labelIcon} color="darkgrey" />;
-          subtitle = "Latin Species";
+          subtitle = "Latin Species";   
         }
         if (Object.keys(match)[0] === "zipcode") {
           icon = <Icon icon={fileZip} color="lightgrey" />;
@@ -244,9 +242,9 @@ class TreesList extends React.Component {
             <div className="search-subtitles">
               {icon} {subtitle}
               {match[Object.keys(match)[0]]
-                .sort(compare)
+                .sort(this.compare)
                 .slice(0, 5)
-              
+
                 .map(mat => (
                   // console.log(mat)
 
@@ -261,7 +259,22 @@ class TreesList extends React.Component {
     );
   };
 
+  renderTrees = () => {
+      const sorted = this.props.filtered && this.props.filtered.sort(this.compare)
+      console.log(sorted)
+      return sorted && sorted.map(fil=>{
+        
+        return <div>{fil.address}</div>
+      })
+   
+   
+   
+  };
   render() {
+    console.log(this.props.filtered)
+
+
+    // this.renderTrees()
     // this.props.filtered && this.makeUnique(this.props.filtered)
     // console.log(this.props.filtered)
     // this.props.filtered && this.props.filtered.map(tree=>{
@@ -333,7 +346,9 @@ class TreesList extends React.Component {
     return (
       <div className="tree-inner">
         {/* {blah} */}
-        {this.renderPatches()}
+        {/* {this.renderPatches()} */}
+        {this.renderTrees()}
+       
         {/* {this.matches().sort()} */}
         {/* {addresses.map(match=>(
             <div onClick={()=>this.props.handleClickSearch(match)}>
