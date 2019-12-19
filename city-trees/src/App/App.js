@@ -236,11 +236,6 @@ class App extends Component {
       )
       .then(response => {
         const trees = response.data;
-<<<<<<< HEAD
-        console.log(trees);   
-        const stuff = {};
-=======
->>>>>>> 3d1aaba6e64b92d128faad4d9a0a7babf38f8514
         const filtered = [];
         const arr = [];
       
@@ -257,42 +252,6 @@ class App extends Component {
                 str[1].includes(srch.toUpperCase()) ||
                 str[1].includes(this.capitalize(srch))
               ) {
-<<<<<<< HEAD
-                if (!arr.includes(str[0])) {
-                  arr.push(str[0]) && filtered.push({ [str[0]]: [] });
-                  // console.log('index', index)
-                  // console.log('str0', str[0])  
-                  // console.log('str1', str[1])
-                  // console.log('filtered', filtered)
-                  // console.log('filtered length', filtered.length)
-                }
-                if (arr.includes(str[0])) {
-                  filtered.forEach(fil => {
-                    do {
-                      fil[str[0]] && fil[str[0]].push(obj);
-                    } while (
-                      fil[str[0]] &&
-                      fil[str[0]].forEach(f => {
-                        // console.log(f[str[0]]);
-
-                        return f[str[0]] !== obj[str[0]]
-                      })
-                    );
-                  });
-                }
-                console.log(filtered);
-
-                if (srch.match(/^\d/)) {
-                  // if (
-                  //     srch.indexOf(" ") !== -1 &&
-                  //     srch[srch.indexOf(" ") + 1] !== "undefined"
-                  //   )
-                  // console.log("number with space ");
-                } else {
-                  // console.log("not number");
-                  // str[1] = str[1].slice(str[1].indexOf(" ")); //chop number of address
-                }
-=======
                 
                 filtered.push({[str[0]]:str[1]})
               
@@ -302,7 +261,6 @@ class App extends Component {
                 // if(arr.includes(str[0])){
                 // filtered.push({ [str[0]]: [str[1]] });
                 // }
->>>>>>> 3d1aaba6e64b92d128faad4d9a0a7babf38f8514
               }
             }
           })
