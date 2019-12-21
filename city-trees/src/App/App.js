@@ -1,23 +1,23 @@
-import React, { Component } from "react";
-import "./App.css";
-import axios from "axios";
-import TreesList from "../TreesList/TreesList.js";
-import Filters from "../Filters/Filters";
-import Map from "../Map/Map.js";
-import ReactDOM from "react-dom";
+import React, { Component } from "react"
+import "./App.css"
+import axios from "axios"
+import TreesList from "../TreesList/TreesList.js"
+// import Filters from "../Filters/Filters";
+import Map from "../Map/Map.js"
+// import ReactDOM from "react-dom";
 
-import Header from "./Header";
+import Header from "./Header"
 // import Search from "./Search";
 
 const TREES_URL =
-  "https://data.cityofnewyork.us/resource/5rq2-4hqu.json?$limit=2000";
+  "https://data.cityofnewyork.us/resource/5rq2-4hqu.json?$limit=2000"
 
 // const TREES_URL2 =
 // "https://data.cityofnewyork.us/resource/5rq2-4hqu.json?$limit=5000";
 
 class App extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       trees: [],
@@ -28,112 +28,108 @@ class App extends Component {
       health: "",
       fixHeader: false,
       input: ""
-    };
+    }
   }
 
   fetchData = async (url, param) => {
-    let urlStr;
+    let urlStr
     if (param) {
-      urlStr = url + param;
+      urlStr = url + param
     } else {
       urlStr =
         url +
         this.state.boroname +
         this.state.zipcode +
         this.state.status +
-        this.state.spc_common;
+        this.state.spc_common
     }
 
     await axios
 
       .get(urlStr)
       .then(response => {
-        const trees = response.data;
+        const trees = response.data
         this.setState({
           trees: trees
-        });
+        })
       })
       .catch(error => {
-        console.error("Error: ", error);
-      });
-  };
+        console.error("Error: ", error)
+      })
+  }
   // viewportChange = (vpz) => {
   //   this.fetchData(TREES_URL2);
 
   // };
   //functions for button and select clicks/chngs
   boroClk = e => {
-    let boroname = "&boroname=" + e.target.value;
-    this.setState({ boroname: boroname });
+    let boroname = "&boroname=" + e.target.value
+    this.setState({ boroname: boroname })
 
     let str =
-      boroname + this.state.spc_common + this.state.status + this.state.health;
-    this.fetchData(TREES_URL, str);
-  };
+      boroname + this.state.spc_common + this.state.status + this.state.health
+    this.fetchData(TREES_URL, str)
+  }
 
   zipChng = e => {
     //chk for empty zip
-    let zip;
-    e.target.value === "" ? (zip = "") : (zip = "&zipcode=" + e.target.value);
-    this.setState({ zipcode: "&zipcode=" + e.target.value });
+    let zip
+    e.target.value === "" ? (zip = "") : (zip = "&zipcode=" + e.target.value)
+    this.setState({ zipcode: "&zipcode=" + e.target.value })
 
     //chk for empty species
-    let spec;
-    this.state.spc_common === "" ? (spec = "") : (spec = this.state.spc_common);
-    this.setState({ zipcode: "&zipcode=" + e.target.value });
+    let spec
+    this.state.spc_common === "" ? (spec = "") : (spec = this.state.spc_common)
+    this.setState({ zipcode: "&zipcode=" + e.target.value })
 
     //set url parameters
     let str =
-      this.state.boroname + zip + spec + this.state.status + this.state.health;
-    this.fetchData(TREES_URL, str);
-  };
+      this.state.boroname + zip + spec + this.state.status + this.state.health
+    this.fetchData(TREES_URL, str)
+  }
 
   speciesChng = e => {
     //chk for empty species
-    let specs;
+    let specs
     e.target.value === ""
       ? (specs = "")
-      : (specs = "&spc_common=" + e.target.value);
+      : (specs = "&spc_common=" + e.target.value)
 
     //chk for empty zip
-    let zips;
-    this.state.zipcode === "" ? (zips = "") : (zips = this.state.zipcode);
-    this.setState({ spc_common: "&spc_common=" + e.target.value });
+    let zips
+    this.state.zipcode === "" ? (zips = "") : (zips = this.state.zipcode)
+    this.setState({ spc_common: "&spc_common=" + e.target.value })
 
     //set url parameters
     let str =
-      this.state.boroname +
-      zips +
-      specs +
-      this.state.status +
-      this.state.health;
-    this.fetchData(TREES_URL, str);
-  };
+      this.state.boroname + zips + specs + this.state.status + this.state.health
+    this.fetchData(TREES_URL, str)
+  }
 
   sttsClk = e => {
-    this.setState({ status: e.target.value });
+    this.setState({ status: e.target.value })
     let str =
       this.state.boroname +
       this.state.zipcode +
       this.state.spc_common +
-      e.target.value;
-    this.fetchData(TREES_URL, str);
-  };
+      e.target.value
+    this.fetchData(TREES_URL, str)
+  }
 
   hlthClk = e => {
-    this.setState({ health: e.target.value });
+    this.setState({ health: e.target.value })
     let str =
       this.state.boroname +
       this.state.zipcode +
       this.state.spc_common +
       this.state.status +
-      e.target.value;
-    this.fetchData(TREES_URL, str);
-  };
+      e.target.value
+    this.fetchData(TREES_URL, str)
+  }
 
   componentDidMount() {
-    this.fetchData(TREES_URL);
-    window.addEventListener("scroll", this.handleScroll);
+    this.fetchData(TREES_URL)
+    window.addEventListener("scroll", this.handleScroll)
     // this.handleScroll();
     // window.addEventListener('scroll', this.handleScroll)
   }
@@ -165,32 +161,32 @@ class App extends Component {
   //   }
   // };
   capitalize = s => {
-    if (typeof s !== "string") return "";
-    return s.charAt(0).toUpperCase() + s.slice(1);
-  };
+    if (typeof s !== "string") return ""
+    return s.charAt(0).toUpperCase() + s.slice(1)
+  }
 
   onSubmit = evt => {
-    evt.preventDefault();
-  };
+    evt.preventDefault()
+  }
 
   onChange = evt => {
-    let params = ["address", "spc_latin"];
+    let params = ["address", "spc_latin"]
 
     // console.log(evt.target.value, evt.target.value.length);
     evt &&
       (evt.target.value.length === 3 ||
         evt.target.value.length === 4 ||
         evt.target.value.length > 6) &&
-      this.getData(evt.target.value);
+      this.getData(evt.target.value)
     this.setState({
       // trees: trees,
       searchString: evt.target.value
-    });
-  };
+    })
+  }
 
   getKeyByValue = (object, value) => {
-    return Object.keys(object).find(key => object[key] === value);
-  };
+    return Object.keys(object).find(key => object[key] === value)
+  }
   getData = async srch => {
     // console.log('here')
     const tail =
@@ -198,12 +194,12 @@ class App extends Component {
       `or ` +
       `address%20like%20%27%25${srch.toLowerCase()}%25%27` +
       `or ` +
-      `address%20like%20%27%25${this.capitalize(srch)}%25%27`;
+      `address%20like%20%27%25${this.capitalize(srch)}%25%27`
 
     const url =
       `https://data.cityofnewyork.us/resource/5rq2-4hqu.json?` +
       `$limit=1000` +
-      `&$where=`;
+      `&$where=`
 
     await axios
       .get(
@@ -235,59 +231,54 @@ class App extends Component {
           `zipcode%20like%20%27%25${this.capitalize(srch)}%25%27`
       )
       .then(response => {
-        const trees = response.data;
-        const filtered = [];
-        const arr = [];
-      
-     
+        const trees = response.data
+        const filtered = {}
+        const arr = []
+
         trees.map((obj, i) => {
-      
           Object.entries(obj).map((str, index) => {
-            
             if (typeof str[1] === "string") {
-            
               if (
                 str[1].includes(srch) ||
                 str[1].includes(srch.toLowerCase()) ||
                 str[1].includes(srch.toUpperCase()) ||
                 str[1].includes(this.capitalize(srch))
               ) {
-                
-                filtered.push({[str[0]]:str[1]})
-              
-                // if (!arr.includes(str[0])) {
-                //   arr.push(str[0]) && filtered.push({ [str[0]]: [] });
-                // }
-                // if(arr.includes(str[0])){
-                // filtered.push({ [str[0]]: [str[1]] });
-                // }
+                if (!arr.includes(str[0])) {
+                  arr.push(str[0])
+                  filtered[str[0]] = [str[1]]
+                }
+                if (arr.includes(str[0])) {
+                  // console.log(filtered[str[0]])
+                  filtered[str[0]] && !filtered[str[0]].includes(str[1]) &&
+                    filtered[str[0]].push(str[1])
+                  
+                }
               }
             }
           })
-        });
-     
+        })
+        console.log("filtered", filtered)
         this.setState({
-        trees:trees,
-        filtered:filtered
+          // trees:trees,
+          filtered: filtered
+        })
       })
-      })
-      
-    }
+  }
 
   // componentWillUnmount() {
   //   window.removeEventListener('scroll', this.handleScroll)
   // }
 
   handleClickSearch = clickedValue => {
-    console.log(clickedValue);
+    console.log(clickedValue)
     this.setState({
       searchString: clickedValue
-    });
-    this.getData(clickedValue);
-  };
+    })
+    this.getData(clickedValue)
+  }
   render() {
-
-
+    console.log(this.state)
     return (
       <div className="App">
         <Header
@@ -334,8 +325,8 @@ class App extends Component {
         </div>
         <footer className="footer">footer</footer>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App

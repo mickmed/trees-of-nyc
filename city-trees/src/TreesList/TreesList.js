@@ -1,53 +1,54 @@
-import React from "react";
-import Tree from "./Tree";
-import { Icon, InlineIcon } from "@iconify/react";
-import streetsignIcon from "@iconify/icons-et/streetsign";
+import React from "react"
+import Tree from "./Tree"
+import { Icon, InlineIcon } from "@iconify/react"
+import streetsignIcon from "@iconify/icons-et/streetsign"
 
-import roundBorderOuter from "@iconify/icons-ic/round-border-outer";
-import science from "@iconify/icons-uil/science";
-import labelIcon from "@iconify/icons-zmdi/label";
-import zipIcon from "@iconify/icons-whh/zip";
-import fileZip from "@iconify/icons-octicon/file-zip";
+import roundBorderOuter from "@iconify/icons-ic/round-border-outer"
+import science from "@iconify/icons-uil/science"
+import labelIcon from "@iconify/icons-zmdi/label"
+import zipIcon from "@iconify/icons-whh/zip"
+import fileZip from "@iconify/icons-octicon/file-zip"
 
 // import Filters from "../Filters/Filters";
 // import { geoloated } from "../App/Geolocated";
 
 class TreesList extends React.Component {
   constructor() {
-    super();
+    super()
     this.state = {
       trees: []
-    };
+    }
   }
   componentDidMount() {
     // this.getLocation()
   }
   getLocation = () => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(this.showPosition);
+      navigator.geolocation.getCurrentPosition(this.showPosition)
     } else {
-      console.log("Geolocation is not supported by this browser.");
+      console.log("Geolocation is not supported by this browser.")
     }
-  };
+  }
 
   showPosition = position => {
     console.log(
       position.coords.latitude.toString() + position.coords.longitude.toString()
-    );
-  };
+    )
+  }
 
   hoods = neighbs => {
-    let result = {};
+    let result = {}
     for (let i = 0; i < neighbs.length; ++i) {
-      if (!result[neighbs[i]]) result[neighbs[i]] = 0;
-      ++result[neighbs[i]];
+      if (!result[neighbs[i]]) result[neighbs[i]] = 0
+      ++result[neighbs[i]]
     }
-    return result;
-  };
+    return result
+  }
+
   capitalize = s => {
-    if (typeof s !== "string") return "";
-    return s.charAt(0).toUpperCase() + s.slice(1);
-  };
+    if (typeof s !== "string") return ""
+    return s.charAt(0).toUpperCase() + s.slice(1)
+  }
 
   // matches = () => {
   //   const stuff = {};
@@ -185,98 +186,108 @@ class TreesList extends React.Component {
   //     for(let ar in obj){
   //       console.log(ar, obj[ar])
   //       // ar[i].forEach()
-        
+
   //     }
   //   })
 
   // }
 
-  renderPatches = () => {
-    function compare(a, b) {
-      // Use toUpperCase() to ignore character casing
-      // const bandA = a.band.toUpperCase();
-      // const bandB = b.band.toUpperCase();
+  // renderPatches = () => {
+  //   function compare(a, b) {
+  //     // Use toUpperCase() to ignore character casing
+  //     // const bandA = a.band.toUpperCase();
+  //     // const bandB = b.band.toUpperCase();
 
-      let comparison = 0;
-      if (a.address > b.address) {
-        comparison = 1;
-      } else if (a.address < b.address) {
-        comparison = -1;
-      }
-      return comparison;
-    }
-  renderPatches = () => {
- 
-
-    return (
-      this.props.filtered &&
-      this.props.filtered.map(match => {
-        const blackList = [
-          "latitude",
-          "longitude",
-          "x_sp",
-          "y_sp",
-          "block_id",
-          "boro_ct"
-        ];
-
-        let icon, subtitle;
-        if (Object.keys(match)[0] === "address") {
-          icon = <Icon icon={streetsignIcon} />;
-          subtitle = "Addresses";
-        }
-        if (Object.keys(match)[0] === "nta_name") {
-          icon = <Icon icon={roundBorderOuter} />;
-          subtitle = "Neighborhood";
-        }
-        if (Object.keys(match)[0] === "spc_common") {
-          icon = <Icon icon={labelIcon} />;
-          subtitle = "Common Species";
-        }
-        if (Object.keys(match)[0] === "spc_latin") {
-          icon = <Icon icon={labelIcon} color="darkgrey" />;
-          subtitle = "Latin Species";   
-        }
-        if (Object.keys(match)[0] === "zipcode") {
-          icon = <Icon icon={fileZip} color="lightgrey" />;
-          subtitle = "ZipCode";
-        }
-        if (!blackList.includes(Object.keys(match)[0])) {
-          return (
-            <div className="search-subtitles">
-              {icon} {subtitle}
-              {match[Object.keys(match)[0]]
-                .sort(this.compare)
-                .slice(0, 5)
-
-                .map(mat => (
-                  // console.log(mat)
-
-                  <div className="search-results">
-                    {mat[Object.keys(match)[0]]}
-                  </div>
-                ))}
-            </div>
-          );
-        }
+  //     let comparison = 0;
+  //     if (a.address > b.address) {
+  //       comparison = 1;
+  //     } else if (a.address < b.address) {
+  //       comparison = -1;
+  //     }
+  //     return comparison;
+  //   }
+  renderFiltered = () => {
+   
+    const filtered = this.props.filtered && this.props.filtered
+    if (this.props.filtered) {
+      return Object.keys(filtered).map(key => {
+        return (
+          <div>
+            <div>{key}</div>
+            {filtered[key] .sort() .slice(0, 5)}
+          </div>
+        )
       })
-    );
-  };
+    }
+
+    // this.props.filtered &&
+    // this.props.filtered.map(match => {
+    //   const blackList = [
+    //     "latitude",
+    //     "longitude",
+    //     "x_sp",
+    //     "y_sp",
+    //     "block_id",
+    //     "boro_ct"
+    //   ]
+
+    // let icon, subtitle
+    // if (Object.keys(match)[0] === "address") {
+    //   icon = <Icon icon={streetsignIcon} />
+    //   subtitle = "Addresses"
+    // }
+    // if (Object.keys(match)[0] === "nta_name") {
+    //   icon = <Icon icon={roundBorderOuter} />
+    //   subtitle = "Neighborhood"
+    // }
+    // if (Object.keys(match)[0] === "spc_common") {
+    //   icon = <Icon icon={labelIcon} />
+    //   subtitle = "Common Species"
+    // }
+    // if (Object.keys(match)[0] === "spc_latin") {
+    //   icon = <Icon icon={labelIcon} color="darkgrey" />
+    //   subtitle = "Latin Species"
+    // }
+    // if (Object.keys(match)[0] === "zipcode") {
+    //   icon = <Icon icon={fileZip} color="lightgrey" />
+    //   subtitle = "ZipCode"
+    // }
+    //   console.log(Object.keys(match))
+    //   if (!blackList.includes(Object.keys(match)[0])) {
+    //     return (
+    //       <div className="search-subtitles">
+    //         hi
+    //         {/* {icon} {subtitle}
+    //         {match[Object.keys(match)[0]]
+    //           .sort(this.compare)
+    //           .slice(0, 5)
+
+    //           .map(mat => (
+    //             console.log(mat)
+
+    //             <div className="search-results">
+    //               {mat[Object.keys(match)[0]]}
+    //             </div>
+    //           ))} */}
+    //       </div>
+    //     )
+    //   }
+    // })
+    // )
+  }
 
   renderTrees = () => {
-      const sorted = this.props.filtered && this.props.filtered.sort(this.compare)
-      console.log(sorted)
-      return sorted && sorted.map(fil=>{
-        
+    const sorted = this.props.filtered && this.props.filtered.sort(this.compare)
+    // console.log(sorted)
+    return (
+      sorted &&
+      sorted.map(fil => {
         return <div>{fil.address}</div>
       })
-   
-   
-   
-  };
+    )
+  }
   render() {
-    console.log(this.props.filtered)
-
+    // console.log(this.props.filtered)
 
     // this.renderTrees()
     // this.props.filtered && this.makeUnique(this.props.filtered)
@@ -350,9 +361,10 @@ class TreesList extends React.Component {
     return (
       <div className="tree-inner">
         {/* {blah} */}
-        {/* {this.renderPatches()} */}
-        {this.renderTrees()}
-       
+        {this.renderFiltered()}
+        {"faroute"}
+        {/* {this.renderTrees()} */}
+
         {/* {this.matches().sort()} */}
         {/* {addresses.map(match=>(
             <div onClick={()=>this.props.handleClickSearch(match)}>
@@ -367,11 +379,11 @@ class TreesList extends React.Component {
         {/* {trees} */}
         {/* {this.props.treesData.length} */}
       </div>
-    );
+    )
   }
 }
 
-export default TreesList;
+export default TreesList
 // console.log("here", splitRes[1]);
 
 // if (
