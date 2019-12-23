@@ -214,7 +214,7 @@ class TreesList extends React.Component {
         return (
           <div>
             <div>{key}</div>
-            {filtered[key] .sort() .slice(0, 5)}
+            {filtered[key] .sort() .slice(0, 5).map(e=><div>{e}</div>)}
           </div>
         )
       })

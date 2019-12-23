@@ -169,72 +169,96 @@ class App extends Component {
     evt.preventDefault()
   }
 
-  onChange = evt => {
-    let params = ["address", "spc_latin"]
+  onChange = value => {
+    // let params = ["address", "spc_latin"]
 
     // console.log(evt.target.value, evt.target.value.length);
-    evt &&
-      (evt.target.value.length === 3 ||
-        evt.target.value.length === 4 ||
-        evt.target.value.length > 6) &&
-      this.getData(evt.target.value)
+    // evt &&
+    //   (evt.target.value.length === 3 ||
+    //     evt.target.value.length === 4 ||
+    //     evt.target.value.length > 6) &&
+    //   this.getData(evt.target.value)
+    let srch = value
+    srch && srch.length > 2 && srch.length % 2 !== 0 && this.getData(srch)
     this.setState({
       // trees: trees,
-      searchString: evt.target.value
+      searchString: srch
     })
   }
 
   getKeyByValue = (object, value) => {
     return Object.keys(object).find(key => object[key] === value)
   }
-  getData = async srch => {
-    // console.log('here')
-    const tail =
-      `address%20like%20%27%25${srch.toUpperCase()}%25%27` +
-      `or ` +
-      `address%20like%20%27%25${srch.toLowerCase()}%25%27` +
-      `or ` +
-      `address%20like%20%27%25${this.capitalize(srch)}%25%27`
 
-    const url =
+  getURL = srch => {
+    const baseURL =
       `https://data.cityofnewyork.us/resource/5rq2-4hqu.json?` +
       `$limit=1000` +
+      `&$order=address` +
       `&$where=`
 
+    const params = ["address", "spc_latin", "spc_common", "zipcode"]
+    let str = "", orTail
+    let cases = params.forEach((e, i) => {
+      if ((i === params.length - 1)) {
+        orTail = ``
+      } else {
+        orTail = `or `
+      }
+      str +=
+        `${e}%20like%20%27%25${srch.toUpperCase()}%25%27` +
+        `or ` +
+        `${e}%20like%20%27%25${srch.toLowerCase()}%25%27` +
+        `or ` +
+        `${e}%20like%20%27%25${this.capitalize(srch)}%25%27` +
+         orTail
+    })
+ 
+    return baseURL + str
+  }
+  getData = async srch => {
+    // console.log('here')
+    console.log(this.getURL(srch))
+
     await axios
-      .get(
-        `https://data.cityofnewyork.us/resource/5rq2-4hqu.json?` +
-          `$limit=1000` +
-          `&$where=` +
-          `address%20like%20%27%25${srch.toUpperCase()}%25%27` +
-          `or ` +
-          `address%20like%20%27%25${srch.toLowerCase()}%25%27` +
-          `or ` +
-          `address%20like%20%27%25${this.capitalize(srch)}%25%27` +
-          `or ` +
-          `spc_latin%20like%20%27%25${srch.toUpperCase()}%25%27` +
-          `or ` +
-          `spc_latin%20like%20%27%25${srch.toLowerCase()}%25%27` +
-          `or ` +
-          `spc_latin%20like%20%27%25${this.capitalize(srch)}%25%27` +
-          `or ` +
-          `spc_common%20like%20%27%25${srch.toUpperCase()}%25%27` +
-          `or ` +
-          `spc_common%20like%20%27%25${srch.toLowerCase()}%25%27` +
-          `or ` +
-          `spc_common%20like%20%27%25${this.capitalize(srch)}%25%27` +
-          `or ` +
-          `zipcode%20like%20%27%25${srch.toUpperCase()}%25%27` +
-          `or ` +
-          `zipcode%20like%20%27%25${srch.toLowerCase()}%25%27` +
-          `or ` +
-          `zipcode%20like%20%27%25${this.capitalize(srch)}%25%27`
-      )
+      .get(this.getURL(srch))
+
+      // await axios
+      //   .get(
+      //     `https://data.cityofnewyork.us/resource/5rq2-4hqu.json?` +
+      //       `$limit=1000` +
+      //       `&$order=address` +
+      //       `&$where=` +
+      //       `address%20like%20%27%25${srch.toUpperCase()}%25%27` +
+      //       `or ` +
+      //       `address%20like%20%27%25${srch.toLowerCase()}%25%27` +
+      //       `or ` +
+      //       `address%20like%20%27%25${this.capitalize(srch)}%25%27` +
+      //       `or ` +
+      //       `spc_latin%20like%20%27%25${srch.toUpperCase()}%25%27` +
+      //       `or ` +
+      //       `spc_latin%20like%20%27%25${srch.toLowerCase()}%25%27` +
+      //       `or ` +
+      //       `spc_latin%20like%20%27%25${this.capitalize(srch)}%25%27` +
+      //       `or ` +
+      //       `spc_common%20like%20%27%25${srch.toUpperCase()}%25%27` +
+      //       `or ` +
+      //       `spc_common%20like%20%27%25${srch.toLowerCase()}%25%27` +
+      //       `or ` +
+      //       `spc_common%20like%20%27%25${this.capitalize(srch)}%25%27` +
+      //       `or ` +
+      //       `zipcode%20like%20%27%25${srch.toUpperCase()}%25%27` +
+      //       `or ` +
+      //       `zipcode%20like%20%27%25${srch.toLowerCase()}%25%27` +
+      //       `or ` +
+      //       `zipcode%20like%20%27%25${this.capitalize(srch)}%25%27`
+      //   )
       .then(response => {
         const trees = response.data
-        const filtered = {}
-        const arr = []
 
+        const arr = []
+        const filtered = {}
+        const filteredMap = {}
         trees.map((obj, i) => {
           Object.entries(obj).map((str, index) => {
             if (typeof str[1] === "string") {
@@ -247,22 +271,28 @@ class App extends Component {
                 if (!arr.includes(str[0])) {
                   arr.push(str[0])
                   filtered[str[0]] = [str[1]]
+                  filteredMap[str[0]] = []
                 }
                 if (arr.includes(str[0])) {
                   // console.log(filtered[str[0]])
-                  filtered[str[0]] && !filtered[str[0]].includes(str[1]) &&
+                  filtered[str[0]] &&
+                    !filtered[str[0]].includes(str[1]) &&
                     filtered[str[0]].push(str[1])
-                  
+                  filteredMap[str[0]] &&
+                    !filteredMap[str[0]].includes(str[1]) &&
+                    filteredMap[str[0]].push(obj)
                 }
               }
             }
           })
         })
-        console.log("filtered", filtered)
+        // console.log(filteredMap)
         this.setState({
           // trees:trees,
-          filtered: filtered
+          filtered: filtered,
+          filteredMap: filteredMap
         })
+        return filtered
       })
   }
 
@@ -271,14 +301,15 @@ class App extends Component {
   // }
 
   handleClickSearch = clickedValue => {
-    console.log(clickedValue)
+    // console.log(clickedValue)
     this.setState({
       searchString: clickedValue
     })
     this.getData(clickedValue)
   }
   render() {
-    console.log(this.state)
+    // console.log(this.state)
+    // this.getURL()
     return (
       <div className="App">
         <Header
@@ -286,6 +317,7 @@ class App extends Component {
           onsubmit={this.onSubmit}
           fixHeader={this.state.fixHeader}
           searchString={this.state.searchString}
+          filtered={this.state.filtered}
         />
 
         <div className="homeComponent">
@@ -294,6 +326,7 @@ class App extends Component {
             <Map
               // component={Map}
               treesData={this.state.trees}
+              filteredMap={this.state.filteredMap}
               // zipcode={this.state.zipcode}
             />
           </div>
@@ -319,6 +352,7 @@ class App extends Component {
               searchString={this.state.searchString}
               handleClickSearch={this.handleClickSearch}
               filtered={this.state.filtered}
+              filteredMap={this.state.filteredMap}
             />
             {/* <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum interdum, nisi lorem egestas odio, vitae scelerisque enim ligula venenatis dolor. Maecenas nisl est, ultrices nec congue eget, auctor vitae massa. Fusce luctus vestibulum augue ut aliquet. Mauris ante ligula,e turpis. Donec vitae dui eget tellus gravida venenatis. Integer fringilla congue eros non fermentum. Sed dapibus pulvinar nibh tempor quet. Mauris ante ligula, facilisis sed ornare eu, lobortis in odio. Praesent convallis urna a lacus interdum ut hendrerit risus congue. Nunc sagittis dictum nisi, sed ullamcorper ipsum dignissim ac. In at libero sed nunc venenatis imperdiet sed ornare turpis. Donec vitae dui eget tellus gravida venenatis. Integer fringilla congue eros non fermentum. Sed dapibus pulvinar nibh tempor porta. Cras ac leo purus. Mauris quis diam velit.</div> */}
           </div>

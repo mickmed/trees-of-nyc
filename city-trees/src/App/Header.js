@@ -69,7 +69,7 @@ class header extends Component {
   }
 
   render() {
-    // console.log(this.state);
+    console.log(this.props);
     // const header = ReactDOM.findDOMNode(this);
 
     // console.log(this.props);
@@ -139,7 +139,9 @@ class header extends Component {
             search={this.state.search}
             searchString={this.props.searchString}
             scrollToView={this.scrollToView}
+            filtered={this.props.filtered}
           />
+        
         </div>
         <div className="dummy" style={style.dummy}></div>
       </>
