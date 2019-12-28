@@ -8,6 +8,8 @@ import Map from "../Map/Map.js"
 
 import Header from "./Header"
 // import Search from "./Search";
+import Api from './Api'
+import capitalize from './Shared'
 
 const TREES_URL =
   "https://data.cityofnewyork.us/resource/5rq2-4hqu.json?$limit=2000"
@@ -57,11 +59,7 @@ class App extends Component {
         console.error("Error: ", error)
       })
   }
-  // viewportChange = (vpz) => {
-  //   this.fetchData(TREES_URL2);
 
-  // };
-  //functions for button and select clicks/chngs
   boroClk = e => {
     let boroname = "&boroname=" + e.target.value
     this.setState({ boroname: boroname })
@@ -130,54 +128,14 @@ class App extends Component {
   componentDidMount() {
     this.fetchData(TREES_URL)
     window.addEventListener("scroll", this.handleScroll)
-    // this.handleScroll();
-    // window.addEventListener('scroll', this.handleScroll)
   }
-  // handleScroll = () => {
-  //   console.log("inside");
-  //   // let headerHeight = document.getElementById("myHeader").offsetHeight
-  //   const header = ReactDOM.findDOMNode(this).getElementsByClassName(
-  //     "bigHeader"
-  //   );
-  //   const search = ReactDOM.findDOMNode(this).getElementsByClassName("search");
-  //   // console.log("headerHeight", header.offsetHeight);
-  //   // console.log('header', .6 * header[0].offsetHeight)
-  //   // console.log("searchOffsetTop", search[0].offsetTop);
-
-  //   console.log("windowScrollY", window.scrollY);
-
-  //   if (window.scrollY < 0.5 * header[0].offsetHeight) {
-  //     console.log("less than");
-  //     this.setState({
-  //       fixHeader: false
-  //     });
-  //   }
-  //   if (window.scrollY > 0.5 * header[0].offsetHeight) {
-  //     console.log("more than");
-  //     this.setState({
-  //       fixHeader: true,
-  //       input: ""
-  //     });
-  //   }
-  // };
-  capitalize = s => {
-    if (typeof s !== "string") return ""
-    return s.charAt(0).toUpperCase() + s.slice(1)
-  }
-
   onSubmit = evt => {
     evt.preventDefault()
+    console.log('test')
   }
 
   onChange = value => {
-    // let params = ["address", "spc_latin"]
-
-    // console.log(evt.target.value, evt.target.value.length);
-    // evt &&
-    //   (evt.target.value.length === 3 ||
-    //     evt.target.value.length === 4 ||
-    //     evt.target.value.length > 6) &&
-    //   this.getData(evt.target.value)
+   console.log('value', value)
     let srch = value
     srch && srch.length > 2 && srch.length % 2 !== 0 && this.getData(srch)
     this.setState({
@@ -186,73 +144,14 @@ class App extends Component {
     })
   }
 
-  getKeyByValue = (object, value) => {
-    return Object.keys(object).find(key => object[key] === value)
-  }
-
-  getURL = srch => {
-    const baseURL =
-      `https://data.cityofnewyork.us/resource/5rq2-4hqu.json?` +
-      `$limit=1000` +
-      `&$order=address` +
-      `&$where=`
-
-    const params = ["address", "spc_latin", "spc_common", "zipcode"]
-    let str = "", orTail
-    let cases = params.forEach((e, i) => {
-      if ((i === params.length - 1)) {
-        orTail = ``
-      } else {
-        orTail = `or `
-      }
-      str +=
-        `${e}%20like%20%27%25${srch.toUpperCase()}%25%27` +
-        `or ` +
-        `${e}%20like%20%27%25${srch.toLowerCase()}%25%27` +
-        `or ` +
-        `${e}%20like%20%27%25${this.capitalize(srch)}%25%27` +
-         orTail
-    })
  
-    return baseURL + str
-  }
   getData = async srch => {
-    // console.log('here')
-    console.log(this.getURL(srch))
+    
+    // console.log('api', Api(srch))
 
     await axios
-      .get(this.getURL(srch))
+      .get(Api(srch))
 
-      // await axios
-      //   .get(
-      //     `https://data.cityofnewyork.us/resource/5rq2-4hqu.json?` +
-      //       `$limit=1000` +
-      //       `&$order=address` +
-      //       `&$where=` +
-      //       `address%20like%20%27%25${srch.toUpperCase()}%25%27` +
-      //       `or ` +
-      //       `address%20like%20%27%25${srch.toLowerCase()}%25%27` +
-      //       `or ` +
-      //       `address%20like%20%27%25${this.capitalize(srch)}%25%27` +
-      //       `or ` +
-      //       `spc_latin%20like%20%27%25${srch.toUpperCase()}%25%27` +
-      //       `or ` +
-      //       `spc_latin%20like%20%27%25${srch.toLowerCase()}%25%27` +
-      //       `or ` +
-      //       `spc_latin%20like%20%27%25${this.capitalize(srch)}%25%27` +
-      //       `or ` +
-      //       `spc_common%20like%20%27%25${srch.toUpperCase()}%25%27` +
-      //       `or ` +
-      //       `spc_common%20like%20%27%25${srch.toLowerCase()}%25%27` +
-      //       `or ` +
-      //       `spc_common%20like%20%27%25${this.capitalize(srch)}%25%27` +
-      //       `or ` +
-      //       `zipcode%20like%20%27%25${srch.toUpperCase()}%25%27` +
-      //       `or ` +
-      //       `zipcode%20like%20%27%25${srch.toLowerCase()}%25%27` +
-      //       `or ` +
-      //       `zipcode%20like%20%27%25${this.capitalize(srch)}%25%27`
-      //   )
       .then(response => {
         const trees = response.data
 
@@ -266,7 +165,7 @@ class App extends Component {
                 str[1].includes(srch) ||
                 str[1].includes(srch.toLowerCase()) ||
                 str[1].includes(srch.toUpperCase()) ||
-                str[1].includes(this.capitalize(srch))
+                str[1].includes(capitalize(srch))
               ) {
                 if (!arr.includes(str[0])) {
                   arr.push(str[0])
@@ -295,11 +194,7 @@ class App extends Component {
         return filtered
       })
   }
-
-  // componentWillUnmount() {
-  //   window.removeEventListener('scroll', this.handleScroll)
-  // }
-
+  
   handleClickSearch = clickedValue => {
     // console.log(clickedValue)
     this.setState({

@@ -61,7 +61,8 @@ class header extends Component {
   };
 
   scrollToView = () => {
-    // console.log('scroll to', this.props.searchHeight + this.props.bigHeaderHeight)
+    
+    console.log('scroll to', this.props.searchHeight + this.props.bigHeaderHeight)
     
     // console.log(this.props.fixHeader)
     window.scrollTo(0, this.state.bigHeaderHeight + this.state.searchHeight) 
@@ -69,7 +70,7 @@ class header extends Component {
   }
 
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     // const header = ReactDOM.findDOMNode(this);
 
     // console.log(this.props);
