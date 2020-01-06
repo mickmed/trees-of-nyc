@@ -1,27 +1,13 @@
 import React, { Component } from "react"
 import Autosuggest from "react-autosuggest"
+import { blackList } from './Shared'
+import axios from "axios"
+import Api from './Api'
+import { capitalize } from './Shared'
+// import { blackList } from './Shared'
 
-const languages = [
-  {
-    name: "C",
-    year: 1972
-  },
-  {
-    name: "Elm",
-    year: 2012
-  }
-]
 
-// When suggestion is clicked, Autosuggest needs to populate the input
-// based on the clicked suggestion. Teach Autosuggest how to calculate the
-// input value for every given suggestion.
-// const getSuggestionValue = suggestion => {
-//   // console.log('hi',suggestion, evt)
 
-//   return suggestion
-// }
-// Use your imagination to render suggestions.
-// const renderSuggestion = suggestion => <div>{suggestion}</div>
 
 function getSuggestionValue(suggestion) {
   console.log(suggestion)
@@ -29,174 +15,182 @@ function getSuggestionValue(suggestion) {
 }
 
 function renderSuggestion(suggestion) {
-  // console.log(suggestion)
+  console.log(suggestion)
   return <span>{suggestion}</span>
 }
 
 function renderSectionTitle(section) {
   let title
-  if (section.title === "nta_name") {
+  let d = Object.keys(section)[0]
+  console.log(Object.keys(section)[0])
+  if (d === "nta_name") {
     title = "neighborhood"
-  } else if (section.title === "spc_common") {
+  } else if (d === "spc_common") {
     title = "common name"
   } else {
-    title = section.title
+    title = d
   }
-  return <strong>{title}</strong>
+  return <strong>{d}</strong>
 }
 
-function getSectionSuggestions(section) {
-  // console.log(section)
-  // console.log(Object.keys(section)[1])
-  //   console.log(section[Object.keys(section)[0]])
-    return section[Object.keys(section)[1]]
-    //  return ['hi']
-}
+
 
 class InputPlus extends React.Component {
   constructor(props) {
     super(props)
 
-    // Autosuggest is a controlled component.
-    // This means that you need to provide an input value
-    // and an onChange handler that updates this value (see below).
-    // Suggestions also need to be provided to the Autosuggest,
-    // and they are initially empty because the Autosuggest is closed.
     this.state = {
       value: "",
       suggestions: [],
       filtered: {}
     }
   }
+  getSectionSuggestions = (section)=> {
+    console.log(section)
+    this.setState({section})
+  return section[Object.keys(section)]
 
-  componentDidUpdate(prevProps, prevState) {
-    console.log(prevProps, prevState)
-    if (prevProps.filtered !== undefined && prevProps.filtered !== prevState.filtered) {
-      console.log("here")
-      this.setState({
-        suggestions: this.getSuggestions(this.props.searchString),
-        filtered: prevProps.filtered
-      })
-    }
-  }
+}
+  // componentWillUpdate(nextProps, nextState) {
+  //   console.log(nextProps, nextState)
+  //   console.log(this.state.click)
+  //   //   console.log('Component will update!');
+  //   if (nextProps.filtered !== undefined && nextProps.filtered !== nextState.filtered) {
+  //     // console.log("here", this.props.searchString, this.props.filtered, this.state.filtered)
+  //     this.state.click !== 'click' && this.setState({
+  //       suggestions: this.getSuggestions(this.props.searchString, nextProps.filtered),
+  //       filtered: nextProps.filtered
+  //     })
+  //   }
+  // }
+
 
   onChange = (event, { newValue, method }) => {
-    // console.log('event', event.target.value)
-    console.log("onChange", newValue, method)
-    
-    this.props.onchange(newValue) 
-  
+    // console.log(event.target)
     this.setState({
       value: newValue,
-      filtered: this.props.filtered || {'':''}
-    }) 
-
-    // method === 'click' && this.props.onchange(newValue)
-
+    })
+    method === 'click' && this.props.onchange(newValue, this.state.section)
   }
 
-  // onSuggestionSelected = (event, {suggestion, method}) => {
-  //   console.blackList = () => {
+  filterTrees = async (srch, data) => {
+    const trees = data.data
+    console.log(srch, trees)
+    const arr = []
+    const arr2 = []
+    const arr3 = []
 
-  //     // this.props.onchange(event)
-  // }
+    const filtered = {}
+    const filteredMap = {}
+    trees && trees.map((obj, i) => {
+      Object.entries(obj).map((str, index) => {
+        if (typeof str[1] === "string" && !blackList().includes(str[0])) {
+          if (
+            str[1].includes(srch) ||
+            str[1].includes(srch.toLowerCase()) ||
+            str[1].includes(srch.toUpperCase()) ||
+            str[1].includes(capitalize(srch))
+          ) {
+            if (!arr.includes(str[0])) {
+              arr.push(str[0])
+              arr2.push({ [str[0]]: [str[1]] })
 
-  // onClick = (event) => {
-  //   // console.log(event.target)
-  //   this.props.onchange(event)
-  // }
-  blackList = () => {
-    return [
-      "latitude",
-      "longitude",
-      "x_sp",
-      "y_sp",
-      "block_id",
-      "boro_ct",
-      "problems"
-    ]
+            }
+        
+
+
+            arr2.forEach(e => Object.keys(e)[0] === str[0]
+              && !e[str[0]].includes(str[1])
+              && e[str[0]].length < 5
+              && e[str[0]].push(str[1])
+            )
+
+          }
+        }
+      })
+    })
+    console.log(arr2)
+    return arr2
   }
 
-  // Teach Autosuggest how to calculate suggestions for any given input value.
-  getSuggestions = value => {
-    // console.log(this.props.filtered && this.props.filtered)
-    // console.log(value)
-    console.log(this.blackList())
-    const inputValue = value.trim().toLowerCase()
-    const inputLength = inputValue.length
-    console.log("ip", inputValue, this.props.filtered)
-    if (this.props.filtered && Object.keys(this.props.filtered).length !== 0) {
-      let filKeys = Object.keys(this.props.filtered).filter(
-        e => !this.blackList().includes(e)
-      )
-      console.log(filKeys)
-      let data =
-        inputLength === 0
-          ? []
-          : // this.props.filtered.filter(lang =>
-            // lang.toLowerCase().slice(0, inputLength) === inputValue)
-            filKeys
-              .sort()
-              .map(key => {
-                console.log(key)
-                console.log(this.props.filtered[key])
-                return {
-                  title: key,
-                  [key]: this.props.filtered[key]
-                    .sort()
-                    .slice(0, 3)
-                    .map(e => e)
-                }
-              })
+  // // Teach Autosuggest how to calculate suggestions for any given input value.
+  // getSuggestions = (value, arr) => {
+  //   // console.log('hi there', value, arr)
+  //   const inputValue = value.trim().toLowerCase()
+  //   const inputLength = inputValue.length
+  //   // console.log("ip", inputValue, arr)
+  //   if (arr && Object.keys(arr).length !== 0) {
 
-      console.log(data)
-      let flattened = [].concat.apply([], data)
-      return flattened.sort()
-    } else {
-      return []
+  //     let data =
+  //       inputLength === 0
+  //         ? []
+  //         : Object.keys(arr)
+  //           .reverse()
+  //           .map(key => {
+
+  //             return {
+  //               title: key,
+  //               [key]: arr[key]
+  //                 .sort()
+  //                 .slice(0, 6)
+  //                 .map(e => e)
+  //             }
+  //           })
+  //     let flattened = [].concat.apply([], data)
+  //     console.log(flattened.sort())
+  //     return flattened.sort()
+
+  //   } else {
+  //     return []
+  //   }
+  // }
+
+  onSuggestionsFetchRequested = async ({ value }) => {
+
+    if (this.lastRequestId !== null) {
+      clearTimeout(this.lastRequestId);
     }
-  }
 
-  // Autosuggest will call this function every time you need to update suggestions.
-  // You already implemented this logic above, so just use it.
-  onSuggestionsFetchRequested = ({ value }) => {
-    console.log("value", value)
-    // this.props.onchange(value)
-
+    this.lastRequestId = setTimeout(async () => {
+      let data = value.length > 2 && await axios
+        .get(Api(value))
+        // .then(e => e.data)
+        .then(e => this.filterTrees(value, e))
+      console.log(data)
       this.setState({
-      suggestions: this.getSuggestions(value)
-    })
+        suggestions: data
+      });
+    }, 500);
   }
 
-  // Autosuggest will call this function every time you need to clear suggestions.
-  onSuggestionsClearRequested = () => {
-    this.setState({
-      suggestions: []
-    })
-  }
+
+  // onSuggestionsClearRequested = () => {
+  //   this.setState({
+  //     suggestions: []
+  //   })
+  // }
 
   render() {
     console.log(this.state)
-    console.log(this.props.filtered)
+    // console.log(this.props.filtered)
     const { value, suggestions } = this.state
     const filtered = this.props.filtered
 
     // Autosuggest will pass through all these props to the input.
     const inputProps = {
       placeholder: "search...",
-      value,
+      value: this.state.value,
       onChange: this.onChange,
       onClick: this.props.scrollToView,
       type: "text",
       name: "input",
       style: {
-        transform: "translate(-10%, 15%)",
+        transform: "translate(-10%, 25%)",
         background: "lightyellow",
         width: "130%"
       }
     }
 
-    // Finally, render it!
     return (
       <Autosuggest
         multiSection={true}
@@ -207,10 +201,10 @@ class InputPlus extends React.Component {
         renderSuggestion={renderSuggestion}
         // onSuggestionSelected={this.onSuggestionSelected}
         renderSectionTitle={renderSectionTitle}
-        getSectionSuggestions={getSectionSuggestions}
+        getSectionSuggestions={this.getSectionSuggestions}
         inputProps={inputProps}
-        // className="search-input"
-        style={{ transform: "translate(50px)", background: "green" }}
+      // className="search-input"
+
       />
     )
   }

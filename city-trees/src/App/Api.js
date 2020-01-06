@@ -1,6 +1,6 @@
 
 import React from 'react'
-import capitalize from './Shared'
+import { capitalize } from './Shared'
 
 
 const Api = srch => {

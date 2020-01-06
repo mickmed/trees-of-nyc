@@ -1,12 +1,31 @@
 
-import React from "react";
+// import React from "react";
 
-const capitalize = s => {
+export const capitalize = s => {
     if (typeof s !== "string") return ""
     return s.charAt(0).toUpperCase() + s.slice(1)
   }
 
-  export default capitalize
+  export const blackList = () => {
+    return [
+      "latitude",
+      "longitude",
+      "x_sp",
+      "y_sp",
+      "block_id",
+      "boro_ct",
+      "problems",
+      "zip_city"
+    ]
+  }
+
+  export const whiteList = () => {
+    return [
+      ""
+    ]
+  }
+
+  // export default capitalize
 
 
 

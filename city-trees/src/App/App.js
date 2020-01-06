@@ -9,7 +9,8 @@ import Map from "../Map/Map.js"
 import Header from "./Header"
 // import Search from "./Search";
 import Api from './Api'
-import capitalize from './Shared'
+import { capitalize } from './Shared'
+import { blackList } from './Shared'
 
 const TREES_URL =
   "https://data.cityofnewyork.us/resource/5rq2-4hqu.json?$limit=2000"
@@ -29,7 +30,9 @@ class App extends Component {
       status: "&status=Alive",
       health: "",
       fixHeader: false,
-      input: ""
+      input: "",
+      searchString: '',
+      searchInfo: {}
     }
   }
 
@@ -125,8 +128,10 @@ class App extends Component {
     this.fetchData(TREES_URL, str)
   }
 
-  componentDidMount() {
-    this.fetchData(TREES_URL)
+  async componentDidMount() {
+    await this.onChange('00083')
+    
+
     window.addEventListener("scroll", this.handleScroll)
   }
   onSubmit = evt => {
@@ -134,67 +139,116 @@ class App extends Component {
     console.log('test')
   }
 
-  onChange = value => {
-   console.log('value', value)
-    let srch = value
-    srch && srch.length > 2 && srch.length % 2 !== 0 && this.getData(srch)
-    this.setState({
-      // trees: trees,
-      searchString: srch
-    })
-  }
+  onChange = async (value,sec) => {
+    console.log('value', value,sec)
+    let srch = value[0]
+    // this.setState({
+    //   // trees: trees,
+    //   searchString: srch
+    // })
+    let b = await srch && srch.length > 2 && 
+   
+    this.getData(srch)
+    .then(e=>this.filterTrees(srch, e))
+    .then(f=>this.setState({
+      filteredMap:f
+    }))
+      // .then(e => {
 
- 
-  getData = async srch => {
     
-    // console.log('api', Api(srch))
 
-    await axios
-      .get(Api(srch))
-
-      .then(response => {
-        const trees = response.data
-
-        const arr = []
-        const filtered = {}
-        const filteredMap = {}
-        trees.map((obj, i) => {
-          Object.entries(obj).map((str, index) => {
-            if (typeof str[1] === "string") {
-              if (
-                str[1].includes(srch) ||
-                str[1].includes(srch.toLowerCase()) ||
-                str[1].includes(srch.toUpperCase()) ||
-                str[1].includes(capitalize(srch))
-              ) {
-                if (!arr.includes(str[0])) {
-                  arr.push(str[0])
-                  filtered[str[0]] = [str[1]]
-                  filteredMap[str[0]] = []
-                }
-                if (arr.includes(str[0])) {
-                  // console.log(filtered[str[0]])
-                  filtered[str[0]] &&
-                    !filtered[str[0]].includes(str[1]) &&
-                    filtered[str[0]].push(str[1])
-                  filteredMap[str[0]] &&
-                    !filteredMap[str[0]].includes(str[1]) &&
-                    filteredMap[str[0]].push(obj)
-                }
+  }
+  filterTrees = async (srch, data) => {
+    const trees = data.data
+    console.log(srch, trees)
+    const arr = []
+    const filtered = {}
+    const filteredMap = {}
+    trees && trees.map((obj, i) => {
+      Object.entries(obj).map((str, index) => {
+        if (typeof str[1] === "string") {
+          if (
+            str[1].includes(srch) ||
+            str[1].includes(srch.toLowerCase()) ||
+            str[1].includes(srch.toUpperCase()) ||
+            str[1].includes(capitalize(srch))
+          ) {
+            if (!arr.includes(str[0])) {
+              if (!blackList().includes(filteredMap[str[0]])) {
+                arr.push(str[0])
+                filtered[str[0]] = [str[1]]
+                filteredMap[str[0]] = []
               }
             }
-          })
-        })
-        // console.log(filteredMap)
-        this.setState({
-          // trees:trees,
-          filtered: filtered,
-          filteredMap: filteredMap
-        })
-        return filtered
+            if (arr.includes(str[0])) {
+              // console.log(filtered[str[0]])
+              if (!blackList().includes(filteredMap[str[0]])) {
+                filtered[str[0]] &&
+                  !filtered[str[0]].includes(str[1]) &&
+                  filtered[str[0]].push(str[1])
+                filteredMap[str[0]] &&
+                  !filteredMap[str[0]].includes(str[1]) &&
+                  filteredMap[str[0]].push(obj)
+              }
+            }
+          }
+        }
       })
+    })
+    // console.log(filteredMap)
+    const filt =
+      filteredMap &&
+      Object.keys(filteredMap).map(key => {
+        // console.log(key)
+        return filteredMap[key]
+      })
+
+    let flatFiltMap = filteredMap && [].concat.apply([], filt.reverse())
+    // return [filtered, flatFiltMap, filteredMap]
+    return flatFiltMap
   }
-  
+
+  getData = async (srch, click) => {
+    console.log(srch)
+    let data = await axios
+      .get(Api(srch))
+// .then(e => e.data)
+        // console.log(e)
+      return data
+      // console.log(data)
+
+      // this.setState({
+      //   searchString: srch,
+      //   trees:data.data
+      // })
+      
+    
+      // .then(response => {
+
+      //   // console.log(flatFiltMap)
+      //   // filteredMap.sort((a, b, key) => {
+      //   //   let comparison = 0
+      //   //   if (a.key > b.key) {
+      //   //     comparison = 1
+      //   //   } else if (a.key < b.key) {
+      //   //     comparison = -1
+      //   //   }
+      //   // })
+
+      //   this.setState({
+      //     // trees:trees,
+      //     trees: response.data,
+      //     srch: srch
+      //     // filtered: click !== 'click' && filtered,
+      //     // filteredMap: click === 'click' && flatFiltMap,
+      //     // searchInfo: click === 'click' && filteredMap
+
+
+      //   })
+   
+      // })
+  }
+
   handleClickSearch = clickedValue => {
     // console.log(clickedValue)
     this.setState({
@@ -202,8 +256,17 @@ class App extends Component {
     })
     this.getData(clickedValue)
   }
+
+  searchClick = (val, click) => {
+    console.log('here', val)
+    this.getData(val, click)
+
+  }
   render() {
-    // console.log(this.state)
+    console.log(this.state)
+    let sh = this.filterTrees(this.state.searchString, this.state.trees)
+    // console.log(sh)
+
     // this.getURL()
     return (
       <div className="App">
@@ -212,7 +275,8 @@ class App extends Component {
           onsubmit={this.onSubmit}
           fixHeader={this.state.fixHeader}
           searchString={this.state.searchString}
-          filtered={this.state.filtered}
+          filtered={sh[0]}
+          searchClick={this.searchClick}
         />
 
         <div className="homeComponent">
@@ -222,7 +286,7 @@ class App extends Component {
               // component={Map}
               treesData={this.state.trees}
               filteredMap={this.state.filteredMap}
-              // zipcode={this.state.zipcode}
+            // zipcode={this.state.zipcode}
             />
           </div>
 
@@ -241,14 +305,15 @@ class App extends Component {
               zipcode={this.state.zipcode}
               spc_common={this.state.spc_common}
             /> */}
-            <TreesList
+            {/* <TreesList
               treesData={this.state.trees}
               fixHeader={this.state.fixHeader}
               searchString={this.state.searchString}
               handleClickSearch={this.handleClickSearch}
               filtered={this.state.filtered}
               filteredMap={this.state.filteredMap}
-            />
+              searchInfo={sh[2]}
+            /> */}
             {/* <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum interdum, nisi lorem egestas odio, vitae scelerisque enim ligula venenatis dolor. Maecenas nisl est, ultrices nec congue eget, auctor vitae massa. Fusce luctus vestibulum augue ut aliquet. Mauris ante ligula,e turpis. Donec vitae dui eget tellus gravida venenatis. Integer fringilla congue eros non fermentum. Sed dapibus pulvinar nibh tempor quet. Mauris ante ligula, facilisis sed ornare eu, lobortis in odio. Praesent convallis urna a lacus interdum ut hendrerit risus congue. Nunc sagittis dictum nisi, sed ullamcorper ipsum dignissim ac. In at libero sed nunc venenatis imperdiet sed ornare turpis. Donec vitae dui eget tellus gravida venenatis. Integer fringilla congue eros non fermentum. Sed dapibus pulvinar nibh tempor porta. Cras ac leo purus. Mauris quis diam velit.</div> */}
           </div>
         </div>

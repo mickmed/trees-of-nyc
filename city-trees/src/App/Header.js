@@ -141,6 +141,7 @@ class header extends Component {
             searchString={this.props.searchString}
             scrollToView={this.scrollToView}
             filtered={this.props.filtered}
+            searchClick={this.props.searchClick}
           />
         
         </div>
