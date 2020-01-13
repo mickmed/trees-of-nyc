@@ -1,13 +1,14 @@
 import React from "react"
 import Tree from "./Tree"
-import { Icon, InlineIcon } from "@iconify/react"
-import streetsignIcon from "@iconify/icons-et/streetsign"
+
 
 import roundBorderOuter from "@iconify/icons-ic/round-border-outer"
 import science from "@iconify/icons-uil/science"
 import labelIcon from "@iconify/icons-zmdi/label"
 import zipIcon from "@iconify/icons-whh/zip"
 import fileZip from "@iconify/icons-octicon/file-zip"
+
+import { typeConverter } from '../App/Shared'
 
 
 // import Filters from "../Filters/Filters";
@@ -40,9 +41,11 @@ class TreesList extends React.Component {
 
 
   renderFiltered = () => {
-  // console.log(this.props.searchInfo && this.props.searchInfo)
-    const filtered = this.props.searchInfo && this.props.searchInfo
-    const data = filtered[Object.keys(filtered)[0]]
+    // console.log(this.props.searchInfo && this.props.searchInfo)
+    const filtered = this.props.filteredMap && this.props.filteredMap
+    console.log(filtered)
+    const data = filtered && filtered[Object.keys(filtered)[0]]
+    console.log(filtered)
     // console.log(data && data.length)
     if (filtered && data) {
 
@@ -58,29 +61,51 @@ class TreesList extends React.Component {
   }
 
   renderSpecies = () => {
+    console.log(this.props.type, this.props.value)
+    console.log(this.props.type, this.props.filteredMap && this.props.filteredMap)
+    let type = this.props.type &&
+      (this.props.type === 'address' || this.props.type === 'zipcode') &&
+      ['spc_common', 'spc_latin', 'nta_name']
+      // 'spc_common'
 
-    const filtered = this.props.searchInfo && this.props.searchInfo
-
-    let counts = {}
-    if (Object.keys(filtered).length !== 0) {
-      const b = filtered[Object.keys(filtered)[0]].forEach(e => {
-        // console.log(e.spc_common)
-        counts[e.spc_common] = (counts[e.spc_common] + 1) || 1
-        //  return e.spc_common
-      })
-      // console.log('counts', counts)
-
-    }
-
-    return <div className="species-list">
-      {Object.keys(counts).map(e => {
-        // console.log(e)
-        return  <div className="species">{e} <span>({counts[e]})</span> </div>
-      })}
-    </div>
+    console.log(type)
 
 
 
+    const filtered = this.props.filteredMap && this.props.filteredMap
+    console.log(filtered)
+
+    let data = type.map(type => {
+
+
+      let counts = {}
+
+
+      if (filtered && filtered.length !== 0) {
+        const b = filtered.forEach(e => {
+          counts[e[type]] = (counts[e[type]] + 1) || 1
+
+        })
+      }
+
+      return <div className="species-list" >
+       
+        <div style={{ marginBottom: '10%' }}>{typeConverter(type)}<span>({Object.keys(counts).length})</span>
+
+        </div>
+        {/* {Object.keys(counts).map(e => {
+          console.log(e)
+          return <div className="species">{e} <span>({counts[e]})</span></div>
+        })} */}
+      </div>
+    })
+
+    return (
+      <>
+       <div>{this.props.type}{this.props.value}</div>
+      <div>{data}</div>
+      </>
+    )
   }
 
 
@@ -88,7 +113,7 @@ class TreesList extends React.Component {
 
     return (
       <div className="tree-inner">
-        {this.renderFiltered()}
+        {/* {this.renderFiltered()} */}
 
         {this.renderSpecies()}
 

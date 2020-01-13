@@ -1,145 +1,96 @@
 
-// import React from "react";
+import React from "react";
+import { Icon, InlineIcon } from "@iconify/react"
+import streetsignIcon from "@iconify/icons-et/streetsign"
+import roundBorderOuter from "@iconify/icons-ic/round-border-outer"
+import science from "@iconify/icons-uil/science"
+import labelIcon from "@iconify/icons-zmdi/label"
+import zipIcon from "@iconify/icons-whh/zip"
+import fileZip from "@iconify/icons-octicon/file-zip"
+
 
 export const capitalize = s => {
-    if (typeof s !== "string") return ""
-    return s.charAt(0).toUpperCase() + s.slice(1)
+  if (typeof s !== "string") return ""
+  return s.charAt(0).toUpperCase() + s.slice(1)
+}
+
+export const blackList = () => {
+  return [
+    "latitude",
+    "longitude",
+    "x_sp",
+    "y_sp",
+    "block_id",
+    "boro_ct",
+    "problems",
+    "zip_city"
+  ]
+}
+
+export const whiteList = () => {
+  return [
+    ""
+  ]
+}
+export const filterData = (srch, trees) => {
+
+
+  const arr = []
+  const arr2 = []
+  trees && trees.map((obj, i) => {
+    Object.entries(obj).map((str, index) => {
+      if (typeof str[1] === "string" && !blackList().includes(str[0])) {
+        if (
+          str[1].includes(srch) ||
+          str[1].includes(srch.toLowerCase()) ||
+          str[1].includes(srch.toUpperCase()) ||
+          str[1].includes(capitalize(srch))
+        ) {
+          if (!arr.includes(str[0])) {
+            arr.push(str[0])
+            arr2.push({ [str[0]]: [str[1]] })
+
+          }
+          arr2.forEach(e => Object.keys(e)[0] === str[0]
+            && !e[str[0]].includes(str[1])
+            && e[str[0]].length < 5
+            && e[str[0]].push(str[1])
+          )
+        }
+      }
+    })
+  })
+  // console.log(arr2)
+  return arr2
+}
+
+export const typeConverter = (type) => {
+  console.log(type)
+
+  let icon, color
+  if(type === 'spc_common'){
+    type = 'common name'
+    icon = labelIcon
+    color = 'green'
+  }else if(type === 'spc_latin'){
+    type = 'latin name'
+    icon = labelIcon
+    color = 'grey'
+  }else if(type === 'zipcode'){
+    type = 'zipcode'
+    icon = zipIcon
+    color = 'red'
+  }else if(type === 'nta_name'){
+    type = 'neighborhood'
+    icon = roundBorderOuter
+    color = 'blue'
   }
+  return <div style={{fontSize:'1.25em'}}><Icon icon={icon} style={{color:color}}/> {type}</div>
 
-  export const blackList = () => {
-    return [
-      "latitude",
-      "longitude",
-      "x_sp",
-      "y_sp",
-      "block_id",
-      "boro_ct",
-      "problems",
-      "zip_city"
-    ]
-  }
-
-  export const whiteList = () => {
-    return [
-      ""
-    ]
-  }
-
-  // export default capitalize
+}
 
 
 
 
 
-
-
-
-      // await axios
-      //   .get(
-      //     `https://data.cityofnewyork.us/resource/5rq2-4hqu.json?` +
-      //       `$limit=1000` +
-      //       `&$order=address` +
-      //       `&$where=` +
-      //       `address%20like%20%27%25${srch.toUpperCase()}%25%27` +
-      //       `or ` +
-      //       `address%20like%20%27%25${srch.toLowerCase()}%25%27` +
-      //       `or ` +
-      //       `address%20like%20%27%25${this.capitalize(srch)}%25%27` +
-      //       `or ` +
-      //       `spc_latin%20like%20%27%25${srch.toUpperCase()}%25%27` +
-      //       `or ` +
-      //       `spc_latin%20like%20%27%25${srch.toLowerCase()}%25%27` +
-      //       `or ` +
-      //       `spc_latin%20like%20%27%25${this.capitalize(srch)}%25%27` +
-      //       `or ` +
-      //       `spc_common%20like%20%27%25${srch.toUpperCase()}%25%27` +
-      //       `or ` +
-      //       `spc_common%20like%20%27%25${srch.toLowerCase()}%25%27` +
-      //       `or ` +
-      //       `spc_common%20like%20%27%25${this.capitalize(srch)}%25%27` +
-      //       `or ` +
-      //       `zipcode%20like%20%27%25${srch.toUpperCase()}%25%27` +
-      //       `or ` +
-      //       `zipcode%20like%20%27%25${srch.toLowerCase()}%25%27` +
-      //       `or ` +
-      //       `zipcode%20like%20%27%25${this.capitalize(srch)}%25%27`
-      //   )
-
-       // getKeyByValue = (object, value) => {
-  //   return Object.keys(object).find(key => object[key] === value)
-  // }
-
-  // getURL = srch => {
-  //   const baseURL =
-  //     `https://data.cityofnewyork.us/resource/5rq2-4hqu.json?` +
-  //     `$limit=1000` +
-  //     `&$order=address` +
-  //     `&$where=`
-
-  //   const params = ["address", "spc_latin", "spc_common", "zipcode"]
-  //   let str = "", orTail
-  //   let cases = params.forEach((e, i) => {
-  //     if ((i === params.length - 1)) {
-  //       orTail = ``
-  //     } else {
-  //       orTail = `or `
-  //     }
-  //     str +=
-  //       `${e}%20like%20%27%25${srch.toUpperCase()}%25%27` +
-  //       `or ` +
-  //       `${e}%20like%20%27%25${srch.toLowerCase()}%25%27` +
-  //       `or ` +
-  //       `${e}%20like%20%27%25${capitalize(srch)}%25%27` +
-  //        orTail
-  //   })
- 
-  //   return baseURL + str
-  // }
-
-
-   // let params = ["address", "spc_latin"]
-
-    // console.log(evt.target.value, evt.target.value.length);
-    // evt &&
-    //   (evt.target.value.length === 3 ||
-    //     evt.target.value.length === 4 ||
-    //     evt.target.value.length > 6) &&
-    //   this.getData(evt.target.value)
-
-
-
-
-      // this.handleScroll();
-    // window.addEventListener('scroll', this.handleScroll)
-//   }
-  // handleScroll = () => {
-  //   console.log("inside");
-  //   // let headerHeight = document.getElementById("myHeader").offsetHeight
-  //   const header = ReactDOM.findDOMNode(this).getElementsByClassName(
-  //     "bigHeader"
-  //   );
-  //   const search = ReactDOM.findDOMNode(this).getElementsByClassName("search");
-  //   // console.log("headerHeight", header.offsetHeight);
-  //   // console.log('header', .6 * header[0].offsetHeight)
-  //   // console.log("searchOffsetTop", search[0].offsetTop);
-
-  //   console.log("windowScrollY", window.scrollY);
-
-  //   if (window.scrollY < 0.5 * header[0].offsetHeight) {
-  //     console.log("less than");
-  //     this.setState({
-  //       fixHeader: false
-  //     });
-  //   }
-  //   if (window.scrollY > 0.5 * header[0].offsetHeight) {
-  //     console.log("more than");
-  //     this.setState({
-  //       fixHeader: true,
-  //       input: ""
-  //     });
-  //   }
-  // };
-  // capitalize = s => {
-  //   if (typeof s !== "string") return ""
-  //   return s.charAt(0).toUpperCase() + s.slice(1)
-  // }
+      

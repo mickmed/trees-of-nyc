@@ -97,7 +97,7 @@ html {
   display:flex;
   justify-content:space-around;
 
-  align-items:flex-end;
+  align-items:center;
   z-index:1;
 
 }
@@ -107,7 +107,7 @@ html {
   background:green;
 } */
 .search-input{
-  transform:translateY(20%);
+  /* transform:translateY(10%); */
   width:150%;
   padding:2%;
   /* font-style: italic; */
@@ -121,7 +121,7 @@ html {
 
 }
 .search img{
-  transform:translate(-5%, -20%);
+  transform:translate(-5%, -30%) scale(.75, .75);
   background:rgba(255, 166, 0,.75);
   /* height:90%;
  

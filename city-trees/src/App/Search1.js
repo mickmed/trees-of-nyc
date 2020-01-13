@@ -13,41 +13,29 @@ class Search extends Component {
     query: "",
     trees: []
   }
- 
+
 
   render() {
 
     const style = this.props.style
-  
+
     return (
-      <form onSubmit={this.props.onsubmit}>
-        {/* <input
-          type="text"
-          name="input"
-          className="search-input"
-          style={style}
-          placeholder="search..."
-          onChange={this.props.onchange}
-          onClick={this.props.scrollToView}
+   
+      
+        <InputPlus
+
+          filtered={this.props.filtered}
+          getData={this.props.getData}searchString={this.props.searchString}
+          getSearch={this.props.getSearch}
+          initSrchVal={this.props.initSrchVal}
           value={this.props.searchString}
-        /> */}
-        {/* <div onClick={this.props.scrollToView}> */}
-          <InputPlus
-           
-            filtered={this.props.filtered}
-            onchange={this.props.onchange}
-            searchString={this.props.searchString}
-            value={this.props.searchString}
-            scrollToView={this.props.scrollToView}
-            searchClick={this.props.searchClick}
-          />
-     
+          scrollToView={this.props.scrollToView}
+          searchClick={this.props.searchClick}
+        />
 
-        <p>{this.state.query}</p>
-        <p>{this.state.results}</p>
-      </form>
-    )
-  }
-}
-
-export default Search
+      
+        )
+      }
+    }
+    
+    export default Search

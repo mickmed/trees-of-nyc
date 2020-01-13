@@ -1,9 +1,10 @@
 
-import React from 'react'
+// import React from 'react'
 import { capitalize } from './Shared'
 
 
-const Api = srch => {
+export const apiSearch = srch => {
+  // console.log(srch)
    
     const baseURL =
       `https://data.cityofnewyork.us/resource/5rq2-4hqu.json?` +
@@ -11,7 +12,7 @@ const Api = srch => {
       `&$order=address` +
       `&$where=`
 
-    const params = ["address", "spc_latin", "spc_common", "zipcode"]
+    const params = ["address", "spc_latin", "spc_common", "zipcode", "nta_name"]
     let str = "", orTail
     let cases = params.forEach((e, i) => {
       if ((i === params.length - 1)) {
@@ -41,4 +42,11 @@ const Api = srch => {
 }
 
 
-export default Api
+export const apiSelection = (srch, type) => {
+  const baseURL =
+  `https://data.cityofnewyork.us/resource/5rq2-4hqu.json?` +
+  `$limit=1000` +
+  `&$where=${type}%20like%20%27%25${srch}%25%27`
+
+  return baseURL
+}

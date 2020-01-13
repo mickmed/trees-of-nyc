@@ -131,17 +131,19 @@ class header extends Component {
 
           <Search1
             style={style.searchInput}
-            onchange={this.props.onchange}
+            getData={this.props.getData}
+            getSearch={this.props.getSearch}
+            initSrchVal={this.props.initSrchVal}
             onsubmit={this.props.onsubmit}
             fixHeader={this.state.fixHeader}
             searchHeight={this.state.searchHeight}
             bigHeaderHeight={this.state.bigHeaderHeight}
             bannerHeight={this.state.bannerHeight}
-            search={this.state.search}
-            searchString={this.props.searchString}
+            // search={this.state.search}
+            // searchString={this.props.searchString}
             scrollToView={this.scrollToView}
-            filtered={this.props.filtered}
-            searchClick={this.props.searchClick}
+            // filtered={this.props.filtered}
+            // searchClick={this.props.searchClick}
           />
         
         </div>
