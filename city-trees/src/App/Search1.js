@@ -23,14 +23,17 @@ class Search extends Component {
    
       
         <InputPlus
-
+          
           filtered={this.props.filtered}
-          getData={this.props.getData}searchString={this.props.searchString}
+          getData={this.props.getData}
+          searchString={this.props.searchString}
           getSearch={this.props.getSearch}
           initSrchVal={this.props.initSrchVal}
           value={this.props.searchString}
           scrollToView={this.props.scrollToView}
           searchClick={this.props.searchClick}
+          getSetSearch={this.props.getSetSearch}  
+
         />
 
       

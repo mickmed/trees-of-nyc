@@ -131,8 +131,10 @@ class header extends Component {
 
           <Search1
             style={style.searchInput}
-            getData={this.props.getData}
+           
             getSearch={this.props.getSearch}
+            getSetSearch={this.props.getSetSearch}  
+
             initSrchVal={this.props.initSrchVal}
             onsubmit={this.props.onsubmit}
             fixHeader={this.state.fixHeader}

@@ -34,7 +34,7 @@ export const whiteList = () => {
 }
 export const filterData = (srch, trees) => {
 
-
+console.log(trees)
   const arr = []
   const arr2 = []
   trees && trees.map((obj, i) => {
@@ -65,7 +65,7 @@ export const filterData = (srch, trees) => {
 }
 
 export const typeConverter = (type) => {
-  console.log(type)
+  // console.log(type)
 
   let icon, color
   if(type === 'spc_common'){
@@ -84,8 +84,12 @@ export const typeConverter = (type) => {
     type = 'neighborhood'
     icon = roundBorderOuter
     color = 'blue'
+  }else if(type === 'address'){
+    type = 'address'
+    icon = streetsignIcon
+    color = 'blue'
   }
-  return <div style={{fontSize:'1.25em'}}><Icon icon={icon} style={{color:color}}/> {type}</div>
+  return [<Icon icon={icon} style={{color:color}}/>, type] 
 
 }
 
@@ -93,4 +97,94 @@ export const typeConverter = (type) => {
 
 
 
-      
+// fetchData = async (url, param) => {
+//   let urlStr
+//   if (param) {
+//     urlStr = url + param
+//   } else {
+//     urlStr =
+//       url +
+//       this.state.boroname +
+//       this.state.zipcode +
+//       this.state.status +
+//       this.state.spc_common
+//   }
+
+//   await axios
+
+//     .get(urlStr)
+//     .then(response => {
+//       const trees = response.data
+//       this.setState({
+//         trees: trees
+//       })
+//     })
+//     .catch(error => {
+//       console.error("Error: ", error)
+//     })
+// }
+
+// boroClk = e => {
+//   let boroname = "&boroname=" + e.target.value
+//   this.setState({ boroname: boroname })
+
+//   let str =
+//     boroname + this.state.spc_common + this.state.status + this.state.health
+//   this.fetchData(TREES_URL, str)
+// }
+
+// zipChng = e => {
+//   //chk for empty zip
+//   let zip
+//   e.target.value === "" ? (zip = "") : (zip = "&zipcode=" + e.target.value)
+//   this.setState({ zipcode: "&zipcode=" + e.target.value })
+
+//   //chk for empty species
+//   let spec
+//   this.state.spc_common === "" ? (spec = "") : (spec = this.state.spc_common)
+//   this.setState({ zipcode: "&zipcode=" + e.target.value })
+
+//   //set url parameters
+//   let str =
+//     this.state.boroname + zip + spec + this.state.status + this.state.health
+//   this.fetchData(TREES_URL, str)
+// }
+
+// speciesChng = e => {
+//   //chk for empty species
+//   let specs
+//   e.target.value === ""
+//     ? (specs = "")
+//     : (specs = "&spc_common=" + e.target.value)
+
+//   //chk for empty zip
+//   let zips
+//   this.state.zipcode === "" ? (zips = "") : (zips = this.state.zipcode)
+//   this.setState({ spc_common: "&spc_common=" + e.target.value })
+
+//   //set url parameters
+//   let str =
+//     this.state.boroname + zips + specs + this.state.status + this.state.health
+//   this.fetchData(TREES_URL, str)
+// }
+
+// sttsClk = e => {
+//   this.setState({ status: e.target.value })
+//   let str =
+//     this.state.boroname +
+//     this.state.zipcode +
+//     this.state.spc_common +
+//     e.target.value
+//   this.fetchData(TREES_URL, str)
+// }
+
+// hlthClk = e => {
+//   this.setState({ health: e.target.value })
+//   let str =
+//     this.state.boroname +
+//     this.state.zipcode +
+//     this.state.spc_common +
+//     this.state.status +
+//     e.target.value
+//   this.fetchData(TREES_URL, str)
+// }

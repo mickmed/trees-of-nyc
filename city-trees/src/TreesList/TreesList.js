@@ -18,7 +18,8 @@ class TreesList extends React.Component {
   constructor() {
     super()
     this.state = {
-      trees: []
+      trees: [],
+      clicked: false
     }
   }
   componentDidMount() {
@@ -40,82 +41,118 @@ class TreesList extends React.Component {
 
 
 
-  renderFiltered = () => {
-    // console.log(this.props.searchInfo && this.props.searchInfo)
-    const filtered = this.props.filteredMap && this.props.filteredMap
-    console.log(filtered)
-    const data = filtered && filtered[Object.keys(filtered)[0]]
-    console.log(filtered)
-    // console.log(data && data.length)
-    if (filtered && data) {
+  // renderFiltered = () => {
+  //   // console.log(this.props.searchInfo && this.props.searchInfo)
+  //   const filtered = this.props.filteredMap && this.props.filteredMap
+  //   console.log(filtered)
+  //   const data = filtered && filtered[Object.keys(filtered)[0]]
+  //   console.log(filtered)
+  //   // console.log(data && data.length)
+  //   if (filtered && data) {
 
-      return (
-        <div className='srch-result'>
-          {Object.keys(filtered)[0]} '{this.props.searchString}' <span>({data.length})</span>
+  //     return (
+  //       <div className='srch-result'>
+  //         {Object.keys(filtered)[0]} '{this.props.searchString}' <span>({data.length})</span>
 
 
-        </div>
-      )
+  //       </div>
+  //     )
 
-    }
+  //   }
+  // }
+  handleClick = (type) => {
+    // console.log(typeConverter(type))
+    // console.log(type, this.props)
+    this.setState({
+      clicked: !this.state.clicked,
+      type: type
+
+    })
   }
 
-  renderSpecies = () => {
-    console.log(this.props.type, this.props.value)
-    console.log(this.props.type, this.props.filteredMap && this.props.filteredMap)
+  filteredList = () => {
+    console.log(this.props.filteredData)
+     return this.props.filteredData && this.props.filteredData.map(e=>{
+       console.log(e[Object.keys(e)[0]])
+       
+       return (
+       <div style={{paddingBottom:'10%'} }>
+         <div>{typeConverter(Object.keys(e)[0])}</div>
+          {e[Object.keys(e)[0]].map(f=>{
+            return <div onClick={()=>this.props.getSetSearch(f, Object.keys(e)[0])}>{f}</div>
+          })}
+         </div>
+         )
+     })
+     
+     
+  }
+
+
+  renderCategories = () => {
+    
     let type = this.props.type &&
-      (this.props.type === 'address' || this.props.type === 'zipcode') &&
-      ['spc_common', 'spc_latin', 'nta_name']
-      // 'spc_common'
-
-    console.log(type)
-
-
-
-    const filtered = this.props.filteredMap && this.props.filteredMap
-    console.log(filtered)
+      (this.props.type === 'zipcode') ?
+      ['address', 'spc_common', 'spc_latin', 'nta_name'] :
+      (this.props.type === 'address') &&
+      ['zipcode', 'spc_common', 'spc_latin', 'nta_name']
+      console.log(type, this.props.filteredList)
 
     let data = type.map(type => {
-
-
       let counts = {}
-
-
-      if (filtered && filtered.length !== 0) {
-        const b = filtered.forEach(e => {
+      if (this.props.filteredList && this.props.filteredList.length !== 0) {
+        this.props.filteredList.forEach(e => {
           counts[e[type]] = (counts[e[type]] + 1) || 1
-
         })
       }
+      
+      return <div style={{ paddingBottom: '10%' }} className="species-list" >
 
-      return <div className="species-list" >
-       
-        <div style={{ marginBottom: '10%' }}>{typeConverter(type)}<span>({Object.keys(counts).length})</span>
+        <div
+          style={{ marginBottom: '2%' }}
+          onClick={() => this.handleClick(type)}>{typeConverter(type)}<span>({Object.keys(counts).length})</span>
 
         </div>
-        {/* {Object.keys(counts).map(e => {
-          console.log(e)
-          return <div className="species">{e} <span>({counts[e]})</span></div>
-        })} */}
+        <div style={{
+          display: this.state.clicked ? 'block' : 'none',
+          marginLeft: '10%',
+
+          overflowY: 'scroll',
+          maxHeight: '100px'
+
+        }}
+        >
+          {Object.keys(counts).map(e => {
+            // console.log(e, type, counts)
+            if (this.state.type && this.state.type === type) {
+              return (
+                <div
+                  style={{ marginRight: '10%', fontSize: '.85em', color: this.props.selected === e && 'red' }}
+                  onClick={() => this.props.handleClick(type, e)}
+                >{e}
+                  <span style={{ color: this.props.selected === e && 'red' }}>({counts[e]})</span></div>
+              )
+            }
+          })}
+        </div>
       </div>
     })
-
     return (
       <>
-       <div>{this.props.type}{this.props.value}</div>
-      <div>{data}</div>
+        <div style={{ fontSize: '1.25em', marginBottom: '10%' }}>{this.props.type} <span style={{ fontStyle: 'italic' }}>'{this.props.value}'</span></div>
+        <div style={{ height: '100%' }}>{data}</div>
       </>
     )
   }
 
 
   render() {
-
+    const treesList = this.props.fromKey ? this.filteredList() : this.renderCategories()
     return (
       <div className="tree-inner">
         {/* {this.renderFiltered()} */}
 
-        {this.renderSpecies()}
+        {treesList}
 
       </div>
     )

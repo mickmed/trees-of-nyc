@@ -53,49 +53,20 @@ class InputPlus extends React.Component {
     this.setState({
       value: newValue,
     })
-    console.log(this.state.section)
-    method === 'click' && this.props.getData(newValue, Object.keys(this.state.section)[0]) 
+    // console.log(this.state.section)
+    method === 'click' && this.props.getSetSearch(newValue, Object.keys(this.state.section)[0]) 
     method === 'enter' && this.props.getSearch(event, newValue)
   }
 
   onKeydown = (event) => {
-    console.log('hre', event.keyCode, event.target.value)
+    // console.log('hre', event.keyCode, event.target.value)
     event.keyCode === 13 && this.props.getSearch(event.target.value)
   }   
 
   filterTrees = async (value, data) => {
    
     return filterData(value, data.data)
-    // console.log(srch, trees)
-    // const arr = []
-    // const arr2 = []
-   
-    // trees && trees.map((obj, i) => {
-    //   Object.entries(obj).map((str, index) => {
-    //     if (typeof str[1] === "string" && !blackList().includes(str[0])) {
-    //       if (
-    //         str[1].includes(srch) ||
-    //         str[1].includes(srch.toLowerCase()) ||
-    //         str[1].includes(srch.toUpperCase()) ||
-    //         str[1].includes(capitalize(srch))
-    //       ) {
-    //         if (!arr.includes(str[0])) {
-    //           arr.push(str[0])
-    //           arr2.push({ [str[0]]: [str[1]] })
-
-    //         }
-    //         arr2.forEach(e => Object.keys(e)[0] === str[0]
-    //           && !e[str[0]].includes(str[1])
-    //           && e[str[0]].length < 5
-    //           && e[str[0]].push(str[1])
-    //         )
-
-    //       }
-    //     }
-    //   })
-    // })
-    // // console.log(arr2)
-    // return arr2
+  
   }
 
 
@@ -114,7 +85,7 @@ class InputPlus extends React.Component {
       this.setState({
         suggestions: data
       });
-    }, 250);
+    }, 500);
   }
 
 
@@ -166,3 +137,35 @@ class InputPlus extends React.Component {
 }
 
 export default InputPlus
+
+
+  // console.log(srch, trees)
+    // const arr = []
+    // const arr2 = []
+   
+    // trees && trees.map((obj, i) => {
+    //   Object.entries(obj).map((str, index) => {
+    //     if (typeof str[1] === "string" && !blackList().includes(str[0])) {
+    //       if (
+    //         str[1].includes(srch) ||
+    //         str[1].includes(srch.toLowerCase()) ||
+    //         str[1].includes(srch.toUpperCase()) ||
+    //         str[1].includes(capitalize(srch))
+    //       ) {
+    //         if (!arr.includes(str[0])) {
+    //           arr.push(str[0])
+    //           arr2.push({ [str[0]]: [str[1]] })
+
+    //         }
+    //         arr2.forEach(e => Object.keys(e)[0] === str[0]
+    //           && !e[str[0]].includes(str[1])
+    //           && e[str[0]].length < 5
+    //           && e[str[0]].push(str[1])
+    //         )
+
+    //       }
+    //     }
+    //   })
+    // })
+    // // console.log(arr2)
+    // return arr2
